@@ -1,0 +1,103 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  padding: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 12%;
+  height: 10%;
+}
+
+.inner__div {
+  position: relative;
+  width: 40%;
+  font-size: 15px;
+  display: flex;
+  align-items: flex-start;
+  right: 30px;
+}
+
+.email__icon {
+  width: 20%;
+  height: 1.2em;
+  position: relative;
+  margin-top: 0.25em;
+  left: 20px;
+}
+
+.login__box {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  margin-bottom: 25px;
+  height: 2em;
+  width: 100%;
+  border: 2px solid black;
+  padding-left: 10px;
+  color: black;
+}
+
+.input::placeholder {
+  color: black;
+}
+
+.input::-ms-reveal {
+  display: block !important;
+}
+
+.forgot__password {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #114da2;
+  cursor: pointer;
+  position: relative;
+  bottom: 10px;
+}
+
+.submit__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.remember {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  height: 1em;
+}
+
+.tick__box {
+  width: 1em;
+  height: 1em;
+  border: 1.2px solid black;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.remember__text {
+  font-weight: 600;
+}
+
+.login__button {
+  font-size: 14px;
+  height: 2em;
+  width: 8em;
+  border: none;
+  border-style: outset;
+  background-color: #dddddd;
+  cursor: pointer;
+}
