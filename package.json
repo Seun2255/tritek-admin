@@ -15,6 +15,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.0"
   }
