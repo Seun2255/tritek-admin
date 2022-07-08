@@ -17,5 +17,8 @@ const signIn = (email, password) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("Not signed in", errorMessage);
+      return false;
     });
 };
+
+export { signIn };

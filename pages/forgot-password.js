@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
 import { useState } from "react";
 
-export default function Login() {
+export default function ForgotPassword() {
   const [remember, setRemember] = useState(false);
 
   return (
