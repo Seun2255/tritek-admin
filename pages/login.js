@@ -6,7 +6,7 @@ import emailIcon from "../assets/icons/email.svg";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { signIn } from "./api/API";
+import { signIn, signUserOut } from "./api/API";
 
 export default function Login() {
   const [remember, setRemember] = useState(false);
@@ -18,6 +18,7 @@ export default function Login() {
   const handleSubmit = async () => {
     const result = signIn(email, password);
     if (result) {
+      signUserOut();
       const otp = Math.floor(100000 + Math.random() * 900000);
       localStorage.setItem("email", email);
       localStorage.setItem("password", password);

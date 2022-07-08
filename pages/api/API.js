@@ -1,6 +1,6 @@
 import app from "../../firebase/firebaseApp";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -21,4 +21,8 @@ const signIn = (email, password) => {
     });
 };
 
-export { signIn };
+const signUserOut = () => {
+  signOut(auth);
+};
+
+export { signIn, signUserOut };
