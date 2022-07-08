@@ -10,14 +10,10 @@ export default function VerifyLogin() {
   const [input, setInput] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
+  const handleSubmit = () => {
     const email = localStorage.getItem("email");
     const password = localStorage.getItem("password");
     const otp = localStorage.getItem("otp");
-    console.log(`email: ${email}, password: ${password}`);
-  }, []);
-
-  const handleSubmit = () => {
     if (input === otp) {
       signIn(email, password).then(() => {
         router.push("/");
