@@ -17,29 +17,29 @@ export default function Login() {
 
   const handleSubmit = async () => {
     signIn(email, password).then((result) => {
-      if (result !== false) {
-        // signUserOut();
-        const otp = Math.floor(100000 + Math.random() * 900000);
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-        localStorage.setItem("otp", otp);
-        axios
-          .post("https://tritek-mail.herokuapp.com/api/send-mail", {
-            email: email,
-            otp: otp,
-          })
-          .then(function (response) {
-            console.log(response);
-            console.log("Succes");
-          })
-          .catch(function (error) {
-            console.log("Failed");
-            console.log(error);
-          });
-        router.push("/verify-login");
-      } else {
-        setInvalid(true);
-      }
+      // if (result !== false) {
+      //   // signUserOut();
+      const otp = Math.floor(100000 + Math.random() * 900000);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+      localStorage.setItem("otp", otp);
+      axios
+        .post("https://tritek-mail.herokuapp.com/api/send-mail", {
+          email: email,
+          otp: otp,
+        })
+        .then(function (response) {
+          console.log(response);
+          console.log("Succes");
+        })
+        .catch(function (error) {
+          console.log("Failed");
+          console.log(error);
+        });
+      router.push("/verify-login");
+      // } else {
+      //   setInvalid(true);
+      // }
     });
   };
 
