@@ -8,12 +8,18 @@ import { signIn, signUserOut } from "./api/API";
 export default function VerifyLogin() {
   const [remember, setRemember] = useState(false);
   const [input, setInput] = useState("");
+  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    setEmail(localStorage.getItem("email"));
+    setPassword(localStorage.getItem("password"));
+    setOtp(localStorage.getItem("otp"));
+  }, []);
+
   const handleSubmit = () => {
-    const email = localStorage.getItem("email");
-    const password = localStorage.getItem("password");
-    const otp = localStorage.getItem("otp");
     if (input === otp) {
       signIn(email, password).then(() => {
         router.push("/");
