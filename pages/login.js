@@ -17,8 +17,6 @@ export default function Login() {
 
   const handleSubmit = async () => {
     signIn(email, password).then((result) => {
-      // if (result !== false) {
-      //   // signUserOut();
       const otp = Math.floor(100000 + Math.random() * 900000);
       localStorage.setItem("email", email);
       localStorage.setItem("password", password);
@@ -37,9 +35,6 @@ export default function Login() {
           console.log(error);
         });
       router.push("/verify-login");
-      // } else {
-      //   setInvalid(true);
-      // }
     });
   };
 
