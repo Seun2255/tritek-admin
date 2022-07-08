@@ -17,37 +17,51 @@ export default function Login() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    // const result = await signIn(email, password);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const otp = Math.floor(100000 + Math.random() * 900000);
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-        localStorage.setItem("otp", otp);
-        axios
-          .post("https://tritek-mail.herokuapp.com/api/send-mail", {
-            email: email,
-            otp: otp,
-          })
-          .then(function (response) {
-            console.log(response);
-            console.log("Succes");
-          })
-          .catch(function (error) {
-            console.log("Failed");
-            console.log(error);
-          });
-        signOut(auth);
-        router.push("/verify-login");
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    axios
+      .post("http://127.0.0.1:8000/api/send-mail", {
+        email: email,
+        otp: otp,
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("Not signed in", errorMessage);
-        setInvalid(true);
-        console.log("User not signed in");
+      .then(function (response) {
+        console.log(response);
+        console.log("Succes");
+      })
+      .catch(function (error) {
+        console.log("Failed");
+        console.log(error);
       });
+    // const result = await signIn(email, password);
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     const user = userCredential.user;
+    //     const otp = Math.floor(100000 + Math.random() * 900000);
+    //     localStorage.setItem("email", email);
+    //     localStorage.setItem("password", password);
+    //     localStorage.setItem("otp", otp);
+    //     axios
+    //       .post("http://127.0.0.1:8000/api/send-mail", {
+    //         email: email,
+    //         otp: otp,
+    //       })
+    //       .then(function (response) {
+    //         console.log(response);
+    //         console.log("Succes");
+    //       })
+    //       .catch(function (error) {
+    //         console.log("Failed");
+    //         console.log(error);
+    //       });
+    //     signOut(auth);
+    //     router.push("/verify-login");
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log("Not signed in", errorMessage);
+    //     setInvalid(true);
+    //     console.log("User not signed in");
+    //   });
   };
 
   return (
