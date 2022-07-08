@@ -26,7 +26,7 @@ export default function Login() {
         localStorage.setItem("password", password);
         localStorage.setItem("otp", otp);
         axios
-          .post("https://tritek-mail.herokuapp.com/api/send-mail/", {
+          .post("https://tritek-mail.herokuapp.com/api/send-mail", {
             email: email,
             otp: otp,
           })
