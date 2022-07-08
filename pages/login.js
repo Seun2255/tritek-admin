@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = async () => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     axios
-      .post("http://127.0.0.1:8000/api/send-mail", {
+      .post("https://tritek-mail.herokuapp.com/api/send-mail", {
         email: email,
         otp: otp,
       })
