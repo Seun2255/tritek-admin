@@ -120,5 +120,8 @@
   border: none;
   border-style: outset;
   background-color: #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }

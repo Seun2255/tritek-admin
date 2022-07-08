@@ -6,7 +6,8 @@ import emailIcon from "../assets/icons/email.svg";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { signIn, signUserOut } from "./api/API";
+import { signIn, signUserOut, auth } from "./api/API";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function Login() {
   const [remember, setRemember] = useState(false);
@@ -16,26 +17,37 @@ export default function Login() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    signIn(email, password).then((result) => {
-      const otp = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("email", email);
-      localStorage.setItem("password", password);
-      localStorage.setItem("otp", otp);
-      axios
-        .post("https://tritek-mail.herokuapp.com/api/send-mail", {
-          email: email,
-          otp: otp,
-        })
-        .then(function (response) {
-          console.log(response);
-          console.log("Succes");
-        })
-        .catch(function (error) {
-          console.log("Failed");
-          console.log(error);
-        });
-      router.push("/verify-login");
-    });
+    // const result = await signIn(email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        localStorage.setItem("otp", otp);
+        axios
+          .post("http://127.0.0.1:8000/api/send-mail", {
+            email: email,
+            otp: otp,
+          })
+          .then(function (response) {
+            console.log(response);
+            console.log("Succes");
+          })
+          .catch(function (error) {
+            console.log("Failed");
+            console.log(error);
+          });
+        signOut(auth);
+        router.push("/verify-login");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("Not signed in", errorMessage);
+        setInvalid(true);
+        console.log("User not signed in");
+      });
   };
 
   return (
@@ -78,9 +90,9 @@ export default function Login() {
                 <div className={styles.tick__box}></div>
                 <span className={styles.remember__text}>Remember me</span>
               </div>
-              <button className={styles.login__button} onClick={handleSubmit}>
+              <div className={styles.login__button} onClick={handleSubmit}>
                 Login
-              </button>
+              </div>
             </div>
           </div>
         </div>

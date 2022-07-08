@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "../styles/verify-login.module.css";
 import logo from "../assets/logo.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { signIn, signUserOut } from "./api/API";
 
@@ -9,14 +9,19 @@ export default function VerifyLogin() {
   const [remember, setRemember] = useState(false);
   const [input, setInput] = useState("");
   const router = useRouter();
-  const email = localStorage.getItem("email");
-  const password = localStorage.getItem("password");
-  const otp = localStorage.getItem("otp");
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
+    const otp = localStorage.getItem("otp");
+    console.log(`email: ${email}, password: ${password}`);
+  }, []);
 
   const handleSubmit = () => {
     if (input === otp) {
-      signIn(email, password);
-      router.push("/");
+      signIn(email, password).then(() => {
+        router.push("/");
+      });
     } else {
       setInput("invalid OTP");
     }
