@@ -49,7 +49,9 @@ export default function VerifyLogin() {
           }}
           value={input}
         />
-        <button className={styles.submit__button}>continue</button>
+        <button className={styles.submit__button} onClick={handleSubmit}>
+          continue
+        </button>
       </div>
     </div>
   );
