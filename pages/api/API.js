@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const signIn = (email, password) => {
+const signIn = async (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
