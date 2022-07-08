@@ -1,11 +1,26 @@
 import Image from "next/image";
 import styles from "../styles/verify-login.module.css";
 import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { signIn, signUserOut } from "./api/API";
 
 export default function VerifyLogin() {
   const [remember, setRemember] = useState(false);
+  const [input, setInput] = useState("");
+  const router = useRouter();
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
+  const otp = localStorage.getItem("otp");
+
+  const handleSubmit = () => {
+    if (input === otp) {
+      signIn(email, password);
+      router.push("/");
+    } else {
+      setInput("invalid OTP");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -20,7 +35,15 @@ export default function VerifyLogin() {
         <label className={styles.verification__box__label}>
           Enter your verification code
         </label>
-        <input className={styles.input} type="text" placeholder="_ _ _ _ _ _" />
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="_ _ _ _ _ _"
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+          value={input}
+        />
         <button className={styles.submit__button}>continue</button>
       </div>
     </div>
