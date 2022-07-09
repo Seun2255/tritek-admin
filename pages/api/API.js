@@ -54,7 +54,7 @@ const signUserOut = () => {
 };
 
 const resetPassword = async (email) => {
-  await sendPasswordResetEmail(auth, email);
+  sendPasswordResetEmail(auth, email);
 };
 
 const resetPasswordConfirmation = async (password, code) => {

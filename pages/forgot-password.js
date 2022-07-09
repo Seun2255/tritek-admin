@@ -9,6 +9,7 @@ export default function ForgotPassword() {
   const [emailInput, setEmailInput] = useState("");
 
   const handleSubmit = () => {
+    console.log("Function Started");
     resetPassword(emailInput)
       .then(() => {
         console.log("SUCCES");
@@ -46,7 +47,10 @@ export default function ForgotPassword() {
               />
             </div>
           </div>
-          <button className={styles.submit__button} onClick={handleSubmit}>
+          <button
+            className={styles.submit__button}
+            onClick={() => handleSubmit()}
+          >
             submit
           </button>
         </div>
