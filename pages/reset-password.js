@@ -15,8 +15,9 @@ export default function ResetPassword() {
   console.log(router.query);
 
   const handleSubmit = () => {
+    console.log(code);
     if (password === confirmPassword) {
-      resetPasswordConfirmation(password, code)
+      resetPasswordConfirmation(password, code.toString())
         .then(() => {
           router.push("/reset-confirmation");
         })
