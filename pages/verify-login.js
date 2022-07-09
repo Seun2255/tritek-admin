@@ -22,6 +22,9 @@ export default function VerifyLogin() {
   const handleSubmit = () => {
     if (input === otp) {
       signIn(email, password).then(() => {
+        var ttl = 36000000;
+        const date = new Date();
+        localStorage.setItem("session", date.getTime() + ttl);
         router.push("/");
       });
     } else {

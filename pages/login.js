@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "../styles/login.module.css";
 import logo from "../assets/logo.png";
 import emailIcon from "../assets/icons/email.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { signIn, signUserOut, auth } from "./api/API";
@@ -15,6 +15,16 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [invalid, setInvalid] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const now = new Date();
+    const session = localStorage.getItem("session");
+
+    if (now.getTime() < session) {
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async () => {
     // const result = await signIn(email, password);
