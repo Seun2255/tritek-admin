@@ -12,10 +12,10 @@ export default function ResetConfirmation() {
       <div className={styles.inner__div}>
         <div className={styles.title}>Reset password confirmation</div>
         <div className={styles.details}>
-          Your password has been changed . Please click
-          <link href={"/login"}>
-            <a className={styles.login__redirect}>here</a>
-          </link>{" "}
+          Your password has been changed. Please click{" "}
+          <Link href={"login"} className={styles.login__redirect}>
+            here
+          </Link>{" "}
           to login
         </div>
       </div>
