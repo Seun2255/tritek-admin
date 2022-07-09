@@ -16,9 +16,13 @@ export default function ResetPassword() {
 
   const handleSubmit = () => {
     if (password === confirmPassword) {
-      resetPasswordConfirmation(password, code).then(() => {
-        router.push("/reset-confirmation");
-      });
+      resetPasswordConfirmation(password, code)
+        .then(() => {
+          router.push("/reset-confirmation");
+        })
+        .catch(() => {
+          console.log("it didn't work");
+        });
     } else {
       setPasswordMismatch(true);
     }

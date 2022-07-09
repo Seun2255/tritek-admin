@@ -27,7 +27,8 @@ export default function ForgotPassword() {
         <h1 className={styles.title}>Forgotten your password</h1>
         <p className={styles.details}>
           Please enter your account email address. We will send an email
-          containing instructions to reset your password.
+          containing instructions to reset your password. check spam if mail not
+          seen
         </p>
         <div className={styles.email__div}>
           <label className={styles.email__label}>Email Address*</label>
