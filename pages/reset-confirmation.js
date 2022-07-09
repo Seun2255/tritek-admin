@@ -1,12 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/reset-confirmation.module.css";
 import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
-import { useState } from "react";
 
 export default function ResetConfirmation() {
-  const [remember, setRemember] = useState(false);
-
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -15,8 +12,11 @@ export default function ResetConfirmation() {
       <div className={styles.inner__div}>
         <div className={styles.title}>Reset password confirmation</div>
         <div className={styles.details}>
-          Your password has been changed . Please click{" "}
-          <a className={styles.login__redirect}>here</a> to login
+          Your password has been changed . Please click
+          <link href={"/login"}>
+            <a className={styles.login__redirect}>here</a>
+          </link>{" "}
+          to login
         </div>
       </div>
     </div>

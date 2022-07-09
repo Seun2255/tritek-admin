@@ -1,6 +1,12 @@
 import app from "../../firebase/firebaseApp";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+} from "firebase/auth";
 import { async } from "@firebase/util";
 
 const db = getFirestore(app);
@@ -47,4 +53,12 @@ const signUserOut = () => {
     });
 };
 
-export { signIn, signUserOut, auth };
+const resetPassword = async (email) => {
+  await sendPasswordResetEmail(auth, email);
+};
+
+const resetPasswordConfirmation = async (password, code) => {
+  await confirmPasswordReset(auth, code, password);
+};
+
+export { signIn, signUserOut, auth, resetPassword, resetPasswordConfirmation };

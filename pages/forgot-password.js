@@ -3,9 +3,14 @@ import styles from "../styles/forgot-password.module.css";
 import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
 import { useState } from "react";
+import { resetPassword } from "./api/API";
 
 export default function ForgotPassword() {
-  const [remember, setRemember] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+
+  const handleSubmit = () => {
+    resetPassword(emailInput);
+  };
 
   return (
     <div className={styles.container}>
@@ -25,10 +30,18 @@ export default function ForgotPassword() {
               <Image alt="logo" layout="fill" src={email} />
             </div>
             <div className={styles.login__box}>
-              <input className={styles.input} type="text" />
+              <input
+                className={styles.input}
+                type="text"
+                onChange={(e) => {
+                  setEmailInput(e.target.value);
+                }}
+              />
             </div>
           </div>
-          <button className={styles.submit__button}>submit</button>
+          <button className={styles.submit__button} onClick={handleSubmit}>
+            submit
+          </button>
         </div>
       </div>
     </div>
