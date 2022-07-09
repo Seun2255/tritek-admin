@@ -9,7 +9,13 @@ export default function ForgotPassword() {
   const [emailInput, setEmailInput] = useState("");
 
   const handleSubmit = () => {
-    resetPassword(emailInput);
+    resetPassword(emailInput)
+      .then(() => {
+        console.log("SUCCES");
+      })
+      .catch(() => {
+        console.log("It didn't work");
+      });
   };
 
   return (
