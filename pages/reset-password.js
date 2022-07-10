@@ -16,6 +16,7 @@ export default function ResetPassword() {
 
   const handleSubmit = () => {
     console.log(code);
+    console.log("arrived in handleSubmit");
     if (password === confirmPassword) {
       resetPasswordConfirmation(password, code.toString())
         .then(() => {

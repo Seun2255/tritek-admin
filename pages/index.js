@@ -14,10 +14,12 @@ import KnowledgeBase from "../components/knowledgeBase";
 import Queries from "../components/queries";
 import Reports from "../components/reports";
 import UserManagement from "../components/userManagement";
+import MySettings from "../components/mySettings";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState("Dashboard");
+  const [option, setOption] = useState("");
   const router = useRouter();
   const options = ["My Settings", "Options", "Add Image", "Change Password"];
   const views = [
@@ -79,7 +81,14 @@ export default function Home() {
               <div className={styles.menu}>
                 {options.map((option, id) => {
                   return (
-                    <div key={id} className={styles.question}>
+                    <div
+                      key={id}
+                      className={styles.question}
+                      onClick={() => {
+                        setOption(option);
+                        setCurrentView("");
+                      }}
+                    >
                       {option}
                     </div>
                   );
@@ -101,7 +110,10 @@ export default function Home() {
                   width: view === currentView ? "calc(100% + 1px)" : "100%",
                   left: view === currentView ? "1px" : "0px",
                 }}
-                onClick={() => setCurrentView(view)}
+                onClick={() => {
+                  setCurrentView(view);
+                  setOption("");
+                }}
               >
                 {view}
               </div>
@@ -115,6 +127,7 @@ export default function Home() {
           {currentView === "Queries" && <Queries />}
           {currentView === "Reports" && <Reports />}
           {currentView === "User Management" && <UserManagement />}
+          {option === "My Settings" && <MySettings />}
         </div>
       </div>
     </div>

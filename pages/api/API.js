@@ -58,7 +58,16 @@ const resetPassword = async (email) => {
 };
 
 const resetPasswordConfirmation = async (password, code) => {
-  await confirmPasswordReset(auth, code, password);
+  confirmPasswordReset(auth, code, password)
+    .then(() => {
+      console.log("Succesfully reset password");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("password reset failed");
+      console.log(errorCode, errorMessage);
+    });
 };
 
 export { signIn, signUserOut, auth, resetPassword, resetPasswordConfirmation };
