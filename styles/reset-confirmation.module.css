@@ -41,4 +41,5 @@
 .login__redirect {
   color: #114da2;
   text-decoration: underline;
+  cursor: pointer;
 }

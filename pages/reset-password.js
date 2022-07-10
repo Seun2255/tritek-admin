@@ -10,14 +10,12 @@ export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [passwordInavalid, setPasswordInavalid] = useState(false);
   const router = useRouter();
   const code = router.query.oobCode;
-  console.log(router.query);
 
   const handleSubmit = () => {
-    console.log(code);
-    console.log("arrived in handleSubmit");
-    if (password === confirmPassword) {
+    if (password === confirmPassword && !passwordInavalid) {
       resetPasswordConfirmation(password, code.toString())
         .then(() => {
           router.push("/reset-confirmation");
@@ -30,12 +28,31 @@ export default function ResetPassword() {
     }
   };
 
+  const validatePassword = () => {
+    const containsSpecialCharacter = /[^a-zA-Z0-9]/;
+    const containsUpperCaseCharacter = /[A-Z]/;
+    const containsLowerCaseCharacter = /[a-z]/;
+
+    if (
+      password.length > 7 &&
+      containsLowerCaseCharacter.test(password) &&
+      containsSpecialCharacter.test(password) &&
+      containsUpperCaseCharacter.test(password)
+    ) {
+    } else {
+      setPasswordInavalid(true);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
         <Image alt="logo" layout="fill" src={logo} />
       </div>
       <div className={styles.inner__div}>
+        {passwordInavalid && (
+          <div className={styles.invalid__password}>Password not valid</div>
+        )}
         <div className={styles.password}>
           <div className={styles.password__input}>
             <label className={styles.input__label}>New password</label>
@@ -44,8 +61,12 @@ export default function ResetPassword() {
               className={styles.input}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setPasswordMismatch(false);
               }}
+              onFocus={() => {
+                setPasswordMismatch(false);
+                setPasswordInavalid(false);
+              }}
+              onBlur={validatePassword}
             />
           </div>
           <div className={styles.password__tips}>
@@ -72,6 +93,8 @@ export default function ResetPassword() {
             className={styles.input}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
+            }}
+            onFocus={() => {
               setPasswordMismatch(false);
             }}
           />
