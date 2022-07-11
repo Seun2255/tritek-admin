@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.png";
 import styles from "../styles/Home.module.css";
-import arrow from "../assets/icons/arrow.svg";
+import arrow from "../assets/icons/arrow-black.svg";
 import search from "../assets/icons/search.svg";
 import microphone from "../assets/icons/microphone.svg";
 import profile from "../assets/icons/profile.svg";
@@ -15,13 +15,21 @@ import Queries from "../components/queries";
 import Reports from "../components/reports";
 import UserManagement from "../components/userManagement";
 import MySettings from "../components/mySettings";
+import { auth } from "./api/API";
+import { signOut } from "firebase/auth";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState("Dashboard");
   const [option, setOption] = useState("");
   const router = useRouter();
-  const options = ["My Settings", "Options", "Add Image", "Change Password"];
+  const options = [
+    "My Settings",
+    "Options",
+    "Add Image",
+    "Change Password",
+    "logout",
+  ];
   const views = [
     "Dashboard",
     "Queries",
@@ -30,6 +38,13 @@ export default function Home() {
     "User Management",
     "Knowledge Base",
   ];
+
+  const logout = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      router.push("/login");
+    });
+  };
 
   useEffect(() => {
     const now = new Date();
@@ -85,8 +100,12 @@ export default function Home() {
                       key={id}
                       className={styles.question}
                       onClick={() => {
-                        setOption(option);
-                        setCurrentView("");
+                        option === "logout"
+                          ? logout()
+                          : () => {
+                              setOption(option);
+                              setCurrentView("");
+                            };
                       }}
                     >
                       {option}
