@@ -22,6 +22,24 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState("Dashboard");
   const [option, setOption] = useState("");
+  const [sideDropdown, setSideDropdown] = useState(false);
+  const sideDropOptions = {
+    Queries: ["New", "In progress", "Resolved"],
+    "Contact Management": ["New query"],
+    "User Management": ["settings"],
+  };
+
+  const [dropOptions, setDropOptions] = useState(sideDropOptions["Queries"]);
+  const [selectedDropdown, setSelectedDropdown] = useState("");
+
+  const settingsDropDown = [
+    "add a user",
+    "edit user account",
+    "Change email",
+    "User Groups",
+    "Permission Level",
+  ];
+
   const router = useRouter();
   const options = [
     "My Settings",
@@ -44,6 +62,24 @@ export default function Home() {
       localStorage.clear();
       router.push("/login");
     });
+  };
+
+  const handleSidebarClick = (view) => {
+    if (
+      view === "Dashboard" ||
+      view === "Reports" ||
+      view === "Knowledge Base"
+    ) {
+      setCurrentView(view);
+      setOption("");
+      setSideDropdown(false);
+    } else {
+      selectedDropdown === view && sideDropdown
+        ? setSideDropdown(false)
+        : setSideDropdown(true);
+      setSelectedDropdown(view);
+      setDropOptions(sideDropOptions[view]);
+    }
   };
 
   useEffect(() => {
@@ -104,7 +140,7 @@ export default function Home() {
                           ? logout()
                           : () => {
                               setOption(option);
-                              setCurrentView("");
+                              // setCurrentView("");
                             };
                       }}
                     >
@@ -123,18 +159,33 @@ export default function Home() {
             return (
               <div
                 key={id}
-                className={styles.option__box}
+                className={styles.option__container}
                 style={{
                   backgroundColor: view === currentView ? "white" : "#cccccc",
                   width: view === currentView ? "calc(100% + 1px)" : "100%",
                   left: view === currentView ? "1px" : "0px",
                 }}
-                onClick={() => {
-                  setCurrentView(view);
-                  setOption("");
-                }}
               >
-                {view}
+                <div
+                  className={styles.option__box}
+                  style={{
+                    backgroundColor: view === currentView ? "white" : "#cccccc",
+                  }}
+                  onClick={() => handleSidebarClick(view)}
+                >
+                  {view}
+                </div>
+                {selectedDropdown === view && sideDropdown && (
+                  <div className={styles.dropdown__menu}>
+                    {dropOptions.map((option, id) => {
+                      return (
+                        <div key={id} className={styles.dropdown__item}>
+                          {option}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
