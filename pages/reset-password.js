@@ -2,6 +2,8 @@ import Image from "next/image";
 import styles from "../styles/reset-password.module.css";
 import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
+import correct from "../assets/icons/accept.png";
+import invalid from "../assets/icons/multiply.png";
 import { useState } from "react";
 import { resetPasswordConfirmation } from "./api/API";
 import { useRouter } from "next/router";
@@ -11,6 +13,8 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [passwordInavalid, setPasswordInavalid] = useState(false);
+  const [statusIcon, setStatusIcon] = useState(false);
+  const [statusIcon2, setStatusIcon2] = useState(false);
   const router = useRouter();
   const code = router.query.oobCode;
 
@@ -28,7 +32,17 @@ export default function ResetPassword() {
     }
   };
 
+  const checkMatch = () => {
+    setStatusIcon2(true);
+    if (password === confirmPassword) {
+      setPasswordMismatch(false);
+    } else {
+      setPasswordMismatch(true);
+    }
+  };
+
   const validatePassword = () => {
+    setStatusIcon(true);
     const containsSpecialCharacter = /[^a-zA-Z0-9]/;
     const containsUpperCaseCharacter = /[A-Z]/;
     const containsLowerCaseCharacter = /[a-z]/;
@@ -39,6 +53,7 @@ export default function ResetPassword() {
       containsSpecialCharacter.test(password) &&
       containsUpperCaseCharacter.test(password)
     ) {
+      setPasswordInavalid(false);
     } else {
       setPasswordInavalid(true);
     }
@@ -50,9 +65,6 @@ export default function ResetPassword() {
         <Image alt="logo" layout="fill" src={logo} />
       </div>
       <div className={styles.inner__div}>
-        {passwordInavalid && (
-          <div className={styles.invalid__password}>Password not valid</div>
-        )}
         <div className={styles.password}>
           <div className={styles.password__input}>
             <label className={styles.input__label}>New password</label>
@@ -63,29 +75,36 @@ export default function ResetPassword() {
                 setPassword(e.target.value);
               }}
               onFocus={() => {
-                setPasswordMismatch(false);
-                setPasswordInavalid(false);
+                setStatusIcon(false);
+                setStatusIcon2(false);
               }}
               onBlur={validatePassword}
             />
+            {statusIcon && (
+              <div className={styles.password__state}>
+                <Image
+                  alt="tick or cross"
+                  layout="fill"
+                  src={passwordInavalid ? invalid : correct}
+                />
+              </div>
+            )}
           </div>
-          <div className={styles.password__tips}>
-            <div className={styles.tip__text}>Passord Strength</div>
-            <div className={styles.tip__text}>- At least 7 characters</div>
-            <div className={styles.tip__text}>
-              - At least one uppercase and one lower case letter
+          {passwordInavalid && (
+            <div className={styles.password__tips}>
+              <div className={styles.tip__text} style={{ color: "black" }}>
+                The entry does not meet criteria, At least:
+              </div>
+              <div className={styles.tip__text}>7 characters</div>
+              <div className={styles.tip__text}>one uppercase letter</div>
+              <div className={styles.tip__text}>one lower case letter</div>
+              <div className={styles.tip__text}>one number</div>
+              <div className={styles.tip__text}>
+                one special character (+, #, ? ...... )
+              </div>
             </div>
-            <div className={styles.tip__text}>- At least one number</div>
-            <div className={styles.tip__text}>
-              - At least one special character (+, #, ? ...... )
-            </div>
-          </div>
+          )}
         </div>
-        {passwordMismatch && (
-          <div className={styles.invalid__password}>
-            Passwords don&#39;t match
-          </div>
-        )}
         <div className={styles.confirm__password}>
           <label className={styles.input__label}>Confirm new password</label>
           <input
@@ -95,9 +114,26 @@ export default function ResetPassword() {
               setConfirmPassword(e.target.value);
             }}
             onFocus={() => {
-              setPasswordMismatch(false);
+              setStatusIcon2(false);
             }}
+            onBlur={checkMatch}
           />
+          {statusIcon2 && (
+            <div className={styles.mismatch__container}>
+              <div className={styles.mismatch__state}>
+                <Image
+                  alt="tick or cross"
+                  layout="fill"
+                  src={passwordMismatch ? invalid : correct}
+                />
+              </div>
+              {passwordMismatch && (
+                <span className={styles.mismatch__text}>
+                  Password doesn&#39;t match
+                </span>
+              )}
+            </div>
+          )}
         </div>
         <button className={styles.submit__button} onClick={handleSubmit}>
           Reset password
