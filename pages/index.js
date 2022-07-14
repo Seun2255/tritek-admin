@@ -15,24 +15,30 @@ import Queries from "../components/queries";
 import Reports from "../components/reports";
 import UserManagement from "../components/userManagement";
 import MySettings from "../components/mySettings";
-import { auth } from "./api/API";
+import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
 import { signOut } from "firebase/auth";
+import querySorter from "../utils/querySorter";
+import contactSearch from "../utils/contactSearch";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [queries, setQueries] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [currentView, setCurrentView] = useState("Dashboard");
   const [option, setOption] = useState("");
+  const [queryStatus, setQueryStatus] = useState("new");
   const [sideDropdown, setSideDropdown] = useState(false);
   const sideDropOptions = {
-    Queries: ["New", "In progress", "Resolved"],
+    Queries: ["New", "in Progress", "Resolved"],
     "Contact Management": ["New query"],
     "User Management": ["settings"],
   };
 
   const [dropOptions, setDropOptions] = useState(sideDropOptions["Queries"]);
   const [selectedDropdown, setSelectedDropdown] = useState("");
+  const [settingsDropdown, setSettingsDropdown] = useState(false);
 
-  const settingsDropDown = [
+  const settingsDropdownList = [
     "add a user",
     "edit user account",
     "Change email",
@@ -73,12 +79,67 @@ export default function Home() {
       setCurrentView(view);
       setOption("");
       setSideDropdown(false);
-    } else {
+      setSettingsDropdown(false);
+    } else if (view === "Contact Management") {
+      setCurrentView(view);
+      setOption("");
+      setSelectedDropdown(view);
+      setDropOptions(sideDropOptions[view]);
+      selectedDropdown === view && sideDropdown
+        ? setSideDropdown(false)
+        : setSideDropdown(true);
+      setSettingsDropdown(false);
+    }
+    // else if (view === "Queries") {
+    //   setOption("");
+    //   setSideDropdown(false);
+    //   setSelectedDropdown(view);
+    //   setDropOptions(sideDropOptions[view]);
+    //   setQueryStatus("New");
+    //   setCurrentView(view);
+    // }
+    else {
       selectedDropdown === view && sideDropdown
         ? setSideDropdown(false)
         : setSideDropdown(true);
       setSelectedDropdown(view);
       setDropOptions(sideDropOptions[view]);
+      setSettingsDropdown(false);
+    }
+  };
+
+  // const handleSidebarHoverOver = (view) => {
+  //   if (view === "Queries") {
+  //     setSideDropdown(true);
+  //     setSelectedDropdown(view);
+  //     setDropOptions(sideDropOptions[view]);
+  //   }
+  // };
+
+  // const handleSidebarHoverOff = (view) => {
+  //   if (view === "Queries") {
+  //     setTimeout(() => {
+  //       setSideDropdown(false);
+  //     }, 50);
+  //   }
+  // };
+
+  const handleQueryOptionClick = (option) => {
+    if (option === "settings") {
+      setSettingsDropdown(!settingsDropdown);
+    } else {
+      setCurrentView(selectedDropdown);
+      setQueryStatus(option);
+      setSideDropdown(false);
+    }
+  };
+
+  const handleSearch = (search) => {
+    if (search.length >= 3) {
+      const results = contactSearch(employees, search);
+      setEmployees(results);
+    } else {
+      setEmployees(employees);
     }
   };
 
@@ -89,6 +150,12 @@ export default function Home() {
     if (now.getTime() > session) {
       router.push("/login");
     }
+    getData().then((data) => {
+      const sortedQueries = querySorter(data.queries);
+      setQueries(sortedQueries);
+      setEmployees(data.employees);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -102,7 +169,13 @@ export default function Home() {
           <div className={styles.search__icon}>
             <Image alt="search icon" layout="fill" src={search} />
           </div>
-          <input type="text" className={styles.search__input} />
+          <input
+            type="text"
+            className={styles.search__input}
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+          />
           <div className={styles.search__icon}>
             <Image alt="Microphone icon" layout="fill" src={microphone} />
           </div>
@@ -162,8 +235,7 @@ export default function Home() {
                 className={styles.option__container}
                 style={{
                   backgroundColor: view === currentView ? "white" : "#cccccc",
-                  width: view === currentView ? "calc(100% + 1px)" : "100%",
-                  left: view === currentView ? "1px" : "0px",
+                  width: view === currentView ? "calc(100% + 2px)" : "100%",
                 }}
               >
                 <div
@@ -179,7 +251,25 @@ export default function Home() {
                   <div className={styles.dropdown__menu}>
                     {dropOptions.map((option, id) => {
                       return (
-                        <div key={id} className={styles.dropdown__item}>
+                        <div
+                          key={id}
+                          className={styles.dropdown__item}
+                          onClick={() => handleQueryOptionClick(option)}
+                        >
+                          {option}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {settingsDropdown && selectedDropdown === view && (
+                  <div className={styles.settings__dropdown__menu}>
+                    {settingsDropdownList.map((option, id) => {
+                      return (
+                        <div
+                          key={id}
+                          className={styles.settings__dropdown__item}
+                        >
                           {option}
                         </div>
                       );
@@ -192,9 +282,11 @@ export default function Home() {
         </div>
         <div className={styles.view}>
           {currentView === "Dashboard" && <Dashboard />}
-          {currentView === "Contact Management" && <ContactManagement />}
+          {currentView === "Contact Management" && (
+            <ContactManagement data={employees} />
+          )}
           {currentView === "Knowledge Base" && <KnowledgeBase />}
-          {currentView === "Queries" && <Queries />}
+          {currentView === "Queries" && <Queries data={queries[queryStatus]} />}
           {currentView === "Reports" && <Reports />}
           {currentView === "User Management" && <UserManagement />}
           {option === "My Settings" && <MySettings />}

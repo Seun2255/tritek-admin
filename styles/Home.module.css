@@ -186,7 +186,7 @@
 }
 
 .dropdown__item:hover {
-  background-color: #2b78e4;
+  background-color: #6fa8dc;
 }
 
 .view {
@@ -194,4 +194,28 @@
   height: 100%;
   border: 2px solid black;
   border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings__dropdown__menu {
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 2px solid black;
+  padding: 0;
+  margin: 0%;
+  position: absolute;
+  left: 102%;
+  top: 2.5em;
+}
+
+.settings__dropdown__item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  height: 1.8em;
+  background-color: white;
+  cursor: pointer;
 }
