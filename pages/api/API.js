@@ -1,5 +1,13 @@
 import app from "../../firebase/firebaseApp";
-import { getFirestore } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -70,4 +78,45 @@ const resetPasswordConfirmation = async (password, code) => {
     });
 };
 
-export { signIn, signUserOut, auth, resetPassword, resetPasswordConfirmation };
+const addQuery = async (queries) => {
+  await setDoc(doc(db, "data", "queries"), queries);
+};
+
+const addEmployee = async (employees) => {
+  await setDoc(doc(db, "data", "employees"), employees);
+};
+
+const getData = async () => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data().data);
+    data[doc.id] = doc.data().data;
+  });
+  return data;
+};
+
+const getMails = async () => {
+  const docRef = doc(db, "users", "data");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data().emails;
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+};
+
+export {
+  signIn,
+  signUserOut,
+  auth,
+  resetPassword,
+  resetPasswordConfirmation,
+  addQuery,
+  addEmployee,
+  getData,
+  getMails,
+};
