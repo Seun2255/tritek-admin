@@ -24,6 +24,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [queries, setQueries] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [people, setPeople] = useState([]);
   const [currentView, setCurrentView] = useState("Dashboard");
   const [option, setOption] = useState("");
   const [queryStatus, setQueryStatus] = useState("new");
@@ -137,9 +138,9 @@ export default function Home() {
   const handleSearch = (search) => {
     if (search.length >= 3) {
       const results = contactSearch(employees, search);
-      setEmployees(results);
+      setPeople(results);
     } else {
-      setEmployees(employees);
+      setPeople(employees);
     }
   };
 
@@ -154,6 +155,7 @@ export default function Home() {
       const sortedQueries = querySorter(data.queries);
       setQueries(sortedQueries);
       setEmployees(data.employees);
+      setPeople(data.employees);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -283,7 +285,7 @@ export default function Home() {
         <div className={styles.view}>
           {currentView === "Dashboard" && <Dashboard />}
           {currentView === "Contact Management" && (
-            <ContactManagement data={employees} />
+            <ContactManagement data={people} />
           )}
           {currentView === "Knowledge Base" && <KnowledgeBase />}
           {currentView === "Queries" && <Queries data={queries[queryStatus]} />}
