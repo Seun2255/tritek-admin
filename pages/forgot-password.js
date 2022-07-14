@@ -2,22 +2,37 @@ import Image from "next/image";
 import styles from "../styles/forgot-password.module.css";
 import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
-import { useState } from "react";
-import { resetPassword } from "./api/API";
+import { useState, useEffect } from "react";
+import { resetPassword, getMails } from "./api/API";
 
 export default function ForgotPassword() {
   const [emailInput, setEmailInput] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const handleSubmit = () => {
-    console.log("Function Started");
-    resetPassword(emailInput)
-      .then(() => {
-        console.log("SUCCES");
-      })
-      .catch(() => {
-        console.log("It didn't work");
-      });
+    var check = false;
+    users.map((mail) => {
+      if (emailInput === mail) check = true;
+    });
+    if (check) {
+      resetPassword(emailInput)
+        .then(() => {
+          console.log("SUCCES");
+        })
+        .catch(() => {
+          console.log("It didn't work");
+        });
+    } else {
+      setInvalid(true);
+    }
   };
+
+  useEffect(() => {
+    getMails().then((mails) => {
+      setUsers(mails);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -32,6 +47,9 @@ export default function ForgotPassword() {
           seen
         </p>
         <div className={styles.email__div}>
+          {invalid && (
+            <div className={styles.invalid}>Invalid Username or Password</div>
+          )}
           <label className={styles.email__label}>Email Address*</label>
           <div className={styles.email__input}>
             <div className={styles.email__icon}>
@@ -44,6 +62,7 @@ export default function ForgotPassword() {
                 onChange={(e) => {
                   setEmailInput(e.target.value);
                 }}
+                onFocus={() => setInvalid(false)}
               />
             </div>
           </div>
