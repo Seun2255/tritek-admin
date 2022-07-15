@@ -1,84 +1,74 @@
 import Image from "next/image";
-import styles from "../../styles/forms/candidate-profile-form.module.css";
-import { useState } from "react";
-import arrow from "../../assets/icons/arrow-black.svg";
-import search from "../../assets/icons/search.svg";
-import microphone from "../../assets/icons/microphone.svg";
-import profile from "../../assets/icons/profile.svg";
+import styles from "../styles/components/candidate-profile-form.module.css";
+import { useState, useEffect } from "react";
+import arrow from "../assets/icons/arrow-black.svg";
+import search from "../assets/icons/search.svg";
+import microphone from "../assets/icons/microphone.svg";
+import profile from "../assets/icons/profile.svg";
 
-const UserBox = () => {
-  const options = ["My Settings", "Options", "Add Image", "Change Password"];
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <div className={styles.user__and__search}>
-      <div className={styles.search__box}>
-        <div className={styles.search__icon}>
-          <Image alt="search icon" layout="fill" src={search} />
-        </div>
-        <input
-          type="text"
-          className={styles.search__input}
-          placeholder="Search"
-        />
-        <div className={styles.search__icon}>
-          <Image alt="Microphone icon" layout="fill" src={microphone} />
-        </div>
-      </div>
-      <div className={styles.user__box}>
-        <div className={styles.profile__pic}>
-          <Image alt="profile pic" layout="fill" src={profile} />
-        </div>
-        <div className={styles.home__buttons}>
-          <button
-            className={styles.menu__button}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span>Admin User</span>
-            <div className={styles.dropdown__arrow}>
-              <Image
-                alt="arrow"
-                layout="fill"
-                src={arrow}
-                style={{
-                  transform: menuOpen ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              />
-            </div>
-          </button>
-          {menuOpen && (
-            <div className={styles.menu}>
-              {options.map((option, id) => {
-                return (
-                  <div
-                    key={id}
-                    className={styles.question}
-                    onClick={() => {
-                      setOption(option);
-                      setCurrentView("");
-                    }}
-                  >
-                    {option}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default function CandidateProfileForm() {
+export default function CandidateProfileForm(props) {
+  const { mode, data, setEditForm } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "America", "Japan", "Nigeria", "China"];
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [mobilePhone, setMobilePhone] = useState("");
+  const [landlinePhone, setLandlinePhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [streetAddress1, setStreetAddress1] = useState("");
+  const [streetAddress2, setStreetAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [county, setCounty] = useState("");
+  const [country, setCountry] = useState("");
+  const [comments, setComments] = useState("");
+
+  const handleSave = () => {
+    setEditForm(false);
+  };
+
+  const handleDelete = () => {
+    if (mode === "edit") {
+    } else {
+      setFirstName("");
+      setLastName("");
+      setMobilePhone("");
+      setLandlinePhone("");
+      setEmail("");
+      setStreetAddress1("");
+      setStreetAddress2("");
+      setCity("");
+      setZip("");
+      setCounty("");
+      setCountry("");
+      setSelected("country");
+      setComments("");
+    }
+  };
+
+  useEffect(() => {
+    if (mode === "edit") {
+      setFirstName(data.firstName);
+      setLastName(data.lastName);
+      setMobilePhone(data.phone);
+      setLandlinePhone(data.landlinePhone || "");
+      setEmail(data.email);
+      setStreetAddress1(data.streetAddress1 || "");
+      streetAddress2(data.streetAddress2 || "");
+      setCity(data.city || "");
+      setZip(data.zip || "");
+      setCounty(data.county || "");
+      setCountry(data.country || "");
+      setSelected(data.country || "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.top__bar}>Candidate Profile Form</div>
       <div className={styles.main}>
-        <UserBox />
         <main className={styles.form}>
           <div className={styles.fields}>
             <div className={styles.name__box}>
@@ -87,10 +77,21 @@ export default function CandidateProfileForm() {
                 <input
                   className={styles.name__input}
                   placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                 />
               </div>
               <div className={styles.first__name__box}>
-                <input className={styles.name__input} placeholder="Last Name" />
+                <input
+                  className={styles.name__input}
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
               </div>
             </div>
             <div className={styles.phone__box}>
@@ -100,7 +101,13 @@ export default function CandidateProfileForm() {
                   <div className={styles.plus__icon}>
                     <Image alt="search icon" layout="fill" src={search} />
                   </div>
-                  <input className={styles.phone__input} />
+                  <input
+                    className={styles.phone__input}
+                    value={mobilePhone}
+                    onChange={(e) => {
+                      setMobilePhone(e.target.value);
+                    }}
+                  />
                 </div>
               </div>
               <div className={styles.phone__container}>
@@ -109,38 +116,70 @@ export default function CandidateProfileForm() {
                   <div className={styles.plus__icon}>
                     <Image alt="search icon" layout="fill" src={search} />
                   </div>
-                  <input className={styles.phone__input} />
+                  <input
+                    className={styles.phone__input}
+                    value={landlinePhone}
+                    onChange={(e) => {
+                      setLandlinePhone(e.target.value);
+                    }}
+                  />
                 </div>
               </div>
             </div>
             <div className={styles.email__box}>
               <label className={styles.email__label}>Email*</label>
-              <input className={styles.email__input} />
+              <input
+                className={styles.email__input}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </div>
             <div className={styles.address__box}>
               <label className={styles.address__label}>Address*</label>
               <input
                 className={styles.address__input}
                 placeholder="Street Address"
+                value={streetAddress1}
+                onChange={(e) => {
+                  setStreetAddress1(e.target.value);
+                }}
               />
               <input
                 className={styles.address__input}
                 placeholder="Street Address 2"
+                value={streetAddress2}
+                onChange={(e) => {
+                  setStreetAddress2(e.target.value);
+                }}
               />
               <div className={styles.city__county}>
                 <input
                   className={styles.city__county__input}
                   placeholder="City"
+                  value={city}
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
                 />
                 <input
                   className={styles.city__county__input}
                   placeholder="County"
+                  value={county}
+                  onChange={(e) => {
+                    setCounty(e.target.value);
+                  }}
                 />
               </div>
               <div className={styles.zip__country}>
                 <input
                   className={styles.zipcode__input}
                   placeholder="Postcode/Zipcode"
+                  value={zip}
+                  onChange={(e) => {
+                    setZip(e.target.value);
+                  }}
                 />
                 <div className={styles.country__dropdown}>
                   <button
@@ -171,6 +210,7 @@ export default function CandidateProfileForm() {
                             onClick={() => {
                               setSelected(option);
                               setMenuOpen(false);
+                              setCountry(option);
                             }}
                           >
                             {option}
@@ -186,14 +226,24 @@ export default function CandidateProfileForm() {
               <label className={styles.additional__info__label}>
                 {"Notes (use for additional information)"}
               </label>
-              <textarea className={styles.additional__info__input}></textarea>
+              <textarea
+                className={styles.additional__info__input}
+                value={comments}
+                onChange={(e) => {
+                  setComments(e.target.value);
+                }}
+              ></textarea>
+            </div>
+            <div className={styles.action__buttons}>
+              <button className={styles.action__button} onClick={handleSave}>
+                save
+              </button>
+              <button className={styles.action__button} onClick={handleDelete}>
+                delete
+              </button>
             </div>
           </div>
         </main>
-        <div className={styles.action__buttons}>
-          <button className={styles.action__button}>submit</button>
-          <button className={styles.action__button}>delete</button>
-        </div>
       </div>
       <div className={styles.bottom__bar}></div>
     </div>

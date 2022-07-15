@@ -1,8 +1,31 @@
 .container {
   width: 100%;
+  height: 100%;
   color: black;
-  border: 2px solid black;
   box-sizing: border-box;
+  overflow: scroll;
+  overflow-x: hidden;
+  z-index: 2;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container::-webkit-scrollbar-button {
+  display: none;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+.container::-webkit-scrollbar-track {
+  background: white;
 }
 
 .top__bar {
@@ -28,125 +51,10 @@
   box-sizing: border-box;
 }
 
-.user__and__search {
-  position: absolute;
-  top: 20px;
-  right: 6px;
-  display: flex;
-  align-items: center;
-}
-
-.search__box {
-  display: flex;
-  font-size: 13px;
-  height: 1.9em;
-  width: 10em;
-  border: 2px solid black;
-  display: flex;
-  align-items: center;
-  background-color: white;
-  position: relative;
-  bottom: 20px;
-}
-
-.search__icon {
-  width: 15%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  background-color: white;
-  position: relative;
-}
-
-.search__input {
-  width: 70%;
-  height: 100%;
-  border: none;
-  color: #80808b;
-}
-
-.search__input::placeholder {
-  color: #80808b;
-}
-
-.search__input:focus {
-  border: none;
-  outline: none;
-}
-
-.user__box {
-  display: flex;
-  flex-direction: column;
-  margin-left: 5px;
-  align-items: center;
-}
-
-.profile__pic {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 10px;
-  border: 2px solid black;
-  border-radius: 50vh;
-  position: relative;
-}
-
-.home__buttons {
-  font-size: 16px;
-  width: 8em;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-}
-
-.menu__button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0em 0.1em 0em 0.2em;
-  border: 2px solid black;
-  color: black;
-  font-size: 12px;
-  width: 100%;
-  height: 2em;
-  cursor: pointer;
-}
-
-.dropdown__arrow {
-  width: 20%;
-  height: 2em;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 2px solid black;
-}
-
-.menu {
-  position: absolute;
-  top: 2em;
-  width: 80%;
-  padding: 5px;
-  border: 2px solid black;
-  color: black;
-  font-size: 16px;
-  box-sizing: border-box;
-  background-color: white;
-}
-
-.question {
-  margin-bottom: 10px;
-  font-size: 11px;
-  cursor: pointer;
-}
-
 .form {
   margin-top: 10px;
-  width: 75%;
+  width: 100%;
   margin-top: 25px;
-  margin-left: 40px;
-  border: 2px solid black;
   display: flex;
   justify-content: center;
 }
@@ -393,7 +301,7 @@
 .additional__info__input {
   width: 100%;
   font-size: 18px;
-  height: 200px;
+  height: 150px;
   padding: 5px;
   border: 2px solid black;
 }
@@ -404,7 +312,7 @@
 
 .action__buttons {
   margin-top: 10px;
-  width: 75%;
+  width: 100%;
   margin-top: 10px;
   margin-left: 40px;
   display: flex;
@@ -412,6 +320,8 @@
   box-sizing: border-box;
   padding: 0% 10%;
   margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .action__button {
@@ -424,14 +334,9 @@
   border-color: black;
   border-width: 1px 3px 3px 1px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .action__button:active {
   border-width: 3px 2px 2px 3px;
-}
-
-.bottom__bar {
-  width: 100%;
-  height: 24px;
-  border-top: 2px solid black;
 }
