@@ -1,7 +1,16 @@
+.outer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: white;
+}
+
 .container {
   width: 90%;
   height: 90%;
-  position: relative;
 }
 
 .header {

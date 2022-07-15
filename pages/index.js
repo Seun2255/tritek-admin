@@ -10,11 +10,13 @@ import microphone from "../assets/icons/microphone.svg";
 import profile from "../assets/icons/profile.svg";
 import Dashboard from "../components/dashboard";
 import ContactManagement from "../components/contactManagement";
+import Users from "../components/users";
 import KnowledgeBase from "../components/knowledgeBase";
 import Queries from "../components/queries";
 import Reports from "../components/reports";
 import UserManagement from "../components/userManagement";
 import MySettings from "../components/mySettings";
+import CandidateProfileForm from "../components/candidate-profile-form";
 import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
@@ -38,6 +40,8 @@ export default function Home() {
   const [dropOptions, setDropOptions] = useState(sideDropOptions["Queries"]);
   const [selectedDropdown, setSelectedDropdown] = useState("");
   const [settingsDropdown, setSettingsDropdown] = useState(false);
+  const [form, setForm] = useState("");
+  const [formMode, setFormMode] = useState("new");
 
   const settingsDropdownList = [
     "add a user",
@@ -132,6 +136,23 @@ export default function Home() {
       setCurrentView(selectedDropdown);
       setQueryStatus(option);
       setSideDropdown(false);
+    }
+  };
+
+  const viewQuery = (option) => {
+    setCurrentView("Queries");
+    setQueryStatus(option);
+  };
+
+  const handleSettingClick = (option) => {
+    setCurrentView("User Management");
+    setOption("");
+    if (option === "add a user") {
+      setForm("candidate profile form");
+      setFormMode("new");
+    } else if (option === "edit user account") {
+      setForm("users");
+      setFormMode("edit");
     }
   };
 
@@ -271,6 +292,7 @@ export default function Home() {
                         <div
                           key={id}
                           className={styles.settings__dropdown__item}
+                          onClick={() => handleSettingClick(option)}
                         >
                           {option}
                         </div>
@@ -283,7 +305,9 @@ export default function Home() {
           })}
         </div>
         <div className={styles.view}>
-          {currentView === "Dashboard" && <Dashboard />}
+          {currentView === "Dashboard" && (
+            <Dashboard data={queries} viewQuery={viewQuery} />
+          )}
           {currentView === "Contact Management" && (
             <ContactManagement data={people} />
           )}
@@ -292,6 +316,10 @@ export default function Home() {
           {currentView === "Reports" && <Reports />}
           {currentView === "User Management" && <UserManagement />}
           {option === "My Settings" && <MySettings />}
+          {form === "candidate profile form" && (
+            <CandidateProfileForm mode={formMode} />
+          )}
+          {form === "users" && <Users />}
         </div>
       </div>
     </div>

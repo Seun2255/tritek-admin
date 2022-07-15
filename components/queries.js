@@ -4,9 +4,14 @@ import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
 import { useState } from "react";
 import { useEffect } from "react";
+import ViewQuery from "./viewQuery";
+import ReplyQuery from "./replyQuery";
 
 export default function Queries(props) {
   const { data } = props;
+  const [viewQuery, setViewQuery] = useState(false);
+  const [replyQuery, setReplyQuery] = useState(false);
+  const [selectedQuery, setSelectedQuery] = useState({});
   const [fillUPArray, setFillUpArray] = useState([]);
   const fillUp = () => {
     var array = [];
@@ -60,6 +65,10 @@ export default function Queries(props) {
                   style={{
                     backgroundColor: index % 2 ? "white" : "#DDDDDD",
                   }}
+                  onClick={() => {
+                    setSelectedQuery(row);
+                    setViewQuery(true);
+                  }}
                 >
                   <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
                   <td className={styles.table__cell}>{row["Query Number"]}</td>
@@ -104,6 +113,16 @@ export default function Queries(props) {
         </button>
         <button className={styles.back}>{"<"}</button>
       </div>
+      {viewQuery && (
+        <ViewQuery
+          setViewQuery={setViewQuery}
+          data={selectedQuery}
+          setReplyQuery={setReplyQuery}
+        />
+      )}
+      {replyQuery && (
+        <ReplyQuery data={selectedQuery} setReplyQuery={setReplyQuery} />
+      )}
     </div>
   );
 }
