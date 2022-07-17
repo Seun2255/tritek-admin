@@ -26,6 +26,15 @@ export default function ReplyQuery(props) {
 
   return (
     <div className={styles.outer}>
+      <div
+        className={styles.back__button}
+        onClick={() => {
+          setReplyQuery(false);
+          setViewQuery(true);
+        }}
+      >
+        Back
+      </div>
       <div className={styles.container}>
         <div className={styles.header}>Reply</div>
         <textarea

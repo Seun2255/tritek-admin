@@ -28,7 +28,7 @@ export default function Home() {
   const [queries, setQueries] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [people, setPeople] = useState([]);
-  const [currentView, setCurrentView] = useState("Dashboard");
+  const [currentView, setCurrentView] = useState("");
   const [option, setOption] = useState("");
   const [queryStatus, setQueryStatus] = useState("new");
   const [sideDropdown, setSideDropdown] = useState(false);
@@ -158,6 +158,7 @@ export default function Home() {
       setQueries(sortedQueries);
       setEmployees(data.employees);
       setPeople(data.employees);
+      setCurrentView("Dashboard");
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

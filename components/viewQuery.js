@@ -20,6 +20,9 @@ export default function ViewQuery(props) {
 
   return (
     <div className={styles.outer}>
+      <div className={styles.back__button} onClick={() => setViewQuery(false)}>
+        Back
+      </div>
       <div className={styles.container}>
         <div className={styles.header}>{`${data["First Name"]} Query`}</div>
         <section className={styles.query}>{data["Comments"]}</section>

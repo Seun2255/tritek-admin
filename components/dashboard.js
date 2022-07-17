@@ -3,10 +3,42 @@ import styles from "../styles/components/dashboard.module.css";
 import logo from "../assets/logo.png";
 import email from "../assets/icons/email.svg";
 import { useState } from "react";
+import { Bar } from "react-chartjs-2";
+import { Chart } from "chart.js/auto";
 
 export default function Dashboard(props) {
   const { data, viewQuery } = props;
   const keys = Object.keys(data);
+
+  const barData = {
+    labels: ["New/Resolved Tickets"],
+    datasets: [
+      {
+        label: "New tickets",
+        data: [data["New"].length],
+        backgroundColor: "#DDDDDD",
+        borderColor: "black",
+        borderWidth: 1,
+      },
+      {
+        label: "Resolved tickets",
+        data: [data["Resolved"].length],
+        backgroundColor: "#666666",
+        borderColor: "black",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
 
   return (
     <div className={styles.container}>
@@ -21,6 +53,11 @@ export default function Dashboard(props) {
             </div>
           );
         })}
+      </div>
+      <div className={styles.chart__container}>
+        <div className={styles.bar__chart}>
+          <Bar data={barData} options={options} />
+        </div>
       </div>
     </div>
   );
