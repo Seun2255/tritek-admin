@@ -12,6 +12,7 @@ export default function Queries(props) {
   const [viewQuery, setViewQuery] = useState(false);
   const [replyQuery, setReplyQuery] = useState(false);
   const [selectedQuery, setSelectedQuery] = useState({});
+  const [selectedQueryId, setSelectedQueryId] = useState(0);
   const [fillUPArray, setFillUpArray] = useState([]);
   const fillUp = () => {
     var array = [];
@@ -67,6 +68,7 @@ export default function Queries(props) {
                   }}
                   onClick={() => {
                     setSelectedQuery(row);
+                    setSelectedQueryId(index);
                     setViewQuery(true);
                   }}
                 >
@@ -85,7 +87,16 @@ export default function Queries(props) {
                 <tr
                   className="table__row"
                   key={index}
-                  style={{ backgroundColor: index % 2 ? "#DDDDDD" : "white" }}
+                  style={{
+                    backgroundColor:
+                      data.length % 2
+                        ? index % 2
+                          ? "#DDDDDD"
+                          : "white"
+                        : index % 2
+                        ? "white"
+                        : "#DDDDDD",
+                  }}
                 >
                   <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
                   <td className={styles.table__cell}>{row["Query Number"]}</td>
@@ -118,10 +129,18 @@ export default function Queries(props) {
           setViewQuery={setViewQuery}
           data={selectedQuery}
           setReplyQuery={setReplyQuery}
+          queries={data}
+          queryId={selectedQueryId}
         />
       )}
       {replyQuery && (
-        <ReplyQuery data={selectedQuery} setReplyQuery={setReplyQuery} />
+        <ReplyQuery
+          queries={data}
+          queryId={selectedQueryId}
+          data={selectedQuery}
+          setReplyQuery={setReplyQuery}
+          setViewQuery={setViewQuery}
+        />
       )}
     </div>
   );

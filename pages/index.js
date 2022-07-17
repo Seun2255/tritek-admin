@@ -21,6 +21,7 @@ import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
 import contactSearch from "../utils/contactSearch";
+import NewQuery from "../components/newQuery";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +34,7 @@ export default function Home() {
   const [sideDropdown, setSideDropdown] = useState(false);
   const sideDropOptions = {
     Queries: ["New", "in Progress", "Resolved"],
-    "Contact Management": ["New query"],
+    "Contact Management": ["New Query"],
     "User Management": ["settings"],
   };
 
@@ -94,16 +95,7 @@ export default function Home() {
         ? setSideDropdown(false)
         : setSideDropdown(true);
       setSettingsDropdown(false);
-    }
-    // else if (view === "Queries") {
-    //   setOption("");
-    //   setSideDropdown(false);
-    //   setSelectedDropdown(view);
-    //   setDropOptions(sideDropOptions[view]);
-    //   setQueryStatus("New");
-    //   setCurrentView(view);
-    // }
-    else {
+    } else {
       selectedDropdown === view && sideDropdown
         ? setSideDropdown(false)
         : setSideDropdown(true);
@@ -113,25 +105,14 @@ export default function Home() {
     }
   };
 
-  // const handleSidebarHoverOver = (view) => {
-  //   if (view === "Queries") {
-  //     setSideDropdown(true);
-  //     setSelectedDropdown(view);
-  //     setDropOptions(sideDropOptions[view]);
-  //   }
-  // };
-
-  // const handleSidebarHoverOff = (view) => {
-  //   if (view === "Queries") {
-  //     setTimeout(() => {
-  //       setSideDropdown(false);
-  //     }, 50);
-  //   }
-  // };
-
   const handleQueryOptionClick = (option) => {
     if (option === "settings") {
       setSettingsDropdown(!settingsDropdown);
+    } else if (option === "New Query") {
+      setCurrentView(selectedDropdown);
+      setQueryStatus(option);
+      setSideDropdown(false);
+      setForm("new query");
     } else {
       setCurrentView(selectedDropdown);
       setQueryStatus(option);
@@ -261,6 +242,7 @@ export default function Home() {
                   width: view === currentView ? "calc(100% + 2px)" : "100%",
                 }}
               >
+                {/* Sidebar buttons */}
                 <div
                   className={styles.option__box}
                   style={{
@@ -270,6 +252,7 @@ export default function Home() {
                 >
                   {view}
                 </div>
+                {/* For dropdowwn */}
                 {selectedDropdown === view && sideDropdown && (
                   <div className={styles.dropdown__menu}>
                     {dropOptions.map((option, id) => {
@@ -285,6 +268,7 @@ export default function Home() {
                     })}
                   </div>
                 )}
+                {/* For settings secondary dropdown only */}
                 {settingsDropdown && selectedDropdown === view && (
                   <div className={styles.settings__dropdown__menu}>
                     {settingsDropdownList.map((option, id) => {
@@ -320,6 +304,7 @@ export default function Home() {
             <CandidateProfileForm mode={formMode} />
           )}
           {form === "users" && <Users />}
+          {form === "new query" && <NewQuery />}
         </div>
       </div>
     </div>

@@ -62,173 +62,27 @@
   font-weight: 800;
 }
 
-.form {
-  margin-top: 10px;
-  width: 100%;
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
-}
-
 .fields {
   width: 80%;
   position: relative;
 }
 
-.name__box {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 30px;
+.query__details {
   width: 100%;
+  display: flex;
 }
 
-.first__name__box {
+.query__type__box {
   width: 45%;
 }
 
-.first__name__label {
+.query__type__label {
   font-size: 13px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.name__input {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  padding-left: 5px;
-  border: 2px solid black;
-}
-
-.name__input:focus {
-  outline: none;
-}
-
-.phone__box {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.phone__container {
-  width: 45%;
-}
-
-.phone__label {
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.phone__input__container {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  display: flex;
-  align-items: center;
-  border: 2px solid black;
-}
-
-.plus__icon {
-  width: 15%;
-  height: 70%;
-  position: relative;
-}
-
-.phone__input {
-  flex-grow: 1;
-  height: 100%;
-  border: none;
-  font-size: 20px;
-}
-
-.phone__input:focus {
-  outline: none;
-}
-
-.email__box {
-  margin-top: 10px;
-  width: 100%;
-}
-
-.email__label {
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.email__input {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  padding-left: 5px;
-  border: 2px solid black;
-}
-
-.email__input:focus {
-  outline: none;
-}
-
-.address__box {
-  margin-top: 10px;
-  width: 100%;
-}
-
-.address__label {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.address__input {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  padding-left: 5px;
-  border: 2px solid black;
-  margin-top: 10px;
-}
-
-.address__input:focus {
-  outline: none;
-}
-
-.city__county {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.city__county__input {
-  width: 45%;
-  height: 100%;
-  padding-left: 5px;
-  border: 2px solid black;
-  font-size: inherit;
-}
-
-.zip__country {
-  width: 100%;
-  font-size: 20px;
-  height: 2em;
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.zipcode__input {
-  width: 45%;
-  height: 100%;
-  padding-left: 5px;
-  border: 2px solid black;
-  font-size: inherit;
-}
-
-.country__dropdown {
+.query__type__dropdown {
   font-size: 16px;
   width: 45%;
   display: flex;
@@ -237,7 +91,7 @@
   position: relative;
 }
 
-.country__dropdown__button {
+.query__type__dropdown__button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -251,7 +105,7 @@
   background-color: white;
 }
 
-.country__dropdown__arrow {
+.query__type__dropdown__arrow {
   width: 5%;
   height: 100%;
   position: relative;
@@ -261,7 +115,7 @@
   border-left: 2px solid black;
 }
 
-.countries__menu {
+.query__type__menu {
   position: absolute;
   top: 1.6em;
   width: 100%;
@@ -276,50 +130,82 @@
   overflow-x: hidden;
 }
 
-.countries__menu::-webkit-scrollbar {
+.query__type__menu::-webkit-scrollbar {
   width: 5px;
 }
 
-.countries__menu::-webkit-scrollbar-button {
+.query__type__menu::-webkit-scrollbar-button {
   display: none;
 }
 
-.countries__menu::-webkit-scrollbar-thumb {
+.query__type__menu::-webkit-scrollbar-thumb {
   background: black;
 }
 
-.countries__menu::-webkit-scrollbar-track {
+.query__type__menu::-webkit-scrollbar-track {
   background: white;
 }
 
-.country {
+.query__type {
   margin-bottom: 5px;
   font-size: 14px;
   cursor: pointer;
 }
 
-.additional__info {
-  margin-top: 30px;
+.query__options {
+  height: 2em;
+  width: 15em;
+}
+
+.option__box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.tick__box {
+  height: 2em;
+  width: 2em;
+  border: 2px solid black;
+}
+
+.option__button {
+  font-size: 14px;
+  height: 2em;
+  width: 8em;
+  border: none;
+  border-style: outset;
+  background-color: #dddddd;
+  border-color: black;
+  border-width: 1px 3px 3px 1px;
+  cursor: pointer;
+}
+
+.escalate__box {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.query__info {
+  margin-top: 10px;
   width: 100%;
   margin-bottom: 20px;
 }
 
-.additional__info__label {
+.query__info__label {
   font-size: 13px;
   font-weight: 700;
   margin-bottom: 20px !important;
 }
 
-.additional__info__input {
+.query__info__input {
   width: 100%;
   font-size: 18px;
   height: 150px;
   padding: 5px;
   border: 2px solid black;
-}
-
-.email__input:focus {
-  outline: none;
 }
 
 .action__buttons {

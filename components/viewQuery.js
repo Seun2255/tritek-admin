@@ -1,9 +1,8 @@
 import styles from "../styles/components/viewQuery.module.css";
-import { useState } from "react";
-import { useEffect } from "react";
+import { addQuery } from "../pages/api/API";
 
 export default function ViewQuery(props) {
-  const { data, setViewQuery, setReplyQuery } = props;
+  const { data, setViewQuery, setReplyQuery, queryId, queries } = props;
 
   const handleReply = () => {
     setViewQuery(false);
@@ -12,7 +11,12 @@ export default function ViewQuery(props) {
 
   const handleEscalate = () => {};
 
-  const handleResolve = () => {};
+  const handleResolve = () => {
+    data["Status"] = "Resolved";
+    addQuery({ ...data, Status: "Resolved" }, data["Query Number"]).then(() => {
+      setViewQuery(false);
+    });
+  };
 
   return (
     <div className={styles.outer}>

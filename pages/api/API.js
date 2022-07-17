@@ -78,8 +78,23 @@ const resetPasswordConfirmation = async (password, code) => {
     });
 };
 
-const addQuery = async (queries) => {
-  await setDoc(doc(db, "data", "queries"), queries);
+const addQuery = async (query, ticket) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data().data);
+    data[doc.id] = doc.data().data;
+  });
+  var queries = data["queries"];
+  queries = queries.map((item) => {
+    if (item["Query Number"] === ticket) {
+      return query;
+    } else {
+      return item;
+    }
+  });
+  await setDoc(doc(db, "data", "queries"), { data: queries });
 };
 
 const addEmployee = async (employees) => {
@@ -91,7 +106,6 @@ const getData = async () => {
   const querySnapshot = await getDocs(collection(db, "data"));
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data().data);
     data[doc.id] = doc.data().data;
   });
   return data;

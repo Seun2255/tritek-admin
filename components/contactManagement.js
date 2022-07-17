@@ -2,6 +2,8 @@ import Image from "next/image";
 import styles from "../styles/components/queries.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import CandidateProfileForm from "./candidate-profile-form";
+import CandidateQueryForm from "./candidate-query-form";
 
 export default function Queries(props) {
   const { data } = props;

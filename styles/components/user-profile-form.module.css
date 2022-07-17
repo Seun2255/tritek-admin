@@ -3,10 +3,13 @@
   height: 100%;
   color: black;
   box-sizing: border-box;
-  background-color: white;
   overflow: scroll;
   overflow-x: hidden;
-  position: relative;
+  z-index: 3;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .container::-webkit-scrollbar {
@@ -35,11 +38,6 @@
   box-sizing: border-box;
   padding-left: 10px;
   border-bottom: 2px solid black;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0%;
-  z-index: 2;
-  background-color: white;
 }
 
 .main {

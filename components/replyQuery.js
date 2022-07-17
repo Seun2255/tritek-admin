@@ -3,13 +3,21 @@ import styles from "../styles/components/replyQuery.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import clip from "../assets/icons/clip.svg";
+import { addQuery } from "../pages/api/API";
 
 export default function ReplyQuery(props) {
-  const { data, setReplyQuery } = props;
+  const { data, setReplyQuery, setViewQuery, queryId } = props;
   const [reply, setReply] = useState("");
   const [file, setFile] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    data["Response"] = reply;
+    console.log(data);
+    addQuery({ ...data, Response: reply }, data["Query Number"]).then(() => {
+      setReplyQuery(false);
+      setViewQuery(true);
+    });
+  };
 
   const uploadFile = (event) => {
     let file = event.target.files[0];

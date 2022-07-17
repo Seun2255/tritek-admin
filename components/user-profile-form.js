@@ -7,7 +7,7 @@ import microphone from "../assets/icons/microphone.svg";
 import profile from "../assets/icons/profile.svg";
 
 export default function CandidateProfileForm(props) {
-  const { data, changeForm } = props;
+  const { mode, data, setEditForm } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "America", "Japan", "Nigeria", "China"];
@@ -25,26 +25,43 @@ export default function CandidateProfileForm(props) {
   const [comments, setComments] = useState("");
 
   const handleSave = () => {
-    changeForm("query");
+    setEditForm(false);
   };
 
   const handleDelete = () => {
-    setFirstName("");
-    setLastName("");
-    setMobilePhone("");
-    setLandlinePhone("");
-    setEmail("");
-    setStreetAddress1("");
-    setStreetAddress2("");
-    setCity("");
-    setZip("");
-    setCounty("");
-    setCountry("");
-    setSelected("country");
-    setComments("");
+    if (mode === "edit") {
+    } else {
+      setFirstName("");
+      setLastName("");
+      setMobilePhone("");
+      setLandlinePhone("");
+      setEmail("");
+      setStreetAddress1("");
+      setStreetAddress2("");
+      setCity("");
+      setZip("");
+      setCounty("");
+      setCountry("");
+      setSelected("country");
+      setComments("");
+    }
   };
 
   useEffect(() => {
+    if (mode === "edit") {
+      setFirstName(data.firstName);
+      setLastName(data.lastName);
+      setMobilePhone(data.phone);
+      setLandlinePhone(data.landlinePhone || "");
+      setEmail(data.email);
+      setStreetAddress1(data.streetAddress1 || "");
+      streetAddress2(data.streetAddress2 || "");
+      setCity(data.city || "");
+      setZip(data.zip || "");
+      setCounty(data.county || "");
+      setCountry(data.country || "");
+      setSelected(data.country || "");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -220,7 +237,7 @@ export default function CandidateProfileForm(props) {
             </div>
             <div className={styles.action__buttons}>
               <button className={styles.action__button} onClick={handleSave}>
-                submit
+                save
               </button>
               <button className={styles.action__button} onClick={handleDelete}>
                 delete
