@@ -44,7 +44,6 @@ export default function ResetPassword() {
 
   const validatePassword = () => {
     var timeout;
-    setStatusIcon(true);
     const containsSpecialCharacter = /[^a-zA-Z0-9]/;
     const containsUpperCaseCharacter = /[A-Z]/;
     const containsLowerCaseCharacter = /[a-z]/;
@@ -61,6 +60,7 @@ export default function ResetPassword() {
       changeTimeout(
         setTimeout(() => {
           setPasswordInavalid(true);
+          setStatusIcon(true);
         }, 1500)
       );
     } else if (password.length >= 7) {
