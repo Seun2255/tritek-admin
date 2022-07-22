@@ -15,7 +15,6 @@ export default function ResetPassword() {
   const [passwordInavalid, setPasswordInavalid] = useState(false);
   const [statusIcon, setStatusIcon] = useState(false);
   const [statusIcon2, setStatusIcon2] = useState(false);
-  const [timeout, changeTimeout] = useState();
   const router = useRouter();
   const code = router.query.oobCode;
 
@@ -43,27 +42,19 @@ export default function ResetPassword() {
   };
 
   const validatePassword = () => {
-    var timeout;
+    setStatusIcon(true);
     const containsSpecialCharacter = /[^a-zA-Z0-9]/;
     const containsUpperCaseCharacter = /[A-Z]/;
     const containsLowerCaseCharacter = /[a-z]/;
 
     if (
-      password.length >= 7 &&
+      password.length > 7 &&
       containsLowerCaseCharacter.test(password) &&
       containsSpecialCharacter.test(password) &&
       containsUpperCaseCharacter.test(password)
     ) {
       setPasswordInavalid(false);
-      clearTimeout(timeout);
-    } else if (password.length === 1) {
-      changeTimeout(
-        setTimeout(() => {
-          setPasswordInavalid(true);
-          setStatusIcon(true);
-        }, 1500)
-      );
-    } else if (password.length >= 7) {
+    } else {
       setPasswordInavalid(true);
     }
   };
@@ -82,12 +73,12 @@ export default function ResetPassword() {
               className={styles.input}
               onChange={(e) => {
                 setPassword(e.target.value);
-                validatePassword();
               }}
               onFocus={() => {
                 setStatusIcon(false);
                 setStatusIcon2(false);
               }}
+              onBlur={validatePassword}
             />
             {statusIcon && (
               <div className={styles.password__state}>
@@ -121,11 +112,11 @@ export default function ResetPassword() {
             className={styles.input}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
-              checkMatch();
             }}
             onFocus={() => {
               setStatusIcon2(false);
             }}
+            onBlur={checkMatch}
           />
           {statusIcon2 && (
             <div className={styles.mismatch__container}>
