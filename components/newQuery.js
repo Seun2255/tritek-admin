@@ -7,6 +7,7 @@ import StatementForm from "./statement-form";
 
 export default function NewQuery() {
   const [form, setForm] = useState("statement");
+  const [ticket, setTicket] = useState("");
 
   const changeForm = (next) => {
     setForm(next);

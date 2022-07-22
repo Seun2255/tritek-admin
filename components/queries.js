@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ViewQuery from "./viewQuery";
 import ReplyQuery from "./replyQuery";
+import EscalateQuery from "./escalateQuery";
 
 export default function Queries(props) {
-  const { data } = props;
+  const { data, staff } = props;
   const [viewQuery, setViewQuery] = useState(false);
   const [replyQuery, setReplyQuery] = useState(false);
+  const [escalateQuery, setEscalateQuery] = useState(false);
   const [selectedQuery, setSelectedQuery] = useState({});
   const [selectedQueryId, setSelectedQueryId] = useState(0);
   const [fillUPArray, setFillUpArray] = useState([]);
@@ -53,8 +55,7 @@ export default function Queries(props) {
               <td className={styles.table__cell}>Address</td>
               <td className={styles.table__cell}>Email</td>
               <td className={styles.table__cell}>Phone Number</td>
-              <td className={styles.table__cell}>Comments</td>
-              <td className={styles.table__cell}>Attachments</td>
+              <td className={styles.table__cell}>Created</td>
             </tr>
           </thead>
           <tbody>
@@ -77,8 +78,7 @@ export default function Queries(props) {
                   <td className={styles.table__cell}>{row["Location"]}</td>
                   <td className={styles.table__cell}>{row["Emails"]}</td>
                   <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>comments</td>
-                  <td className={styles.table__cell}>Attachments</td>
+                  <td className={styles.table__cell}>{row["Created"]}</td>
                 </tr>
               );
             })}
@@ -104,7 +104,6 @@ export default function Queries(props) {
                   <td className={styles.table__cell}>{row["Emails"]}</td>
                   <td className={styles.table__cell}>{row["Phone number"]}</td>
                   <td className={styles.table__cell}></td>
-                  <td className={styles.table__cell}></td>
                 </tr>
               );
             })}
@@ -129,6 +128,7 @@ export default function Queries(props) {
           setViewQuery={setViewQuery}
           data={selectedQuery}
           setReplyQuery={setReplyQuery}
+          setEscalateQuery={setEscalateQuery}
           queries={data}
           queryId={selectedQueryId}
         />
@@ -140,6 +140,14 @@ export default function Queries(props) {
           data={selectedQuery}
           setReplyQuery={setReplyQuery}
           setViewQuery={setViewQuery}
+        />
+      )}
+      {escalateQuery && (
+        <EscalateQuery
+          data={selectedQuery}
+          setEscalateQuery={setEscalateQuery}
+          setViewQuery={setViewQuery}
+          staff={staff}
         />
       )}
     </div>

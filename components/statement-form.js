@@ -21,7 +21,32 @@ export default function StatementForm(props) {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>GDPR STATEMENT (Read to candidate)</h2>
-      <div className={styles.terms}>cat</div>
+      <div className={styles.terms}>
+        I am jd siid isidj dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e
+        ce c ecw e e we veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg
+        efweg wefgewg wefewg efew, work ffor tritek dvd dfe fefef efef I am jd
+        siid isidj dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw
+        e e we veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg
+        wefgewg wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid
+        isidj dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e
+        we veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid isidj
+        dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e we
+        veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid isidj
+        dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e we
+        veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid isidj
+        dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e we
+        veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid isidj
+        dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e we
+        veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef I am jd siid isidj
+        dihwlhdwjlhd whdjlb jjs chsc sc cc ecec ece c ece e ce c ecw e e we
+        veevw v vwrvr vwrvwr rvrv wrrvr efwrfwe wegweg wefewg efweg wefgewg
+        wefewg efew, work ffor tritek dvd dfe fefef efef
+      </div>
       <div className={styles.accept__box}>
         <div
           className={styles.tick__box}

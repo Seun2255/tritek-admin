@@ -11,11 +11,13 @@ import {
 import {
   getAuth,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
   confirmPasswordReset,
 } from "firebase/auth";
 import { async } from "@firebase/util";
+import { timeStamp } from "../../utils/dateFunctions";
 
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -36,6 +38,20 @@ const signUserIn = async (email, password) => {
       const errorMessage = error.message;
       console.log("Not signed in", errorMessage);
       return false;
+    });
+};
+
+const signUp = async (email, password) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
     });
 };
 
@@ -78,7 +94,22 @@ const resetPasswordConfirmation = async (password, code) => {
     });
 };
 
-const addQuery = async (query, ticket) => {
+const addQuery = async (query) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data().data;
+  });
+  const queries = data["queries"];
+  var time = new Date();
+  var formattedQuery = query;
+  formattedQuery.created = timeStamp(time);
+  queries.push(formattedQuery);
+  await setDoc(doc(db, "data", "queries"), { data: queries });
+};
+
+const editQuery = async (query, ticket) => {
   var data = {};
   const querySnapshot = await getDocs(collection(db, "data"));
   querySnapshot.forEach((doc) => {
@@ -97,8 +128,56 @@ const addQuery = async (query, ticket) => {
   await setDoc(doc(db, "data", "queries"), { data: queries });
 };
 
-const addEmployee = async (employees) => {
-  await setDoc(doc(db, "data", "employees"), employees);
+const addEmployee = async (employee) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data().data);
+    data[doc.id] = doc.data().data;
+  });
+  var employees = data["employees"];
+  employees.push(employee);
+  await setDoc(doc(db, "data", "employees"), { data: employees });
+};
+
+const editEmployee = async (employee, email, number) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data().data);
+    data[doc.id] = doc.data().data;
+  });
+  var employees = data["employees"];
+  employees = employees.map((item) => {
+    if (item["Emails"] === email && item["Phone number"] === number) {
+      return employee;
+    } else {
+      return item;
+    }
+  });
+  await setDoc(doc(db, "data", "employees"), { data: employees });
+};
+
+const removeEmployee = async (employee, email, number) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data().data);
+    data[doc.id] = doc.data().data;
+  });
+  var employees = data["employees"];
+  const check = (item) => {
+    if (item["Emails"] === email && item["Phone number"] === number) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  employees = employees.filter(check);
+  await setDoc(doc(db, "data", "employees"), { data: employees });
 };
 
 const getData = async () => {
@@ -109,6 +188,28 @@ const getData = async () => {
     data[doc.id] = doc.data().data;
   });
   return data;
+};
+
+const getRoles = async () => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data();
+  });
+  var roles = data["Roles"];
+  return roles.Roles;
+};
+
+const addRoles = async (roles) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data();
+  });
+  data["Roles"] = roles;
+  await setDoc(doc(db, "data", "Roles"), data["Roles"]);
 };
 
 const getMails = async () => {
@@ -133,4 +234,10 @@ export {
   addEmployee,
   getData,
   getMails,
+  getRoles,
+  editEmployee,
+  editQuery,
+  removeEmployee,
+  addRoles,
+  signUp,
 };

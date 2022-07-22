@@ -8,6 +8,7 @@ export default function EscalateQuery(props) {
   const { data, setEscalateQuery, setViewQuery, staff } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState({ Emails: "Staff" });
+  const [message, setMessage] = useState("");
 
   const handleSubmit = () => {
     axios
@@ -15,12 +16,13 @@ export default function EscalateQuery(props) {
         email: selectedStaff.Emails,
         ticket: data["Query Number"],
         query: data.Comments,
+        message: message,
       })
       .then(function (response) {
         console.log(response);
         console.log("Succes");
         setEscalateQueryQuery(false);
-        setViewQuery(true);
+        setViewQuery(false);
       })
       .catch(function (error) {
         console.log("Failed");
@@ -68,6 +70,7 @@ export default function EscalateQuery(props) {
                       className={styles.staff}
                       onClick={() => {
                         setSelectedStaff(option);
+                        setMenuOpen(false);
                       }}
                     >
                       {option.Emails}
@@ -77,6 +80,10 @@ export default function EscalateQuery(props) {
               </div>
             )}
           </div>
+          <textarea
+            className={styles.escalate__message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
         </div>
         <div className={styles.base}></div>
       </div>

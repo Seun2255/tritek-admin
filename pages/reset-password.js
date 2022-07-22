@@ -73,12 +73,12 @@ export default function ResetPassword() {
               className={styles.input}
               onChange={(e) => {
                 setPassword(e.target.value);
+                validatePassword();
               }}
               onFocus={() => {
                 setStatusIcon(false);
                 setStatusIcon2(false);
               }}
-              onBlur={validatePassword}
             />
             {statusIcon && (
               <div className={styles.password__state}>
@@ -112,11 +112,11 @@ export default function ResetPassword() {
             className={styles.input}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
+              checkMatch();
             }}
             onFocus={() => {
               setStatusIcon2(false);
             }}
-            onBlur={checkMatch}
           />
           {statusIcon2 && (
             <div className={styles.mismatch__container}>

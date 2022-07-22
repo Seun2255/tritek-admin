@@ -8,8 +8,9 @@ export default function CandidateQueryForm(props) {
   const { changeForm, data } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [note, setNote] = useState("");
-  const [queryType, setQueryType] = useState("");
+  const [queryType, setQueryType] = useState("xyz");
   const escalateOptions = ["Admin Manager", "ICT", "Sales", "Resolved"];
+  const typeOptions = ["ICT", "Sales", "Admin"];
 
   const handleSave = () => {};
 
@@ -51,7 +52,7 @@ export default function CandidateQueryForm(props) {
                 </button>
                 {menuOpen && (
                   <div className={styles.query__type__menu}>
-                    {options.map((option, id) => {
+                    {typeOptions.map((option, id) => {
                       return (
                         <div
                           key={id}
@@ -59,7 +60,6 @@ export default function CandidateQueryForm(props) {
                           onClick={() => {
                             setQueryType(option);
                             setMenuOpen(false);
-                            setQueryType(option);
                           }}
                         >
                           {option}
@@ -76,13 +76,12 @@ export default function CandidateQueryForm(props) {
                 <button className={styles.option__button}>New</button>
               </div>
               <div className={styles.option__box}>
-                <div
-                  style={{ height: "2em", width: "2em", position: "relative" }}
-                >
+                <div className={styles.clip}>
                   <Image alt="clip" layout="fill" src={clip} />
                 </div>
                 <button className={styles.option__button}>Attach</button>
               </div>
+              <div className={styles.escalate__label}>Escalate*</div>
               <div className={styles.escalate__box}>
                 {escalateOptions.map((option, id) => {
                   return (
@@ -108,6 +107,10 @@ export default function CandidateQueryForm(props) {
                 setNote(e.target.value);
               }}
             ></textarea>
+          </div>
+          <div className={styles.action__buttons}>
+            <button className={styles.action__button}>submit</button>
+            <button className={styles.action__button}>delete</button>
           </div>
         </div>
       </div>

@@ -10,13 +10,11 @@ import microphone from "../assets/icons/microphone.svg";
 import profile from "../assets/icons/profile.svg";
 import Dashboard from "../components/dashboard";
 import ContactManagement from "../components/contactManagement";
-import Users from "../components/users";
 import KnowledgeBase from "../components/knowledgeBase";
 import Queries from "../components/queries";
-import Reports from "../components/reports";
-import UserManagement from "../components/userManagement";
+import Reports from "../components/Reports/index";
+import UserManagement from "../components/User Management/index";
 import MySettings from "../components/mySettings";
-import CandidateProfileForm from "../components/candidate-profile-form";
 import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
@@ -110,7 +108,6 @@ export default function Home() {
       setSettingsDropdown(!settingsDropdown);
     } else if (option === "New Query") {
       setCurrentView(selectedDropdown);
-      setQueryStatus(option);
       setSideDropdown(false);
       setForm("new query");
     } else {
@@ -128,12 +125,14 @@ export default function Home() {
   const handleSettingClick = (option) => {
     setCurrentView("User Management");
     setOption("");
+    setSettingsDropdown(false);
+    setSideDropdown(false);
     if (option === "add a user") {
-      setForm("candidate profile form");
-      setFormMode("new");
+      setForm("profile");
     } else if (option === "edit user account") {
-      setForm("users");
-      setFormMode("edit");
+      setForm("edit");
+    } else if (option === "User Groups") {
+      setForm("user groups");
     }
   };
 
@@ -231,8 +230,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={styles.main}>
-        <div className={styles.options}>
+      <div
+        className={styles.main}
+        style={{ width: currentView === "Reports" ? "97%" : "84%" }}
+      >
+        <div
+          className={styles.options}
+          style={{ width: currentView === "Reports" ? "13%" : "15%" }}
+        >
           {views.map((view, id) => {
             return (
               <div
@@ -297,14 +302,14 @@ export default function Home() {
             <ContactManagement data={people} />
           )}
           {currentView === "Knowledge Base" && <KnowledgeBase />}
-          {currentView === "Queries" && <Queries data={queries[queryStatus]} />}
-          {currentView === "Reports" && <Reports />}
-          {currentView === "User Management" && <UserManagement />}
-          {option === "My Settings" && <MySettings />}
-          {form === "candidate profile form" && (
-            <CandidateProfileForm mode={formMode} />
+          {currentView === "Queries" && (
+            <Queries data={queries[queryStatus]} staff={employees} />
           )}
-          {form === "users" && <Users />}
+          {currentView === "Reports" && <Reports />}
+          {currentView === "User Management" && (
+            <UserManagement form={form} data={people} employees={employees} />
+          )}
+          {option === "My Settings" && <MySettings />}
           {form === "new query" && <NewQuery />}
         </div>
       </div>

@@ -2,14 +2,24 @@ import styles from "../styles/components/viewQuery.module.css";
 import { addQuery } from "../pages/api/API";
 
 export default function ViewQuery(props) {
-  const { data, setViewQuery, setReplyQuery, queryId, queries } = props;
+  const {
+    data,
+    setViewQuery,
+    setReplyQuery,
+    setEscalateQuery,
+    queryId,
+    queries,
+  } = props;
 
   const handleReply = () => {
     setViewQuery(false);
     setReplyQuery(true);
   };
 
-  const handleEscalate = () => {};
+  const handleEscalate = () => {
+    setViewQuery(false);
+    setEscalateQuery(true);
+  };
 
   const handleResolve = () => {
     data["Status"] = "Resolved";
