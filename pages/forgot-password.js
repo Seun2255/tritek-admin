@@ -9,6 +9,7 @@ export default function ForgotPassword() {
   const [emailInput, setEmailInput] = useState("");
   const [invalid, setInvalid] = useState(false);
   const [users, setUsers] = useState([]);
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = () => {
     var check = false;
@@ -19,6 +20,7 @@ export default function ForgotPassword() {
       resetPassword(emailInput)
         .then(() => {
           console.log("SUCCES");
+          setSent(true);
         })
         .catch(() => {
           console.log("It didn't work");
@@ -39,41 +41,47 @@ export default function ForgotPassword() {
       <div className={styles.logo}>
         <Image alt="logo" layout="fill" src={logo} />
       </div>
-      <div className={styles.inner__div}>
-        <h1 className={styles.title}>Forgotten your password</h1>
-        <p className={styles.details}>
-          Please enter your account email address. We will send an email
-          containing instructions to reset your password. check spam if mail not
-          seen
-        </p>
-        <div className={styles.email__div}>
-          {invalid && (
-            <div className={styles.invalid}>Invalid Username or Password</div>
-          )}
-          <label className={styles.email__label}>Email Address*</label>
-          <div className={styles.email__input}>
-            <div className={styles.email__icon}>
-              <Image alt="logo" layout="fill" src={email} />
-            </div>
-            <div className={styles.login__box}>
-              <input
-                className={styles.input}
-                type="text"
-                onChange={(e) => {
-                  setEmailInput(e.target.value);
-                }}
-                onFocus={() => setInvalid(false)}
-              />
-            </div>
-          </div>
-          <button
-            className={styles.submit__button}
-            onClick={() => handleSubmit()}
-          >
-            submit
-          </button>
+      {sent ? (
+        <div className={styles.inner__div}>
+          <h1 className={styles.succes__text}>Reset Password mail sent</h1>
         </div>
-      </div>
+      ) : (
+        <div className={styles.inner__div}>
+          <h1 className={styles.title}>Forgotten your password</h1>
+          <p className={styles.details}>
+            Please enter your account email address. We will send an email
+            containing instructions to reset your password. check spam if mail
+            not seen
+          </p>
+          <div className={styles.email__div}>
+            {invalid && (
+              <div className={styles.invalid}>Invalid Username or Password</div>
+            )}
+            <label className={styles.email__label}>Email Address*</label>
+            <div className={styles.email__input}>
+              <div className={styles.email__icon}>
+                <Image alt="logo" layout="fill" src={email} />
+              </div>
+              <div className={styles.login__box}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  onChange={(e) => {
+                    setEmailInput(e.target.value);
+                  }}
+                  onFocus={() => setInvalid(false)}
+                />
+              </div>
+            </div>
+            <button
+              className={styles.submit__button}
+              onClick={() => handleSubmit()}
+            >
+              submit
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
