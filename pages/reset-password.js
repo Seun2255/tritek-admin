@@ -15,6 +15,7 @@ export default function ResetPassword() {
   const [passwordInavalid, setPasswordInavalid] = useState(false);
   const [statusIcon, setStatusIcon] = useState(false);
   const [statusIcon2, setStatusIcon2] = useState(false);
+  const [timeout, changeTimeout] = useState();
   const router = useRouter();
   const code = router.query.oobCode;
 
@@ -42,19 +43,27 @@ export default function ResetPassword() {
   };
 
   const validatePassword = () => {
+    var timeout;
     setStatusIcon(true);
     const containsSpecialCharacter = /[^a-zA-Z0-9]/;
     const containsUpperCaseCharacter = /[A-Z]/;
     const containsLowerCaseCharacter = /[a-z]/;
 
     if (
-      password.length > 7 &&
+      password.length >= 7 &&
       containsLowerCaseCharacter.test(password) &&
       containsSpecialCharacter.test(password) &&
       containsUpperCaseCharacter.test(password)
     ) {
       setPasswordInavalid(false);
-    } else {
+      clearTimeout(timeout);
+    } else if (password.length === 1) {
+      changeTimeout(
+        setTimeout(() => {
+          setPasswordInavalid(true);
+        }, 1500)
+      );
+    } else if (password.length >= 7) {
       setPasswordInavalid(true);
     }
   };
