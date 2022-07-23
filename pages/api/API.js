@@ -48,7 +48,7 @@ const signUp = async (email, password) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      sendEmailVerification(user, { password: password });
+      sendEmailVerification(user);
       // ...
     })
     .catch((error) => {

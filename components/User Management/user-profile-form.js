@@ -63,7 +63,12 @@ export default function UserProfileForm(props) {
           symbols: true,
           strict: true,
         });
-        signUp(employee.Emails, password).then(() => {});
+        signUp(employee.Emails, password).then(() => {
+          axios.post("https://tritek-mail.herokuapp.com/api/password-mail", {
+            email: employee.Emails,
+            password: password,
+          });
+        });
         setFormState("added");
         setTimeout(() => {
           setEditForm(false);
