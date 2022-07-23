@@ -10,13 +10,22 @@ export default function CandidateQueryForm(props) {
   const [note, setNote] = useState("");
   const [queryType, setQueryType] = useState("xyz");
   const escalateOptions = ["Admin Manager", "ICT", "Sales", "Resolved"];
-  const typeOptions = ["ICT", "Sales", "Admin"];
+  const typeOptions = ["ICT Dept", "Sales/Marketing", "Admin"];
+  const [ticked, setTicked] = useState("");
 
   const handleSave = () => {};
 
   const handleDelete = () => {
     if (mode === "edit") {
     } else {
+    }
+  };
+
+  const handleTick = (option) => {
+    if (ticked === option) {
+      setTicked("");
+    } else {
+      setTicked(option);
     }
   };
 
@@ -86,8 +95,16 @@ export default function CandidateQueryForm(props) {
                 {escalateOptions.map((option, id) => {
                   return (
                     <div className={styles.option__box} key={id}>
-                      <div className={styles.tick__box}></div>
-                      <button className={styles.option__button}>
+                      <input
+                        type="checkbox"
+                        checked={ticked === option ? true : false}
+                        className={styles.tick__box}
+                        onClick={() => handleTick(option)}
+                      />
+                      <button
+                        className={styles.option__button}
+                        onClick={() => handleTick(option)}
+                      >
                         {option}
                       </button>
                     </div>

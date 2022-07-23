@@ -15,6 +15,8 @@ import {
   signOut,
   sendPasswordResetEmail,
   confirmPasswordReset,
+  sendEmailVerification,
+  applyActionCode,
 } from "firebase/auth";
 import { async } from "@firebase/util";
 import { timeStamp } from "../../utils/dateFunctions";
@@ -46,6 +48,7 @@ const signUp = async (email, password) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+      sendEmailVerification(user, { password: password });
       // ...
     })
     .catch((error) => {
@@ -53,6 +56,12 @@ const signUp = async (email, password) => {
       const errorMessage = error.message;
       // ..
     });
+};
+
+const confirmSignUp = async (code) => {
+  applyActionCode(auth, code).then(() => {
+    console.log("Your now verified");
+  });
 };
 
 const signIn = async (email, password) => {
@@ -240,4 +249,5 @@ export {
   removeEmployee,
   addRoles,
   signUp,
+  confirmSignUp,
 };

@@ -48,10 +48,12 @@ export default function StatementForm(props) {
         wefewg efew, work ffor tritek dvd dfe fefef efef
       </div>
       <div className={styles.accept__box}>
-        <div
+        <input
+          type="checkbox"
+          checked={ticked}
           className={styles.tick__box}
           onClick={() => setTicked(!ticked)}
-        ></div>
+        />
         <button className={styles.accept__button} onClick={handleAccept}>
           Accept
         </button>

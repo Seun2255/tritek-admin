@@ -15,7 +15,14 @@ import Queries from "../components/queries";
 import Reports from "../components/Reports/index";
 import UserManagement from "../components/User Management/index";
 import MySettings from "../components/mySettings";
-import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
+import {
+  auth,
+  addEmployee,
+  addQuery,
+  getData,
+  getMails,
+  signUp,
+} from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
 import contactSearch from "../utils/contactSearch";
@@ -148,6 +155,9 @@ export default function Home() {
   useEffect(() => {
     const now = new Date();
     const session = localStorage.getItem("session");
+    signUp("tritek704@gmail.com", "123456789wert").then(() =>
+      console.log("Check your Email")
+    );
 
     if (now.getTime() > session) {
       router.push("/login");

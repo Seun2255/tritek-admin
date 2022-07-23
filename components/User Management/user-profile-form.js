@@ -3,7 +3,15 @@ import styles from "../../styles/components/User Management/user-profile-form.mo
 import { useState, useEffect } from "react";
 import arrow from "../../assets/icons/arrow-black.svg";
 import search from "../../assets/icons/search.svg";
-import { addEmployee, editEmployee, removeEmployee } from "../../pages/api/API";
+import {
+  addEmployee,
+  editEmployee,
+  removeEmployee,
+  signUp,
+} from "../../pages/api/API";
+import axios from "axios";
+
+var generator = require("generate-password");
 
 export default function UserProfileForm(props) {
   const { mode, data, setEditForm } = props;
@@ -22,8 +30,8 @@ export default function UserProfileForm(props) {
   const [county, setCounty] = useState("");
   const [country, setCountry] = useState("");
   const [comments, setComments] = useState("");
-  const [deleted, SetDeleted] = useState(false);
   const [deleteUser, setDeleteUser] = useState(false);
+  const [formState, setFormState] = useState("active");
 
   const handleSave = () => {
     const employee = {
@@ -42,13 +50,24 @@ export default function UserProfileForm(props) {
     };
     if (mode === "edit") {
       editEmployee(employee, data["Emails"], data["Phone number"]).then(() => {
-        console.log("Employee edited");
-        setEditForm(false);
+        setFormState("edited");
+        setTimeout(() => {
+          setEditForm(false);
+        }, 3000);
       });
     } else {
       addEmployee(employee).then(() => {
-        console.log("Employee added");
-        setEditForm(false);
+        var password = generator.generate({
+          length: 8,
+          numbers: true,
+          symbols: true,
+          strict: true,
+        });
+        signUp(employee.Emails, password).then(() => {});
+        setFormState("added");
+        setTimeout(() => {
+          setEditForm(false);
+        }, 3000);
       });
     }
   };
@@ -57,12 +76,11 @@ export default function UserProfileForm(props) {
     if (mode === "edit") {
       removeEmployee(employee, data["Emails"], data["Phone number"]).then(
         () => {
-          console.log("Employee removed");
           setDeleteUser(false);
-          SetDeleted(true);
+          setFormState("deleted");
           setTimeout(() => {
             setEditForm(false);
-          }, 4000);
+          }, 3000);
         }
       );
     } else {
@@ -102,11 +120,22 @@ export default function UserProfileForm(props) {
 
   return (
     <div className={styles.outer}>
-      {deleted ? (
-        <h1 className={styles.deleted__text}>
+      {formState === "deleted" && (
+        <h1 className={styles.deleted__text} style={{ color: "red" }}>
           The user account has been successfully deleted.
         </h1>
-      ) : (
+      )}
+      {formState === "added" && (
+        <h1 className={styles.deleted__text}>
+          The user account has been successfully added.
+        </h1>
+      )}
+      {formState === "edited" && (
+        <h1 className={styles.deleted__text}>
+          The user account has been successfully edited.
+        </h1>
+      )}
+      {formState === "active" && (
         <div className={styles.container}>
           <div className={styles.top__bar}>Candidate Profile Form</div>
           <div className={styles.main}>

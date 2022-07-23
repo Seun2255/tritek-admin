@@ -6,17 +6,15 @@ import correct from "../assets/icons/accept.png";
 import invalid from "../assets/icons/multiply.png";
 import { useState } from "react";
 import { resetPasswordConfirmation } from "./api/API";
-import { useRouter } from "next/router";
 
-export default function ResetPassword() {
+export default function ResetPassword(props) {
+  const { code } = props;
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [passwordInavalid, setPasswordInavalid] = useState(false);
   const [statusIcon, setStatusIcon] = useState(false);
   const [statusIcon2, setStatusIcon2] = useState(false);
-  const router = useRouter();
-  const code = router.query.oobCode;
 
   const handleSubmit = () => {
     if (password === confirmPassword && !passwordInavalid) {
