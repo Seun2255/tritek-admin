@@ -78,7 +78,7 @@ export default function Queries(props) {
                   <td className={styles.table__cell}>{row["Location"]}</td>
                   <td className={styles.table__cell}>{row["Emails"]}</td>
                   <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>{row["Created"]}</td>
+                  <td className={styles.table__cell}>{row["created"]}</td>
                 </tr>
               );
             })}
