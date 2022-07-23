@@ -22,7 +22,7 @@ export default function EscalateQuery(props) {
       .then(function (response) {
         setEscalated(true);
         setTimeout(() => {
-          setEscalateQueryQuery(false);
+          setEscalateQuery(false);
           setViewQuery(false);
         }, 2000);
       })
