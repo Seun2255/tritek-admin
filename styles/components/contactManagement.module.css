@@ -21,6 +21,24 @@
   width: 100%;
   height: 26.2em;
   border: 2px solid black;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.table__container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.table__container::-webkit-scrollbar-button {
+  display: none;
+}
+
+.table__container::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+.table__container::-webkit-scrollbar-track {
+  background: white;
 }
 
 .table {
