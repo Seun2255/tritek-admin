@@ -1,9 +1,9 @@
 import Image from "next/image";
-import styles from "../styles/reset-password.module.css";
-import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
-import correct from "../assets/icons/accept.png";
-import invalid from "../assets/icons/multiply.png";
+import styles from "../../styles/reset-password.module.css";
+import logo from "../../assets/logo.png";
+import email from "../../assets/icons/email.svg";
+import correct from "../../assets/icons/accept.png";
+import invalid from "../../assets/icons/multiply.png";
 import { useState } from "react";
 import { resetPasswordConfirmation } from "./api/API";
 

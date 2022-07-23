@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/reset-confirmation.module.css";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { confirmSignUp } from "../../pages/api/API";
 import { useEffect } from "react";
 
