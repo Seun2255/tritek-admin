@@ -5,7 +5,7 @@ import email from "../../assets/icons/email.svg";
 import correct from "../../assets/icons/accept.png";
 import invalid from "../../assets/icons/multiply.png";
 import { useState } from "react";
-import { resetPasswordConfirmation } from "./api/API";
+import { resetPasswordConfirmation } from "../../pages/api/API";
 
 export default function ResetPassword(props) {
   const { code } = props;
