@@ -218,7 +218,23 @@ const addRoles = async (roles) => {
     data[doc.id] = doc.data();
   });
   data["Roles"] = roles;
-  await setDoc(doc(db, "data", "Roles"), data["Roles"]);
+  await setDoc(doc(db, "data", "Roles"), { Roles: data["Roles"] });
+  getData().then(async (data) => {
+    var users = data.employees;
+    var keys = Object.keys(data["Roles"]);
+    var temp = { ...data["Roles"] };
+    keys.map((group) => {
+      temp[group].map((groupUser) => {
+        users.map((user) => {
+          if (user.Emails === groupUser.Emails) {
+            user["Roles"] = group;
+            return user;
+          }
+        });
+      });
+    });
+    await setDoc(doc(db, "data", "employees"), { data: users });
+  });
 };
 
 const getMails = async () => {

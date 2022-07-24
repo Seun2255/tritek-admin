@@ -157,22 +157,41 @@
   flex-grow: 1;
   border: 2px solid black;
   padding: 15px 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.box__container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.box__container::-webkit-scrollbar-button {
+  display: none;
+}
+
+.box__container::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+.box__container::-webkit-scrollbar-track {
+  background: white;
 }
 
 .user__group__container {
+  margin-bottom: 10px;
 }
 
 .user__group {
   font-size: 14px;
-  height: 1.4em;
+  height: 2em;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
 .add__icon {
-  height: 1.4em;
-  width: 1.4em;
+  height: 100%;
+  width: 2em;
   position: relative;
   margin-right: 4px;
 }
@@ -200,6 +219,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.user:hover {
+  background-color: rgb(144, 187, 144);
+}
+
+.action__buttons {
+  margin-top: 20px;
+  align-self: flex-end;
+  position: relative;
+  left: 40px;
+}
+
+.action__button {
+  font-size: 14px;
+  height: 2em;
+  width: 5em;
+  border: none;
+  border-style: outset;
+  background-color: #dddddd;
+  border-color: black;
+  border-width: 1px 3px 3px 1px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.action__button:active {
+  border-width: 3px 2px 2px 3px;
 }
 
 .bottom__bar {

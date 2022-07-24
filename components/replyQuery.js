@@ -3,7 +3,7 @@ import styles from "../styles/components/replyQuery.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import clip from "../assets/icons/clip.svg";
-import { addQuery } from "../pages/api/API";
+import { editQuery } from "../pages/api/API";
 
 export default function ReplyQuery(props) {
   const { data, setReplyQuery, setViewQuery, queryId } = props;
@@ -14,7 +14,7 @@ export default function ReplyQuery(props) {
     data["Response"] = reply;
     data["Status"] = "in Progress";
     console.log(data);
-    addQuery(
+    editQuery(
       { ...data, Response: reply, Status: "in Progress" },
       data["Query Number"]
     ).then(() => {

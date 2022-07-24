@@ -8,6 +8,7 @@ import { getRoles, addRoles } from "../../pages/api/API";
 
 export default function UserGroups(props) {
   const { data } = props;
+
   const [userGroups, setUserGroups] = useState({
     "Admin Manager": [],
     "Admin Staff": [],
@@ -15,9 +16,16 @@ export default function UserGroups(props) {
     "Sales/Marketing": [],
     Unassigned: [],
   });
+  const [storedUsers, setStoredUsers] = useState({
+    "Admin Manager": 0,
+    "Admin Staff": 0,
+    "ICT Dept": 0,
+    "Sales/Marketing": 0,
+    Unassigned: 0,
+  });
 
-  const [available, setAvailable] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState("");
+  const [selectUser, setSelectUser] = useState(false);
   const groups = [
     "Admin Manager",
     "Admin Staff",
@@ -25,10 +33,73 @@ export default function UserGroups(props) {
     "Sales/Marketing",
   ];
 
+  const removeUser = (index, group) => {
+    var temp = { ...userGroups };
+    if (group) {
+      temp[group].splice(index, 1);
+    } else {
+      temp.Unassigned.splice(index, 1);
+    }
+    setUserGroups(temp);
+  };
+
+  const addToGroup = (user, index, group) => {
+    var temp = { ...userGroups };
+    if (group) {
+      removeUser(index, group);
+      temp.Unassigned.unshift(user);
+    } else {
+      removeUser(index);
+      temp[selectedGroup].push(user);
+    }
+    setUserGroups(temp);
+    console.log(temp);
+  };
+
+  const handleAvailableClick = (user, index, group) => {
+    if (index > storedUsers[group] - 1) {
+      addToGroup(user, index, group);
+    }
+  };
+
+  const handleSelectedClick = (user, index) => {
+    addToGroup(user, index);
+  };
+
+  const handleGroupClick = (group) => {
+    if (group === selectedGroup) {
+      setSelectedGroup("");
+      setSelectUser(false);
+    } else {
+      setSelectedGroup(group);
+      setSelectUser(true);
+    }
+  };
+
+  const handleCancel = () => {};
+
+  const handleSave = () => {
+    var keys = Object.keys(userGroups);
+    var temp = { ...userGroups };
+    keys.map((group) => {
+      temp[group].map((user) => {
+        user["Roles"] = group;
+        return user;
+      });
+    });
+    addRoles(temp);
+  };
+
   useEffect(() => {
     getRoles().then((roles) => {
       setUserGroups(roles);
-      setAvailable(roles["Unassigned"]);
+      setStoredUsers({
+        "Admin Manager": roles["Admin Manager"].length,
+        "Admin Staff": roles["Admin Staff"].length,
+        "ICT Dept": roles["ICT Dept"].length,
+        "Sales/Marketing": roles["Sales/Marketing"].length,
+        Unassigned: roles["Unassigned"].length,
+      });
     });
   }, []);
 
@@ -64,17 +135,40 @@ export default function UserGroups(props) {
                         className={styles.user__group__container}
                         key={index}
                       >
-                        <div className={styles.user__group}>
-                          <div className={styles.add__icon}>
+                        <div
+                          className={styles.user__group}
+                          style={{
+                            backgroundColor:
+                              group === selectedGroup
+                                ? "rgb(144, 187, 144)"
+                                : null,
+                          }}
+                        >
+                          <div
+                            className={styles.add__icon}
+                            onClick={() => handleGroupClick(group)}
+                          >
                             <Image alt="plus icon" layout="fill" src={add} />
                           </div>
-                          {group}
+                          <span
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            {group}
+                          </span>
                         </div>
                         <div>
-                          {userGroups[group].map((user) => {
-                            <div className={styles.user}>
-                              {user["First Name"]}
-                            </div>;
+                          {userGroups[group].map((user, index) => {
+                            return (
+                              <div
+                                className={styles.user}
+                                onClick={() => {
+                                  handleAvailableClick(user, index, group);
+                                }}
+                                key={index}
+                              >
+                                {user["First Name"]}
+                              </div>
+                            );
                           })}
                         </div>
                       </div>
@@ -86,22 +180,41 @@ export default function UserGroups(props) {
                 <div className={styles.arrow} style={{ marginBottom: "5px" }}>
                   <Image alt="arrow icon" layout="fill" src={arrow} />
                 </div>
-                <div className={styles.arrow}>
+                <div
+                  className={styles.arrow}
+                  style={{ transform: "rotate(180deg)" }}
+                >
                   <Image alt="arrow icon" layout="fill" src={arrow} />
                 </div>
               </div>
               <div className={styles.box}>
                 <label className={styles.box__label}>Selected</label>
                 <div className={styles.box__container}>
-                  {userGroups.Unassigned.map((user, index) => {
-                    return (
-                      <div className={styles.user} key={index}>
-                        {user["First Name"]}
-                      </div>
-                    );
-                  })}
+                  {selectUser && (
+                    <>
+                      {userGroups.Unassigned.map((user, index) => {
+                        return (
+                          <div
+                            className={styles.user}
+                            key={index}
+                            onClick={() => handleSelectedClick(user, index)}
+                          >
+                            {user["First Name"]}
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
               </div>
+            </div>
+            <div className={styles.action__buttons}>
+              <button className={styles.action__button} onClick={handleCancel}>
+                cancel
+              </button>
+              <button className={styles.action__button} onClick={handleSave}>
+                Save
+              </button>
             </div>
           </div>
         </main>

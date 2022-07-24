@@ -1,5 +1,5 @@
 import styles from "../styles/components/viewQuery.module.css";
-import { addQuery } from "../pages/api/API";
+import { editQuery } from "../pages/api/API";
 
 export default function ViewQuery(props) {
   const {
@@ -23,9 +23,11 @@ export default function ViewQuery(props) {
 
   const handleResolve = () => {
     data["Status"] = "Resolved";
-    addQuery({ ...data, Status: "Resolved" }, data["Query Number"]).then(() => {
-      setViewQuery(false);
-    });
+    editQuery({ ...data, Status: "Resolved" }, data["Query Number"]).then(
+      () => {
+        setViewQuery(false);
+      }
+    );
   };
 
   return (
