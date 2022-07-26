@@ -38,7 +38,7 @@
 }
 
 .container::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .back__button {
@@ -324,7 +324,7 @@
 }
 
 .countries__menu::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .country {

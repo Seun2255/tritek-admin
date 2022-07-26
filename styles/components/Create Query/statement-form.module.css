@@ -22,7 +22,7 @@
 }
 
 .container::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .title {

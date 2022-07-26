@@ -14,14 +14,12 @@ export default function UserGroups(props) {
     "Admin Staff": [],
     "ICT Dept": [],
     "Sales/Marketing": [],
-    Unassigned: [],
   });
   const [storedUsers, setStoredUsers] = useState({
     "Admin Manager": 0,
     "Admin Staff": 0,
     "ICT Dept": 0,
     "Sales/Marketing": 0,
-    Unassigned: 0,
   });
 
   const [selectedGroup, setSelectedGroup] = useState("");
@@ -32,51 +30,88 @@ export default function UserGroups(props) {
     "ICT Dept",
     "Sales/Marketing",
   ];
+  const [selected, setSelected] = useState([]);
+  const [usersSelected, setUsersCollected] = useState([]);
 
   const removeUser = (index, group) => {
-    var temp = { ...userGroups };
     if (group) {
+      var temp = { ...userGroups };
       temp[group].splice(index, 1);
+      setUserGroups(temp);
     } else {
-      temp.Unassigned.splice(index, 1);
+      var tempSelected = [...selected];
+      tempSelected.splice(index, 1);
+      setSelected(tempSelected);
     }
-    setUserGroups(temp);
   };
 
-  const addToGroup = (user, index, group) => {
-    var temp = { ...userGroups };
-    if (group) {
-      removeUser(index, group);
-      temp.Unassigned.unshift(user);
-    } else {
-      removeUser(index);
-      temp[selectedGroup].push(user);
-    }
-    setUserGroups(temp);
+  // const addToGroup = (user, index, group) => {
+  //   var temp = { ...userGroups };
+  //   if (group) {
+  //     removeUser(index, group);
+  //     temp.Unassigned.unshift(user);
+  //   } else {
+  //     removeUser(index);
+  //     temp[selectedGroup].push(user);
+  //   }
+  //   setUserGroups(temp);
+  //   console.log(temp);
+  // };
+
+  const addToSelected = (user, index, group) => {
+    var temp = [...selected];
+    removeUser(index, group);
+    temp.unshift(user);
+    setSelected(temp);
     console.log(temp);
   };
 
-  const handleAvailableClick = (user, index, group) => {
-    if (index > storedUsers[group] - 1) {
-      addToGroup(user, index, group);
+  const addToGroup = (user, index) => {
+    var temp = { ...userGroups };
+    removeUser(index);
+    temp[selectedGroup].push(user);
+  };
+
+  // const handleAvailableClick = (user, index, group) => {
+  //   if (index > storedUsers[group] - 1) {
+  //     addToGroup(user, index, group);
+  //   }
+  // };
+
+  // const handleSelectedClick = (user, index) => {
+  //   addToGroup(user, index);
+  // };
+
+  const handleAvailableClick = (user) => {
+    if (true) {
+      var temp = [...selected];
+      temp.push(user);
+      setSelected(temp);
     }
   };
 
-  const handleSelectedClick = (user, index) => {
-    addToGroup(user, index);
-  };
+  const handleSelectedClick = (user, index) => {};
 
   const handleGroupClick = (group) => {
     if (group === selectedGroup) {
       setSelectedGroup("");
-      setSelectUser(false);
     } else {
       setSelectedGroup(group);
-      setSelectUser(true);
     }
   };
 
   const handleCancel = () => {};
+
+  const check = (user) => {
+    selected.map((item) => {
+      if (user["Emails"] === item["Emails"]) {
+        return true;
+        console.log("True");
+      }
+    });
+    return false;
+    console.log("False");
+  };
 
   const handleSave = () => {
     var keys = Object.keys(userGroups);
@@ -98,7 +133,6 @@ export default function UserGroups(props) {
         "Admin Staff": roles["Admin Staff"].length,
         "ICT Dept": roles["ICT Dept"].length,
         "Sales/Marketing": roles["Sales/Marketing"].length,
-        Unassigned: roles["Unassigned"].length,
       });
     });
   }, []);
@@ -162,7 +196,13 @@ export default function UserGroups(props) {
                               <div
                                 className={styles.user}
                                 onClick={() => {
-                                  handleAvailableClick(user, index, group);
+                                  handleAvailableClick(user);
+                                  console.log(selected);
+                                }}
+                                style={{
+                                  backgroundColor: check(user)
+                                    ? "rgb(144, 187, 144)"
+                                    : null,
                                 }}
                                 key={index}
                               >
@@ -190,21 +230,17 @@ export default function UserGroups(props) {
               <div className={styles.box}>
                 <label className={styles.box__label}>Selected</label>
                 <div className={styles.box__container}>
-                  {selectUser && (
-                    <>
-                      {userGroups.Unassigned.map((user, index) => {
-                        return (
-                          <div
-                            className={styles.user}
-                            key={index}
-                            onClick={() => handleSelectedClick(user, index)}
-                          >
-                            {user["First Name"]}
-                          </div>
-                        );
-                      })}
-                    </>
-                  )}
+                  {selected.map((user, index) => {
+                    return (
+                      <div
+                        className={styles.user}
+                        key={index}
+                        onClick={() => handleSelectedClick(user, index)}
+                      >
+                        {user["First Name"]}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

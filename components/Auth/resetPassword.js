@@ -5,10 +5,12 @@ import email from "../../assets/icons/email.svg";
 import correct from "../../assets/icons/accept.png";
 import invalid from "../../assets/icons/multiply.png";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { resetPasswordConfirmation } from "../../pages/api/API";
 
 export default function ResetPassword(props) {
   const { code } = props;
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMismatch, setPasswordMismatch] = useState(false);
@@ -18,13 +20,9 @@ export default function ResetPassword(props) {
 
   const handleSubmit = () => {
     if (password === confirmPassword && !passwordInavalid) {
-      resetPasswordConfirmation(password, code.toString())
-        .then(() => {
-          router.push("/reset-confirmation");
-        })
-        .catch(() => {
-          console.log("it didn't work");
-        });
+      resetPasswordConfirmation(password, code).then(() => {
+        router.push("/reset-confirmation");
+      });
     } else {
       setPasswordMismatch(true);
     }

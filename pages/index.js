@@ -15,7 +15,14 @@ import Queries from "../components/Queries/index";
 import Reports from "../components/Reports/index";
 import UserManagement from "../components/User Management/index";
 import MySettings from "../components/mySettings";
-import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
+import {
+  auth,
+  addEmployee,
+  addQuery,
+  getData,
+  getMails,
+  addRoles,
+} from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
 import { contactSearch, querySearch } from "../utils/search";

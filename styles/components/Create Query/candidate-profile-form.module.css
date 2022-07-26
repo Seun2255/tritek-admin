@@ -23,7 +23,7 @@
 }
 
 .container::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .top__bar {
@@ -291,7 +291,7 @@
 }
 
 .countries__menu::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .country {

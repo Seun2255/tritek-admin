@@ -10,7 +10,7 @@ export default function CandidateProfileForm(props) {
   const { data, changeForm, setUserDetails } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
-  const options = ["Germany", "America", "Japan", "Nigeria", "China"];
+  const options = ["Germany", "UK", "America", "Japan", "Nigeria", "China"];
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobilePhone, setMobilePhone] = useState("");

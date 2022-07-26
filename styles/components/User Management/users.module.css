@@ -48,7 +48,7 @@
 }
 
 .table__container::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .table {

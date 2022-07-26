@@ -23,7 +23,7 @@
 }
 
 .container::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .top__bar {
@@ -148,7 +148,7 @@
 }
 
 .query__type__menu::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .query__type {

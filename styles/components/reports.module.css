@@ -43,7 +43,7 @@
 }
 
 .main::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .switch {
@@ -156,7 +156,7 @@
 }
 
 .dropdown__menu::-webkit-scrollbar-track {
-  background: white;
+  background: #fee8ad;
 }
 
 .dropdown__item {
