@@ -9,7 +9,6 @@ export default function NewQuery() {
   const [form, setForm] = useState("statement");
   const [ticket, setTicket] = useState("");
   const [userDetails, setUserDetails] = useState({});
-  f;
   const changeForm = (next) => {
     setForm(next);
   };
