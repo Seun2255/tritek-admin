@@ -9,21 +9,30 @@ export default function NewQuery() {
   const [form, setForm] = useState("statement");
   const [ticket, setTicket] = useState("");
   const [userDetails, setUserDetails] = useState({});
-
+  f;
   const changeForm = (next) => {
     setForm(next);
   };
 
   return (
     <div className={styles.container}>
-      {form === "statement" && <StatementForm changeForm={changeForm} />}
+      {form === "statement" && (
+        <StatementForm changeForm={changeForm} setTicket={setTicket} />
+      )}
       {form === "profile" && (
         <CandidateProfileForm
           changeForm={changeForm}
           setUserDetails={setUserDetails}
+          ticket={ticket}
         />
       )}
-      {form === "query" && <CandidateQueryForm changeForm={changeForm} />}
+      {form === "query" && (
+        <CandidateQueryForm
+          changeForm={changeForm}
+          ticket={ticket}
+          userDetails={userDetails}
+        />
+      )}
     </div>
   );
 }

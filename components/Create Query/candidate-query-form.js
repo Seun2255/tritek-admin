@@ -5,7 +5,7 @@ import arrow from "../../assets/icons/arrow-black.svg";
 import clip from "../../assets/icons/clip.svg";
 
 export default function CandidateQueryForm(props) {
-  const { changeForm, data } = props;
+  const { changeForm, data, ticket } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [note, setNote] = useState("");
   const [queryType, setQueryType] = useState("xyz");
@@ -37,7 +37,7 @@ export default function CandidateQueryForm(props) {
     <div className={styles.container}>
       <div className={styles.top__bar}>Candidate Query Form</div>
       <div className={styles.main}>
-        <div className={styles.ticket}>12345678</div>
+        <div className={styles.ticket}>{ticket}</div>
         <div className={styles.fields}>
           <div className={styles.query__details}>
             <div className={styles.query__type__box}>

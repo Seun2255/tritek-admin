@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
+import { useEffect } from "react";
 import styles from "../../styles/components/Create Query/statement-form.module.css";
 
 export default function StatementForm(props) {
-  const { changeForm } = props;
+  const { changeForm, setTicket } = props;
   const [ticked, setTicked] = useState(false);
   const [query, setQuery] = useState(false);
 
@@ -12,6 +13,14 @@ export default function StatementForm(props) {
       changeForm("profile");
     }
   };
+
+  useEffect(() => {
+    var temp = generator.generate({
+      length: 8,
+      numbers: true,
+    });
+    setTicket(temp);
+  }, []);
 
   // const handleProfileSave = () => {
   //   setProfile(false);

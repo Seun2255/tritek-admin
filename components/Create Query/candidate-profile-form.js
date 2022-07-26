@@ -7,7 +7,7 @@ import microphone from "../../assets/icons/microphone.svg";
 import profile from "../../assets/icons/profile.svg";
 
 export default function CandidateProfileForm(props) {
-  const { data, changeForm, setUserDetails } = props;
+  const { data, changeForm, setUserDetails, ticket } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "UK", "America", "Japan", "Nigeria", "China"];
@@ -67,7 +67,7 @@ export default function CandidateProfileForm(props) {
     <div className={styles.container}>
       <div className={styles.top__bar}>Candidate Profile Form</div>
       <div className={styles.main}>
-        <div className={styles.ticket}>12345678</div>
+        <div className={styles.ticket}>{ticket}</div>
         <main className={styles.form}>
           <div className={styles.fields}>
             <div className={styles.name__box}>
