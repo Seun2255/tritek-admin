@@ -5,7 +5,8 @@ import CandidateProfileForm from "./candidate-profile-form";
 import CandidateQueryForm from "./candidate-query-form";
 import StatementForm from "./statement-form";
 
-export default function NewQuery() {
+export default function NewQuery(props) {
+  const { closeForm } = props;
   const [form, setForm] = useState("statement");
   const [ticket, setTicket] = useState("");
   const [userDetails, setUserDetails] = useState({});
@@ -30,6 +31,7 @@ export default function NewQuery() {
           changeForm={changeForm}
           ticket={ticket}
           userDetails={userDetails}
+          closeForm={closeForm}
         />
       )}
     </div>

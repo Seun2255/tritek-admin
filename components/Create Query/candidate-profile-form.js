@@ -37,7 +37,7 @@ export default function CandidateProfileForm(props) {
       Zip: zip,
       County: county,
       Country: country,
-      Comments: comments,
+      Notes: comments,
     };
     setUserDetails(user);
     changeForm("query");

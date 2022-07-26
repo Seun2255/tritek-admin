@@ -64,7 +64,7 @@ export default function StatementForm(props) {
           type="checkbox"
           checked={ticked}
           className={styles.tick__box}
-          onClick={() => setTicked(!ticked)}
+          onChange={() => setTicked(!ticked)}
         />
         <button className={styles.accept__button} onClick={handleAccept}>
           Accept

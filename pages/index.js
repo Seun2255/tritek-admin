@@ -339,7 +339,7 @@ export default function Home() {
             <UserManagement form={form} data={people} employees={employees} />
           )}
           {option === "My Settings" && <MySettings />}
-          {form === "new query" && <NewQuery />}
+          {form === "new query" && <NewQuery closeForm={() => setForm("")} />}
         </div>
       </div>
     </div>

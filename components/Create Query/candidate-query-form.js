@@ -6,7 +6,7 @@ import clip from "../../assets/icons/clip.svg";
 import { addQuery } from "../../pages/api/API";
 
 export default function CandidateQueryForm(props) {
-  const { changeForm, data, ticket, userDetails } = props;
+  const { ticket, userDetails, closeForm } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [note, setNote] = useState("");
   const [queryType, setQueryType] = useState("general");
@@ -22,7 +22,12 @@ export default function CandidateQueryForm(props) {
       Status: "New",
       Comments: note,
     };
-    addQuery(query).then(() => {});
+    addQuery(query).then(() => {
+      setSucces(true);
+      setTimeout(() => {
+        closeForm();
+      }, 2000);
+    });
   };
 
   const handleDelete = () => {
@@ -47,7 +52,7 @@ export default function CandidateQueryForm(props) {
     <div className={styles.container}>
       {succes ? (
         <div className={styles.centered}>
-          <h1 className={styles.center__text}>Query Created</h1>
+          <h1 className={styles.centered__text}>Query Created</h1>
         </div>
       ) : (
         <>
@@ -101,7 +106,7 @@ export default function CandidateQueryForm(props) {
                 </div>
                 <div className={styles.query__options}>
                   <div className={styles.option__box}>
-                    <input checked={true} className={styles.tick__box}></input>
+                    <input defaultChecked={true} className={styles.tick__box} />
                     <button className={styles.option__button}>New</button>
                   </div>
                   <div className={styles.option__box}>
@@ -119,7 +124,7 @@ export default function CandidateQueryForm(props) {
                             type="checkbox"
                             checked={ticked === option ? true : false}
                             className={styles.tick__box}
-                            onClick={() => handleTick(option)}
+                            onChange={() => handleTick(option)}
                           />
                           <button
                             className={styles.option__button}

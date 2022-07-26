@@ -10,6 +10,8 @@ export default function Dashboard(props) {
   const { data, viewQuery, setCurrentQueries } = props;
   const keys = Object.keys(data);
 
+  const backgrounds = ["lightblue", "#ffbf00", "rgb(87, 168, 87)"];
+
   const barData = {
     labels: ["New/Resolved Tickets"],
     datasets: [
@@ -59,10 +61,13 @@ export default function Dashboard(props) {
                   viewQuery(key);
                   setCurrentQueries(data[key]);
                 }}
+                style={{ backgroundColor: backgrounds[id] }}
               >
                 {data[key].length}
               </div>
-              <label className={styles.query__status}>{key}</label>
+              <label className={styles.query__status}>
+                {key === "in Progress" ? "In Progress" : key}
+              </label>
             </div>
           );
         })}
