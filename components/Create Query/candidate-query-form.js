@@ -146,8 +146,15 @@ export default function CandidateQueryForm(props) {
                 ></textarea>
               </div>
               <div className={styles.action__buttons}>
-                <button className={styles.action__button}>submit</button>
-                <button className={styles.action__button}>delete</button>
+                <button className={styles.action__button} onClick={handleSave}>
+                  submit
+                </button>
+                <button
+                  className={styles.action__button}
+                  onClick={handleDelete}
+                >
+                  delete
+                </button>
               </div>
             </div>
           </div>

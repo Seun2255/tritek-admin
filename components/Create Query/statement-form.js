@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styles from "../../styles/components/Create Query/statement-form.module.css";
 
+var generator = require("generate-password");
+
 export default function StatementForm(props) {
   const { changeForm, setTicket } = props;
   const [ticked, setTicked] = useState(false);
@@ -20,6 +22,7 @@ export default function StatementForm(props) {
       numbers: true,
     });
     setTicket(temp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const handleProfileSave = () => {
