@@ -1,13 +1,13 @@
 import Image from "next/image";
-import styles from "../styles/components/candidate-profile-form.module.css";
+import styles from "../../styles/components/Create Query/candidate-profile-form.module.css";
 import { useState, useEffect } from "react";
-import arrow from "../assets/icons/arrow-black.svg";
-import search from "../assets/icons/search.svg";
-import microphone from "../assets/icons/microphone.svg";
-import profile from "../assets/icons/profile.svg";
+import arrow from "../../assets/icons/arrow-black.svg";
+import search from "../../assets/icons/search.svg";
+import microphone from "../../assets/icons/microphone.svg";
+import profile from "../../assets/icons/profile.svg";
 
 export default function CandidateProfileForm(props) {
-  const { data, changeForm } = props;
+  const { data, changeForm, setUserDetails } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "America", "Japan", "Nigeria", "China"];
@@ -25,6 +25,21 @@ export default function CandidateProfileForm(props) {
   const [comments, setComments] = useState("");
 
   const handleSave = () => {
+    const user = {
+      "First Name": firstName,
+      "Last Name": lastName,
+      "Phone number": mobilePhone,
+      "Landline Phone": landlinePhone,
+      Emails: email,
+      "Street Address 1": streetAddress1,
+      "Street Address 2": streetAddress2,
+      City: city,
+      Zip: zip,
+      County: county,
+      Country: country,
+      Comments: comments,
+    };
+    setUserDetails(user);
     changeForm("query");
   };
 

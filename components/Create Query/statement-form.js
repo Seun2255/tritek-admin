@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import styles from "../styles/components/statement-form.module.css";
+import styles from "../../styles/components/Create Query/statement-form.module.css";
 
 export default function StatementForm(props) {
   const { changeForm } = props;
@@ -13,10 +13,10 @@ export default function StatementForm(props) {
     }
   };
 
-  const handleProfileSave = () => {
-    setProfile(false);
-    setQuery(true);
-  };
+  // const handleProfileSave = () => {
+  //   setProfile(false);
+  //   setQuery(true);
+  // };
 
   return (
     <div className={styles.container}>

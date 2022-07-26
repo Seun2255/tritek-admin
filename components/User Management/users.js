@@ -20,7 +20,7 @@ export default function Users(props) {
           "Last Name": "",
           "Phone number": "",
           Emails: "",
-          Location: "",
+          Country: "",
           Status: "",
           Comments: "",
           "User name": "",
@@ -78,7 +78,7 @@ export default function Users(props) {
                       <td className={styles.table__cell}>
                         {row["Phone number"]}
                       </td>
-                      <td className={styles.table__cell}>{row["Location"]}</td>
+                      <td className={styles.table__cell}>{row["Country"]}</td>
                     </tr>
                   );
                 })}
@@ -96,7 +96,7 @@ export default function Users(props) {
                       <td className={styles.table__cell}>
                         {row["Phone number"]}
                       </td>
-                      <td className={styles.table__cell}>{row["Location"]}</td>
+                      <td className={styles.table__cell}>{row["Country"]}</td>
                     </tr>
                   );
                 })}

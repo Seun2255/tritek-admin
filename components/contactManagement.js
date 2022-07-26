@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/components/queries.module.css";
+import styles from "../styles/components/contactManagement.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -15,7 +15,7 @@ export default function Queries(props) {
           "Last Name": "",
           "Phone number": "",
           Emails: "",
-          Location: "",
+          Country: "",
           Status: "",
           Comments: "",
           "User name": "",
@@ -40,8 +40,8 @@ export default function Queries(props) {
       <section className={styles.table__container}>
         <table className={styles.table}>
           <thead style={{ backgroundColor: "#CCCCCC" }}>
-            <tr className="table__head">
-              <td>Name</td>
+            <tr className={styles.table__head}>
+              <td style={{ fontWeight: 700, color: "#293986" }}>Name</td>
               <td className={styles.table__cell}>Role</td>
               <td className={styles.table__cell}>Email</td>
               <td className={styles.table__cell}>Phone Number</td>
@@ -60,7 +60,7 @@ export default function Queries(props) {
                   <td className={styles.table__cell}>{row["Roles"]}</td>
                   <td className={styles.table__cell}>{row["Emails"]}</td>
                   <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>{row["Location"]}</td>
+                  <td className={styles.table__cell}>{row["Country"]}</td>
                 </tr>
               );
             })}
@@ -75,7 +75,7 @@ export default function Queries(props) {
                   <td className={styles.table__cell}>{row["Roles"]}</td>
                   <td className={styles.table__cell}>{row["Emails"]}</td>
                   <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>{row["Location"]}</td>
+                  <td className={styles.table__cell}>{row["Country"]}</td>
                 </tr>
               );
             })}

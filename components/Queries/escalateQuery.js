@@ -1,7 +1,7 @@
 import Image from "next/image";
-import styles from "../styles/components/escalateQuery.module.css";
+import styles from "../../styles/components/Queries/escalateQuery.module.css";
 import { useState } from "react";
-import arrow from "../assets/icons/arrow-black.svg";
+import arrow from "../../assets/icons/arrow-black.svg";
 import axios from "axios";
 
 export default function EscalateQuery(props) {

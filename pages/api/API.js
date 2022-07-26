@@ -32,7 +32,7 @@ const signUserIn = async (email, password) => {
       const user = userCredential.user;
       console.log("Signed IN");
       // return user;
-      return true;
+      return user;
       // ...
     })
     .catch((error) => {
@@ -169,7 +169,7 @@ const editEmployee = async (employee, email, number) => {
   await setDoc(doc(db, "data", "employees"), { data: employees });
 };
 
-const removeEmployee = async (employee, email, number) => {
+const removeEmployee = async (email, number) => {
   var data = {};
   const querySnapshot = await getDocs(collection(db, "data"));
   querySnapshot.forEach((doc) => {
@@ -180,9 +180,9 @@ const removeEmployee = async (employee, email, number) => {
   var employees = data["employees"];
   const check = (item) => {
     if (item["Emails"] === email && item["Phone number"] === number) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   };
   employees = employees.filter(check);
@@ -219,8 +219,8 @@ const addRoles = async (roles) => {
   });
   data["Roles"] = roles;
   await setDoc(doc(db, "data", "Roles"), { Roles: data["Roles"] });
-  getData().then(async (data) => {
-    var users = data.employees;
+  getData().then(async (fireBaseDoc) => {
+    var users = fireBaseDoc.employees;
     var keys = Object.keys(data["Roles"]);
     var temp = { ...data["Roles"] };
     keys.map((group) => {

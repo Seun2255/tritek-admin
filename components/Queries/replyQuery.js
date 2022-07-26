@@ -1,12 +1,12 @@
 import Image from "next/image";
-import styles from "../styles/components/replyQuery.module.css";
+import styles from "../../styles/components/Queries/replyQuery.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
-import clip from "../assets/icons/clip.svg";
-import { editQuery } from "../pages/api/API";
+import clip from "../../assets/icons/clip.svg";
+import { editQuery } from "../../pages/api/API";
 
 export default function ReplyQuery(props) {
-  const { data, setReplyQuery, setViewQuery, queryId } = props;
+  const { data, setReplyQuery, setViewQuery } = props;
   const [reply, setReply] = useState("");
   const [file, setFile] = useState("");
 

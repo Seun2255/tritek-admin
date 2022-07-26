@@ -1,15 +1,8 @@
-import styles from "../styles/components/viewQuery.module.css";
-import { editQuery } from "../pages/api/API";
+import styles from "../../styles/components/Queries/viewQuery.module.css";
+import { editQuery } from "../../pages/api/API";
 
 export default function ViewQuery(props) {
-  const {
-    data,
-    setViewQuery,
-    setReplyQuery,
-    setEscalateQuery,
-    queryId,
-    queries,
-  } = props;
+  const { data, setViewQuery, setReplyQuery, setEscalateQuery } = props;
 
   const handleReply = () => {
     setViewQuery(false);

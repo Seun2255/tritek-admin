@@ -1,8 +1,8 @@
 import Image from "next/image";
-import styles from "../styles/components/candidate-query-form.module.css";
+import styles from "../../styles/components/Create Query/candidate-query-form.module.css";
 import { useState, useEffect } from "react";
-import arrow from "../assets/icons/arrow-black.svg";
-import clip from "../assets/icons/clip.svg";
+import arrow from "../../assets/icons/arrow-black.svg";
+import clip from "../../assets/icons/clip.svg";
 
 export default function CandidateQueryForm(props) {
   const { changeForm, data } = props;

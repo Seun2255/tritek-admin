@@ -5,13 +5,14 @@
   align-items: flex-end;
   justify-content: flex-start;
   color: black;
+  background-color: #fee8ad;
 }
 
 .logo {
   position: absolute;
   top: 5px;
   left: 5px;
-  width: 12%;
+  width: 15%;
   height: 10%;
 }
 
@@ -28,7 +29,7 @@
   font-size: 13px;
   height: 2em;
   width: 10em;
-  border: 2px solid black;
+  border: 2px solid #bf9000;
   display: flex;
   align-items: center;
   background-color: white;
@@ -71,7 +72,7 @@
   width: 50px;
   height: 50px;
   margin-bottom: 5px;
-  border: 2px solid black;
+  border: 2px solid #bf9000;
   border-radius: 50vh;
   position: relative;
 }
@@ -90,12 +91,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 0em 0.1em 0em 0.2em;
-  border: 2px solid black;
-  color: black;
+  border: 2px solid #bf9000;
+  color: #293986;
   font-size: 12px;
   width: 100%;
   height: 2em;
   cursor: pointer;
+  background-color: white;
 }
 
 .dropdown__arrow {
@@ -105,7 +107,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 2px solid black;
+  border-left: 2px solid #bf9000;
 }
 
 .menu {
@@ -113,8 +115,8 @@
   top: 2em;
   width: 80%;
   padding: 5px;
-  border: 2px solid black;
-  color: black;
+  border: 2px solid #bf9000;
+  color: #293986;
   font-size: 16px;
   box-sizing: border-box;
   background-color: white;
@@ -157,17 +159,20 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
-  border: 2px solid black;
+  border: 2px solid #bf9000;
   font-size: 14px;
-  background-color: #cccccc;
+  background-color: #293986;
   cursor: pointer;
   border-right: none;
   position: relative;
+  color: white;
+  font-weight: 700;
 }
 
 .dropdown__menu {
   width: -moz-fit-content;
   width: fit-content;
+  min-width: 5em;
   border: 2px solid black;
   padding: 0;
   margin: 0%;
@@ -181,8 +186,8 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  font-size: 16px;
-  height: 1.8em;
+  font-size: 14px;
+  height: 2em;
   background-color: white;
   cursor: pointer;
 }
@@ -194,18 +199,20 @@
 .view {
   flex-grow: 1;
   height: 100%;
-  border: 2px solid black;
+  border: 2px solid #bf9000;
   border-bottom: none;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 3;
+  background-color: #fee8ad;
 }
 
 .settings__dropdown__menu {
   width: -moz-fit-content;
   width: fit-content;
+  min-width: 11em;
   border: 2px solid black;
   padding: 0;
   margin: 0%;
@@ -218,8 +225,8 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  font-size: 16px;
-  height: 1.8em;
+  font-size: 14px;
+  height: 2em;
   background-color: white;
   cursor: pointer;
   z-index: 50;

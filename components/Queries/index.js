@@ -1,12 +1,13 @@
 import Image from "next/image";
-import styles from "../styles/components/queries.module.css";
-import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
+import styles from "../../styles/components/Queries/queries.module.css";
+import logo from "../../assets/logo.png";
+import email from "../../assets/icons/email.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import ViewQuery from "./viewQuery";
 import ReplyQuery from "./replyQuery";
 import EscalateQuery from "./escalateQuery";
+import { querySearch } from "../../utils/search";
 
 export default function Queries(props) {
   const { data, staff } = props;
@@ -43,6 +44,18 @@ export default function Queries(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  // useEffect(() => {
+  //   if (searchText.length >= 3) {
+  //     const results = querySearch(data, searchText);
+  //     setQueries(results);
+  //     fillUp();
+  //   } else {
+  //     setQueries(data);
+  //     fillUp();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchText]);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>Queries - New, In progress, Resolved</div>
@@ -50,7 +63,7 @@ export default function Queries(props) {
         <table className={styles.table}>
           <thead style={{ backgroundColor: "#CCCCCC" }}>
             <tr className={styles.table__head}>
-              <td>Name</td>
+              <td style={{ fontWeight: 700, color: "#293986" }}>Name</td>
               <td className={styles.table__cell}>Ticket Number</td>
               <td className={styles.table__cell}>Address</td>
               <td className={styles.table__cell}>Email</td>
@@ -129,14 +142,10 @@ export default function Queries(props) {
           data={selectedQuery}
           setReplyQuery={setReplyQuery}
           setEscalateQuery={setEscalateQuery}
-          queries={data}
-          queryId={selectedQueryId}
         />
       )}
       {replyQuery && (
         <ReplyQuery
-          queries={data}
-          queryId={selectedQueryId}
           data={selectedQuery}
           setReplyQuery={setReplyQuery}
           setViewQuery={setViewQuery}

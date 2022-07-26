@@ -32,9 +32,10 @@ export default function UserProfileForm(props) {
   const [comments, setComments] = useState("");
   const [deleteUser, setDeleteUser] = useState(false);
   const [formState, setFormState] = useState("active");
+  const [ticket, setTicket] = useState("");
 
   const handleSave = () => {
-    const employee = {
+    var employee = {
       "First Name": firstName,
       "Last Name": lastName,
       "Phone number": mobilePhone,
@@ -49,6 +50,8 @@ export default function UserProfileForm(props) {
       Comments: comments,
     };
     if (mode === "edit") {
+      employee["Roles"] = data.Roles || "Admin Staff";
+      employee["Employee Number"] = data["Employee Number"] || ticket;
       editEmployee(employee, data["Emails"], data["Phone number"]).then(() => {
         setFormState("edited");
         setTimeout(() => {
@@ -56,6 +59,8 @@ export default function UserProfileForm(props) {
         }, 3000);
       });
     } else {
+      employee["Roles"] = "Admin Staff";
+      employee["Employee Number"] = ticket;
       addEmployee(employee).then(() => {
         var password = generator.generate({
           length: 8,
@@ -70,24 +75,19 @@ export default function UserProfileForm(props) {
           });
         });
         setFormState("added");
-        setTimeout(() => {
-          setEditForm(false);
-        }, 3000);
       });
     }
   };
 
   const handleDelete = () => {
     if (mode === "edit") {
-      removeEmployee(employee, data["Emails"], data["Phone number"]).then(
-        () => {
-          setDeleteUser(false);
-          setFormState("deleted");
-          setTimeout(() => {
-            setEditForm(false);
-          }, 3000);
-        }
-      );
+      removeEmployee(data["Emails"], data["Phone number"]).then(() => {
+        setDeleteUser(false);
+        setFormState("deleted");
+        setTimeout(() => {
+          setEditForm(false);
+        }, 3000);
+      });
     } else {
       setFirstName("");
       setLastName("");
@@ -120,6 +120,11 @@ export default function UserProfileForm(props) {
       setCountry(data["Country"] || "country");
       setSelected(data["Country"] || "country");
     }
+    var temp = generator.generate({
+      length: 8,
+      numbers: true,
+    });
+    setTicket(temp);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -154,7 +159,7 @@ export default function UserProfileForm(props) {
                 Back
               </div>
             )}
-            <div className={styles.ticket}>12345678</div>
+            {mode !== "edit" && <div className={styles.ticket}>{ticket}</div>}
             <main className={styles.form}>
               <div className={styles.fields}>
                 <div className={styles.name__box}>

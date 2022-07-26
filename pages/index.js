@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import logo from "../assets/logo.png";
+import logo from "../assets/tritek-logo.png";
 import styles from "../styles/Home.module.css";
 import arrow from "../assets/icons/arrow-black.svg";
 import search from "../assets/icons/search.svg";
@@ -11,15 +11,15 @@ import profile from "../assets/icons/profile.svg";
 import Dashboard from "../components/dashboard";
 import ContactManagement from "../components/contactManagement";
 import KnowledgeBase from "../components/knowledgeBase";
-import Queries from "../components/queries";
+import Queries from "../components/Queries/index";
 import Reports from "../components/Reports/index";
 import UserManagement from "../components/User Management/index";
 import MySettings from "../components/mySettings";
 import { auth, addEmployee, addQuery, getData, getMails } from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
-import contactSearch from "../utils/contactSearch";
-import NewQuery from "../components/newQuery";
+import { contactSearch, querySearch } from "../utils/search";
+import NewQuery from "../components/Create Query/index";
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function Home() {
   const [queryStatus, setQueryStatus] = useState("new");
   const [sideDropdown, setSideDropdown] = useState(false);
   const sideDropOptions = {
-    Queries: ["New", "in Progress", "Resolved"],
+    Queries: ["New", "In Progress", "Resolved"],
     "Contact Management": ["New Query"],
     "User Management": ["settings"],
   };
@@ -41,6 +41,7 @@ export default function Home() {
   const [settingsDropdown, setSettingsDropdown] = useState(false);
   const [form, setForm] = useState("");
   const [formMode, setFormMode] = useState("new");
+  const [currentQueries, setCurrentQueries] = useState([]);
 
   const settingsDropdownList = [
     "add a user",
@@ -112,7 +113,13 @@ export default function Home() {
       setForm("new query");
     } else {
       setCurrentView(selectedDropdown);
-      setQueryStatus(option);
+      if (option === "In Progress") {
+        setQueryStatus("in Progress");
+        setCurrentQueries(queries["in Progress"]);
+      } else {
+        setQueryStatus(option);
+        setCurrentQueries(queries[option]);
+      }
       setSideDropdown(false);
     }
   };
@@ -137,11 +144,20 @@ export default function Home() {
   };
 
   const handleSearch = (search) => {
-    if (search.length >= 3) {
-      const results = contactSearch(employees, search);
-      setPeople(results);
+    if (currentView === "Queries") {
+      if (search.length >= 3) {
+        const results = querySearch(queries[queryStatus], search);
+        setCurrentQueries(results);
+      } else {
+        setCurrentQueries(queries[queryStatus]);
+      }
     } else {
-      setPeople(employees);
+      if (search.length >= 3) {
+        const results = contactSearch(employees, search);
+        setPeople(results);
+      } else {
+        setPeople(employees);
+      }
     }
   };
 
@@ -154,6 +170,7 @@ export default function Home() {
     getData().then((data) => {
       const sortedQueries = querySorter(data.queries);
       setQueries(sortedQueries);
+      setCurrentQueries(sortedQueries["New"]);
       setEmployees(data.employees);
       setPeople(data.employees);
       setCurrentView("Dashboard");
@@ -251,7 +268,9 @@ export default function Home() {
                 <div
                   className={styles.option__box}
                   style={{
-                    backgroundColor: view === currentView ? "white" : "#cccccc",
+                    backgroundColor:
+                      view === currentView ? "#fee8ad" : "#293986",
+                    color: view === currentView ? "#293986" : "white",
                   }}
                   onClick={() => handleSidebarClick(view)}
                 >
@@ -295,14 +314,18 @@ export default function Home() {
         </div>
         <div className={styles.view}>
           {currentView === "Dashboard" && (
-            <Dashboard data={queries} viewQuery={viewQuery} />
+            <Dashboard
+              data={queries}
+              viewQuery={viewQuery}
+              setCurrentQueries={setCurrentQueries}
+            />
           )}
           {currentView === "Contact Management" && (
             <ContactManagement data={people} />
           )}
           {currentView === "Knowledge Base" && <KnowledgeBase />}
           {currentView === "Queries" && (
-            <Queries data={queries[queryStatus]} staff={employees} />
+            <Queries data={currentQueries} staff={employees} />
           )}
           {currentView === "Reports" && <Reports />}
           {currentView === "User Management" && (
