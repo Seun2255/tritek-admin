@@ -6,6 +6,8 @@ import { useState } from "react";
 import UserProfileForm from "./user-profile-form";
 import Users from "./users";
 import UserGroups from "./userGroups";
+import ChangeEmail from "./changeEmail";
+import Permissions from "./permissions";
 
 export default function UserManagement(props) {
   const { form, data, employees } = props;
@@ -14,6 +16,8 @@ export default function UserManagement(props) {
       {form === "profile" && <UserProfileForm />}
       {form === "edit" && <Users data={data} />}
       {form === "user groups" && <UserGroups data={employees} />}
+      {form === "change email" && <ChangeEmail />}
+      {form === "permissions" && <Permissions />}
     </div>
   );
 }

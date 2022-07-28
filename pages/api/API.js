@@ -17,6 +17,7 @@ import {
   confirmPasswordReset,
   sendEmailVerification,
   applyActionCode,
+  updateEmail,
 } from "firebase/auth";
 import { async } from "@firebase/util";
 import { timeStamp } from "../../utils/dateFunctions";
@@ -249,6 +250,21 @@ const getMails = async () => {
   }
 };
 
+const setPermissions = async (permissions) => {
+  await setDoc(doc(db, "data", "permissions"), permissions);
+};
+
+const getPermissions = async () => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data();
+  });
+  var permissions = data["permissions"];
+  return permissions;
+};
+
 export {
   signIn,
   signUserOut,
@@ -266,4 +282,6 @@ export {
   addRoles,
   signUp,
   confirmSignUp,
+  setPermissions,
+  getPermissions,
 };

@@ -147,6 +147,10 @@ export default function Home() {
       setForm("edit");
     } else if (option === "User Groups") {
       setForm("user groups");
+    } else if (option === "Change email") {
+      setForm("change email");
+    } else if (option === "Permission Level") {
+      setForm("permissions");
     }
   };
 
