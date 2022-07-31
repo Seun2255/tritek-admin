@@ -1,7 +1,8 @@
 import { formatDate } from "../../utils/dateFunctions";
+import styles from "../../styles/components/Reports/chart.module.css";
 
 export default function ChartDashboard(props) {
-  const { data, fillUPArray, styles, fromValue, toValue } = props;
+  const { data, fillUPArray, fromValue, toValue } = props;
   return (
     <div className={styles.chart__dashboard}>
       <div className={styles.chart__action__buttons}>
@@ -34,12 +35,10 @@ export default function ChartDashboard(props) {
                     className={styles.table__cell}
                     style={{ borderLeft: "none" }}
                   >
-                    {row.Department}
+                    {row.type}
                   </td>
-                  <td className={styles.table__cell}>{row.Report}</td>
-                  <td className={styles.table__cell}>{`${formatDate(
-                    fromValue
-                  )}-${formatDate(toValue)}`}</td>
+                  <td className={styles.table__cell}>{row.title}</td>
+                  <td className={styles.table__cell}>{row.period}</td>
                 </tr>
               );
             })}

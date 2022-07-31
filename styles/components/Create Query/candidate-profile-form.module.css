@@ -4,7 +4,7 @@
   color: black;
   box-sizing: border-box;
   background-color: white;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
   position: relative;
   background-color: #fee8ad;
@@ -274,7 +274,7 @@
   box-sizing: border-box;
   background-color: white;
   height: 60px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 

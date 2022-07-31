@@ -1,7 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/components/knowledgeBase.module.css";
-import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
+import styles from "../../styles/components/Knowledge Base/knowledgeBase.module.css";
 import { useState } from "react";
 
 export default function KnowledgeBase() {

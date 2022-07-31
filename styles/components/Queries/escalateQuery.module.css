@@ -104,7 +104,7 @@
   box-sizing: border-box;
   background-color: white;
   height: 160px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 

@@ -33,7 +33,7 @@
   width: 100%;
   flex-grow: 1;
   border: 2px solid black;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 

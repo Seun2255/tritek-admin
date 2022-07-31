@@ -22,6 +22,8 @@ import {
 import { async } from "@firebase/util";
 import { timeStamp } from "../../utils/dateFunctions";
 
+var generator = require("generate-password");
+
 const db = getFirestore(app);
 const auth = getAuth(app);
 
@@ -124,7 +126,6 @@ const editQuery = async (query, ticket) => {
   const querySnapshot = await getDocs(collection(db, "data"));
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data().data);
     data[doc.id] = doc.data().data;
   });
   var queries = data["queries"];
@@ -151,6 +152,45 @@ const addEmployee = async (employee) => {
   await setDoc(doc(db, "data", "employees"), { data: employees });
 };
 
+const confirmStatus = async (email) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data().data;
+  });
+  var employees = data["employees"];
+  var exists = false;
+  employees.map((item) => {
+    if (item["Emails"] === email) {
+      exists = true;
+    }
+  });
+  if (!exists) {
+    var ticket = generator.generate({
+      length: 8,
+      numbers: true,
+    });
+    var employee = {
+      "First Name": "",
+      "Last Name": "",
+      "Phone number": "",
+      "Landline Phone": "",
+      Emails: email,
+      "Street Address 1": "",
+      "Street Address 2": "",
+      City: "",
+      Zip: "",
+      County: "",
+      Country: "",
+      Comments: "",
+      Roles: "Admin Staff",
+      "Employee Number": ticket,
+    };
+    addEmployee(employee);
+  }
+};
+
 const editEmployee = async (employee, email, number) => {
   var data = {};
   const querySnapshot = await getDocs(collection(db, "data"));
@@ -168,6 +208,23 @@ const editEmployee = async (employee, email, number) => {
     }
   });
   await setDoc(doc(db, "data", "employees"), { data: employees });
+};
+
+const getUserData = async (email) => {
+  var data = {};
+  const querySnapshot = await getDocs(collection(db, "data"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data[doc.id] = doc.data().data;
+  });
+  var employees = data["employees"];
+  var user = {};
+  employees.map((item) => {
+    if (item["Emails"] === email) {
+      user = item;
+    }
+  });
+  return user;
 };
 
 const removeEmployee = async (email, number) => {
@@ -265,10 +322,23 @@ const getPermissions = async () => {
   return permissions;
 };
 
+const changeEmail = async (email, password, newEmail) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      updateEmail(user, newEmail).then(() => console.log("Email Changed"));
+      return true;
+    })
+    .catch((error) => {
+      return false;
+    });
+};
+
 export {
   signIn,
   signUserOut,
   auth,
+  db,
   resetPassword,
   resetPasswordConfirmation,
   addQuery,
@@ -284,4 +354,7 @@ export {
   confirmSignUp,
   setPermissions,
   getPermissions,
+  changeEmail,
+  confirmStatus,
+  getUserData,
 };

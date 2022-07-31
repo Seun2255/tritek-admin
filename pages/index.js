@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../context";
 import { useRouter } from "next/router";
 import logo from "../assets/tritek-logo.png";
 import styles from "../styles/Home.module.css";
@@ -10,25 +11,30 @@ import microphone from "../assets/icons/microphone.svg";
 import profile from "../assets/icons/profile.svg";
 import Dashboard from "../components/dashboard";
 import ContactManagement from "../components/contactManagement";
-import KnowledgeBase from "../components/knowledgeBase";
 import Queries from "../components/Queries/index";
 import Reports from "../components/Reports/index";
 import UserManagement from "../components/User Management/index";
-import MySettings from "../components/mySettings";
+import KnowledgeBase from "../components/Knowledge Base/index";
+import UserOptions from "../components/User Options/index";
 import {
   auth,
+  db,
   addEmployee,
   addQuery,
   getData,
   getMails,
   addRoles,
+  confirmStatus,
 } from "./api/API";
 import { signOut } from "firebase/auth";
 import querySorter from "../utils/querySorter";
 import { contactSearch, querySearch } from "../utils/search";
 import NewQuery from "../components/Create Query/index";
+import { doc, onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
+  const { state, dispatch } = useContext(Context);
   const [menuOpen, setMenuOpen] = useState(false);
   const [queries, setQueries] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -41,7 +47,9 @@ export default function Home() {
     Queries: ["New", "In Progress", "Resolved"],
     "Contact Management": ["New Query"],
     "User Management": ["settings"],
+    "Knowledge Base": ["Videos", "Templates", "Training Manuals"],
   };
+  const [allQueries, setAllQueries] = useState([]);
 
   const [dropOptions, setDropOptions] = useState(sideDropOptions["Queries"]);
   const [selectedDropdown, setSelectedDropdown] = useState("");
@@ -49,6 +57,7 @@ export default function Home() {
   const [form, setForm] = useState("");
   const [formMode, setFormMode] = useState("new");
   const [currentQueries, setCurrentQueries] = useState([]);
+  const [userOptions, setUserOptions] = useState(false);
 
   const settingsDropdownList = [
     "add a user",
@@ -83,16 +92,14 @@ export default function Home() {
   };
 
   const handleSidebarClick = (view) => {
-    if (
-      view === "Dashboard" ||
-      view === "Reports" ||
-      view === "Knowledge Base"
-    ) {
+    if (view === "Dashboard" || view === "Reports") {
       setCurrentView(view);
       setOption("");
       setSideDropdown(false);
       setSettingsDropdown(false);
+      setUserOptions(false);
     } else if (view === "Contact Management") {
+      setUserOptions(false);
       setCurrentView(view);
       setOption("");
       setSelectedDropdown(view);
@@ -111,7 +118,10 @@ export default function Home() {
     }
   };
 
+  const handleOptionClick = () => {};
+
   const handleQueryOptionClick = (option) => {
+    setUserOptions(false);
     if (option === "settings") {
       setSettingsDropdown(!settingsDropdown);
     } else if (option === "New Query") {
@@ -134,10 +144,12 @@ export default function Home() {
   const viewQuery = (option) => {
     setCurrentView("Queries");
     setQueryStatus(option);
+    setUserOptions(false);
   };
 
   const handleSettingClick = (option) => {
     setCurrentView("User Management");
+    setUserOptions(false);
     setOption("");
     setSettingsDropdown(false);
     setSideDropdown(false);
@@ -166,10 +178,19 @@ export default function Home() {
       if (search.length >= 3) {
         const results = contactSearch(employees, search);
         setPeople(results);
+        console.log("in first part");
       } else {
+        console.log("in second part");
+        console.log(employees);
         setPeople(employees);
       }
     }
+  };
+
+  const userOptionClicked = (option) => {
+    setOption(option);
+    setUserOptions(true);
+    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -179,12 +200,45 @@ export default function Home() {
       router.push("/login");
     }
     getData().then((data) => {
+      setAllQueries(data.queries);
       const sortedQueries = querySorter(data.queries);
       setQueries(sortedQueries);
       setCurrentQueries(sortedQueries["New"]);
       setEmployees(data.employees);
       setPeople(data.employees);
       setCurrentView("Dashboard");
+    });
+    const unsubQueries = onSnapshot(doc(db, "data", "queries"), (doc) => {
+      var data = doc.data().data;
+      const sortedQueries = querySorter(data);
+      setQueries(sortedQueries);
+      setCurrentQueries(sortedQueries["New"]);
+    });
+    const unsubEmployees = onSnapshot(doc(db, "data", "employees"), (doc) => {
+      var data = doc.data().data;
+      setEmployees(data);
+      if (search.length >= 3) {
+        const results = contactSearch(data, search);
+        setPeople(results);
+      } else {
+        setPeople(data);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: user,
+        });
+        confirmStatus(user.email);
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,12 +267,18 @@ export default function Home() {
         </div>
         <div className={styles.user__box}>
           <div className={styles.profile__pic}>
-            <Image alt="profile pic" layout="fill" src={profile} />
+            <img
+              alt="profile pic"
+              src={state.user.photoURL || profile}
+              style={{ width: "100%", height: "100%" }}
+            />
           </div>
           <div className={styles.home__buttons}>
             <button
               className={styles.menu__button}
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => {
+                setMenuOpen(!menuOpen);
+              }}
             >
               <span>Admin User</span>
               <div className={styles.dropdown__arrow}>
@@ -242,10 +302,7 @@ export default function Home() {
                       onClick={() => {
                         option === "logout"
                           ? logout()
-                          : () => {
-                              setOption(option);
-                              // setCurrentView("");
-                            };
+                          : userOptionClicked(option);
                       }}
                     >
                       {option}
@@ -257,6 +314,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* The Main APP */}
       <div
         className={styles.main}
         style={{ width: currentView === "Reports" ? "97%" : "84%" }}
@@ -334,15 +392,17 @@ export default function Home() {
           {currentView === "Contact Management" && (
             <ContactManagement data={people} />
           )}
-          {currentView === "Knowledge Base" && <KnowledgeBase />}
           {currentView === "Queries" && (
             <Queries data={currentQueries} staff={employees} />
           )}
-          {currentView === "Reports" && <Reports />}
+          {currentView === "Reports" && <Reports queries={allQueries} />}
           {currentView === "User Management" && (
             <UserManagement form={form} data={people} employees={employees} />
           )}
-          {option === "My Settings" && <MySettings />}
+          {currentView === "Knowledge Base" && <KnowledgeBase />}
+          {userOptions && (
+            <UserOptions option={option} setUserOptions={setUserOptions} />
+          )}
           {form === "new query" && <NewQuery closeForm={() => setForm("")} />}
         </div>
       </div>

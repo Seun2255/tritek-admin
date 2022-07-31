@@ -1,18 +1,39 @@
 import Image from "next/image";
 import styles from "../../styles/components/User Management/changeEmail.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import arrow from "../../assets/icons/arrow-black.svg";
 import search from "../../assets/icons/search.svg";
-import { addEmployee } from "../../pages/api/API";
+import { changeEmail } from "../../pages/api/API";
+import { Context } from "../../context";
 
 export default function ChangeEmail(props) {
+  const { state } = useContext(Context);
   const [succes, setSucces] = useState(false);
+  const [succesText, setSuccesText] = useState("Email Changed");
   const [currentEmail, setCurrentEmail] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newEmail2, setNewEmail2] = useState("");
   const [password, setPassword] = useState("");
+  const [color, setColor] = useState("green");
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    if (newEmail === newEmail2) {
+      changeEmail(currentEmail, password).then((result) => {
+        result ? setColor("green") : setColor("red");
+        var text = result ? "Email Changed" : "Invalid details Entered";
+        console.log(text);
+        setSuccesText(text);
+        setSucces(true);
+        if (!result) {
+          setTimeout(() => {
+            setSucces(false);
+          }, 2000);
+        }
+      });
+    } else {
+      alert("New email doesn't match");
+    }
+  };
 
   const handleCancel = () => {};
 
@@ -20,7 +41,9 @@ export default function ChangeEmail(props) {
     <div className={styles.outer}>
       {succes ? (
         <div className={styles.centered}>
-          <h1 className={styles.centered__text}>Email Changed</h1>
+          <h1 className={styles.centered__text} style={{ color: color }}>
+            {succesText}
+          </h1>
         </div>
       ) : (
         <div className={styles.container}>

@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { setPermissions, getPermissions } from "../../pages/api/API";
 
 export default function Permissions() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
+  const [rows, setRows] = useState([]);
 
   const createTable = (data) => {
     var rows = [];
@@ -63,14 +64,39 @@ export default function Permissions() {
     return rows;
   };
 
-  const handleSave = () => {};
+  const handleClick = (row, index) => {
+    var roles = ["Admin Staff", "ICT Dept", "Admin Manager", "Sales/Marketing"];
+    var category = "";
+    var temp = { ...data };
+    var tempKeys = Object.keys(temp);
+    tempKeys.map((key) => {
+      roles.map((role) => {
+        var permKeys = Object.keys(temp[key][role]);
+        permKeys.map((perm) => {
+          if (perm === row[0]) category = key;
+        });
+      });
+    });
+    temp[category][roles[index - 1]][row[0]] =
+      !temp[category][roles[index - 1]][row[0]];
+    setData(temp);
+    var newRows = createTable(temp);
+    setRows(newRows);
+  };
+
+  const handleSave = () => {
+    setPermissions(data).then(() => {
+      console.log("Permissions Set");
+    });
+  };
 
   const handleCancel = () => {};
 
   useEffect(() => {
     getPermissions().then((permissions) => {
+      setData(permissions);
       var rows = createTable(permissions);
-      setData(rows);
+      setRows(rows);
     });
   }, []);
 
@@ -90,7 +116,7 @@ export default function Permissions() {
               </tr>
             </thead>
             <tbody>
-              {data.map((row, index) => {
+              {rows.map((row, index) => {
                 return (
                   <tr
                     className={styles.table__row}
@@ -107,6 +133,7 @@ export default function Permissions() {
                           style={{
                             backgroundColor: row[1] ? "black" : "white",
                           }}
+                          onClick={() => handleClick(row, 1)}
                         ></div>
                       )}
                     </td>
@@ -119,6 +146,7 @@ export default function Permissions() {
                           style={{
                             backgroundColor: row[2] ? "black" : "white",
                           }}
+                          onClick={() => handleClick(row, 2)}
                         ></div>
                       )}
                     </td>
@@ -131,6 +159,7 @@ export default function Permissions() {
                           style={{
                             backgroundColor: row[3] ? "black" : "white",
                           }}
+                          onClick={() => handleClick(row, 3)}
                         ></div>
                       )}
                     </td>
@@ -143,6 +172,7 @@ export default function Permissions() {
                           style={{
                             backgroundColor: row[4] ? "black" : "white",
                           }}
+                          onClick={() => handleClick(row, 4)}
                         ></div>
                       )}
                     </td>

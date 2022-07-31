@@ -20,7 +20,7 @@
   color: black;
   box-sizing: border-box;
   background-color: #fee8ad;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
   position: relative;
 }
@@ -307,7 +307,7 @@
   box-sizing: border-box;
   background-color: white;
   height: 60px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 

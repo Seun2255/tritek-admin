@@ -1,6 +1,6 @@
 import Image from "next/image";
 import calendar from "../../assets/icons/calendar.svg";
-import styles from "../../styles/components/reports.module.css";
+import styles from "../../styles/components/Reports/reports.module.css";
 import arrow from "../../assets/icons/arrow-black.svg";
 import { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
@@ -8,8 +8,10 @@ import "react-calendar/dist/Calendar.css";
 import { formatDate } from "../../utils/dateFunctions";
 import ChartDashboard from "./chartDashboard";
 import InsightDashboard from "./insightDashboard";
+import getRows from "../../utils/reportCreators";
 
-export default function Reports() {
+export default function Reports(props) {
+  const { queries } = props;
   const [departmentMenuOpen, setDepartmentMenuOpen] = useState(false);
   const [titleMenuOpen, setTitleMenuOpen] = useState(false);
   const [agentMenuOpen, setAgentMenuOpen] = useState(false);
@@ -34,7 +36,8 @@ export default function Reports() {
   const [calendar1Open, setCalendar1Open] = useState(false);
   const [calendar2Open, setCalendar2Open] = useState(false);
   const [fillUPArray, setFillUpArray] = useState([]);
-  const data = [{ Department: "Admin", Report: "Ticket Backlog" }];
+  const [data, setData] = useState([]);
+  const [viewReport, setViewReport] = useState(false);
 
   const fillUp = () => {
     var array = [];
@@ -73,6 +76,19 @@ export default function Reports() {
   const handleToDateChange = (value) => {
     setToValue(value);
     setCalendar2Open(false);
+  };
+
+  const generateReport = () => {
+    var temp = getRows(
+      selectedDepartment,
+      selectedTitle,
+      fromValue,
+      toValue,
+      queries
+    );
+    console.log(temp);
+    setData(temp);
+    setViewReport(true);
   };
 
   return (
@@ -281,21 +297,23 @@ export default function Reports() {
             </div>
           </div>
           <div className={styles.filter__buttons}>
-            <button className={styles.filter__button}>Generate Report</button>
+            <button className={styles.filter__button} onClick={generateReport}>
+              Generate Report
+            </button>
             <button className={styles.filter__button}>Clear</button>
           </div>
         </div>
-        {dashboard === "chart" ? (
-          <ChartDashboard
-            data={data}
-            fillUPArray={fillUPArray}
-            styles={styles}
-            fromValue={fromValue}
-            toValue={toValue}
-          />
-        ) : (
-          <InsightDashboard data={data} styles={styles} />
-        )}
+        {dashboard === "chart"
+          ? viewReport && (
+              <ChartDashboard
+                data={data}
+                fillUPArray={fillUPArray}
+                styles={styles}
+                fromValue={fromValue}
+                toValue={toValue}
+              />
+            )
+          : viewReport && <InsightDashboard data={data} styles={styles} />}
       </main>
     </div>
   );

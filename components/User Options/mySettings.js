@@ -1,7 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/components/mySettings.module.css";
-import logo from "../assets/logo.png";
-import email from "../assets/icons/email.svg";
+import styles from "../../styles/components/User Options/mySettings.module.css";
 import { useState } from "react";
 
 export default function MySettings() {

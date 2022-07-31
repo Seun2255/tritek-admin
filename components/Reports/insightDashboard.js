@@ -1,5 +1,7 @@
+import styles from "../../styles/components/Reports/insight.module.css";
+
 export default function InsightDashboard(props) {
-  const { data, styles } = props;
+  const { data } = props;
   const keyData = [
     {
       performance: "%- Good (94% to 100%)",
@@ -19,10 +21,12 @@ export default function InsightDashboard(props) {
     },
   ];
   return (
-    <div className={styles.insight__dashboard}>
-      <div className={styles.insight__container}>
-        <label className={styles.container__label}></label>
-        <h3 className={styles.table__name}></h3>
+    <div className={styles.dashboard}>
+      <div className={styles.container}>
+        <label className={styles.container__label}>Results</label>
+        <h3 className={styles.table__name}>
+          Key <span style={{ fontWeight: 900 }}>i</span>
+        </h3>
         <table className={styles.table}>
           <thead style={{ backgroundColor: "#CCCCCC" }}>
             <tr className={styles.table__head}>
@@ -55,10 +59,10 @@ export default function InsightDashboard(props) {
           </tbody>
         </table>
       </div>
-      <button className={styles.filter__button}>Download Pdf</button>
-      <div className={styles.insight__container}>
-        <label className={styles.container__label}></label>
-        <h3 className={styles.table__name}></h3>
+      <button className={styles.download__button}>Download Pdf</button>
+      <div className={styles.container} style={{ marginTop: "20px" }}>
+        <label className={styles.container__label}>Results table</label>
+        <h3 className={styles.table__name}>Report Overview</h3>
         <table className={styles.table}>
           <thead style={{ backgroundColor: "#CCCCCC" }}>
             <tr className={styles.table__head}>

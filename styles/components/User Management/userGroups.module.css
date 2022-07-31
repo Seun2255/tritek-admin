@@ -155,7 +155,7 @@
   height: 220px;
   border: 2px solid black;
   padding: 15px 10px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 
