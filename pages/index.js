@@ -239,6 +239,7 @@ export default function Home() {
           payload: user,
         });
         confirmStatus(user.email);
+        console.log(user.photoURL);
         // ...
       } else {
         // User is signed out
@@ -272,11 +273,15 @@ export default function Home() {
         </div>
         <div className={styles.user__box}>
           <div className={styles.profile__pic}>
-            <img
-              alt="profile pic"
-              src={state.user.photoURL || profile}
-              style={{ width: "100%", height: "100%" }}
-            />
+            {state.user.photoURL ? (
+              <img
+                alt="profile pic"
+                src={state.user.photoURL}
+                style={{ width: "100%", height: "100%" }}
+              />
+            ) : (
+              <Image alt="profile pic" src={profile} layout="fill" />
+            )}
           </div>
           <div className={styles.home__buttons}>
             <button

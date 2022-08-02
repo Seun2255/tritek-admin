@@ -64,11 +64,15 @@ export default function AddImage(props) {
       {view === "home" && (
         <div className={styles.pic__box}>
           <div className={styles.profile__pic}>
-            <img
-              alt="profile pic"
-              src={user.photoURL || profile}
-              style={{ width: "100%", height: "100%" }}
-            />
+            {user.photoURL ? (
+              <img
+                alt="profile pic"
+                src={user.photoURL}
+                style={{ width: "100%", height: "100%" }}
+              />
+            ) : (
+              <Image alt="profile pic" src={profile} layout="fill" />
+            )}
           </div>
           <label htmlFor="upload" className={styles.button}>
             Change
