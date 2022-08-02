@@ -1,16 +1,13 @@
 import { formatDate } from "./dateFunctions";
 const departmentOptions = ["Admin", "Sales/Marketing", "IT"];
 const reportOptions = [
-  "First response time",
-  "Ticket backlog",
   "resolution rate",
-  "Contact volume by channel",
   "Time in queue",
   "Queries recieved per day",
 ];
 
 const typeOptions = {
-  Admin: ["Admin", "Membership", "Training & Mentorship"],
+  Admin: ["Admin", "Membership", "Training & Mentorship", "General"],
   "Sales/Marketing": ["Sales"],
   IT: ["Technical", "ICT Dept"],
 };

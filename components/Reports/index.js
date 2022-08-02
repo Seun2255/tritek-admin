@@ -21,10 +21,7 @@ export default function Reports(props) {
   const departmentOptions = ["All", "Admin", "Sales/Marketing", "IT"];
   const titleOptions = [
     "All",
-    "First response time",
-    "Ticket backlog",
     "resolution rate",
-    "Contact volume by channel",
     "Time in queue",
     "Queries recieved per day",
   ];
