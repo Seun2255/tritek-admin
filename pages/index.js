@@ -277,7 +277,7 @@ export default function Home() {
               <img
                 alt="profile pic"
                 src={state.user.photoURL}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", borderRadius: "50vh" }}
               />
             ) : (
               <Image alt="profile pic" src={profile} layout="fill" />

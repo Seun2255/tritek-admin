@@ -68,7 +68,7 @@ export default function AddImage(props) {
               <img
                 alt="profile pic"
                 src={user.photoURL}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", borderRadius: "10px" }}
               />
             ) : (
               <Image alt="profile pic" src={profile} layout="fill" />
