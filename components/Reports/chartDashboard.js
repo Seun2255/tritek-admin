@@ -27,7 +27,7 @@ export default function ChartDashboard(props) {
   });
 
   const viewChart = () => {
-    if (chartOpen && current === selected) {
+    if (chartOpen) {
       setChartOpen(false);
     } else {
       var rowData = data[selected].data;
@@ -72,7 +72,7 @@ export default function ChartDashboard(props) {
         </CSVLink>
 
         <button className={styles.chart__action__button} onClick={viewChart}>
-          view
+          {chartOpen ? "close" : "view"}
         </button>
       </div>
       <div className={styles.chart__dashboard} ref={ref}>
