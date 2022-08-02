@@ -12,7 +12,8 @@ export default function UserOptions(props) {
   return (
     <div className={styles.container}>
       {option === "My Settings" && <MySettings />}
-      {option === "Add Image" && <AddImage user={state.user} />}
+      {option === "Add Image" ||
+        (option === "Change Image" && <AddImage user={state.user} />)}
     </div>
   );
 }
