@@ -55,7 +55,7 @@ export default function ChartDashboard(props) {
   ];
 
   return (
-    <div className={styles.chart__dashboard}>
+    <div className={styles.outer}>
       <div className={styles.chart__action__buttons}>
         <button className={styles.chart__action__button} onClick={handlePrint}>
           Download pdf
@@ -75,70 +75,71 @@ export default function ChartDashboard(props) {
           view
         </button>
       </div>
-      {chartOpen && (
-        <div
-          className={styles.container}
-          style={{ marginTop: "20px" }}
-          ref={ref}
-        >
-          <label className={styles.container__label}>Results</label>
-          <Bar data={barData} options={options} />
-        </div>
-      )}
-      <div className={styles.table__container}>
-        <table className={styles.table}>
-          <thead style={{ backgroundColor: "#CCCCCC" }}>
-            <tr className={styles.table__head}>
-              <td className={styles.table__cell} style={{ borderLeft: "none" }}>
-                Department
-              </td>
-              <td className={styles.table__cell}>Report</td>
-              <td className={styles.table__cell}>Period</td>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => {
-              return (
-                <tr
-                  className={styles.table__row}
-                  key={index}
-                  style={{
-                    backgroundColor:
-                      index === selected
-                        ? "#6fa8dc"
-                        : index % 2
-                        ? "white"
-                        : "#DDDDDD",
-                  }}
-                  onClick={() => setSelected(index)}
+      <div className={styles.chart__dashboard} ref={ref}>
+        {chartOpen && (
+          <div className={styles.container} style={{ marginTop: "20px" }}>
+            <label className={styles.container__label}>Results</label>
+            <Bar data={barData} options={options} />
+          </div>
+        )}
+        <div className={styles.table__container}>
+          <table className={styles.table}>
+            <thead style={{ backgroundColor: "#CCCCCC" }}>
+              <tr className={styles.table__head}>
+                <td
+                  className={styles.table__cell}
+                  style={{ borderLeft: "none" }}
                 >
-                  <td
-                    className={styles.table__cell}
-                    style={{ borderLeft: "none" }}
+                  Department
+                </td>
+                <td className={styles.table__cell}>Report</td>
+                <td className={styles.table__cell}>Period</td>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, index) => {
+                return (
+                  <tr
+                    className={styles.table__row}
+                    key={index}
+                    style={{
+                      backgroundColor:
+                        index === selected
+                          ? "#6fa8dc"
+                          : index % 2
+                          ? "white"
+                          : "#DDDDDD",
+                    }}
+                    onClick={() => setSelected(index)}
                   >
-                    {row.type}
-                  </td>
-                  <td className={styles.table__cell}>{row.title}</td>
-                  <td className={styles.table__cell}>{row.period}</td>
-                </tr>
-              );
-            })}
-            {fillUPArray.map((row, index) => {
-              return (
-                <tr
-                  key={index}
-                  style={{
-                    backgroundColor: index % 2 ? "#DDDDDD" : "white",
-                  }}
-                >
-                  <td></td>
-                  <td className={styles.table__cell}></td>
-                  <td className={styles.table__cell}></td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td
+                      className={styles.table__cell}
+                      style={{ borderLeft: "none" }}
+                    >
+                      {row.type}
+                    </td>
+                    <td className={styles.table__cell}>{row.title}</td>
+                    <td className={styles.table__cell}>{row.period}</td>
+                  </tr>
+                );
+              })}
+              {fillUPArray.map((row, index) => {
+                return (
+                  <tr
+                    key={index}
+                    style={{
+                      backgroundColor: index % 2 ? "#DDDDDD" : "white",
+                    }}
+                  >
+                    <td></td>
+                    <td className={styles.table__cell}></td>
+                    <td className={styles.table__cell}></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
