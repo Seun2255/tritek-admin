@@ -1,5 +1,6 @@
 import styles from "../../styles/components/Queries/viewQuery.module.css";
 import { editQuery } from "../../pages/api/API";
+import { timeStamp } from "../../utils/dateFunctions";
 
 export default function ViewQuery(props) {
   const { data, setViewQuery, setReplyQuery, setEscalateQuery } = props;
@@ -15,12 +16,16 @@ export default function ViewQuery(props) {
   };
 
   const handleResolve = () => {
+    var time = new Date();
+    var resolvedTime = timeStamp(time);
     data["Status"] = "Resolved";
-    editQuery({ ...data, Status: "Resolved" }, data["Query Number"]).then(
-      () => {
-        setViewQuery(false);
-      }
-    );
+    data["resolved"] = resolvedTime;
+    editQuery(
+      { ...data, Status: "Resolved", resolved: resolvedTime },
+      data["Query Number"]
+    ).then(() => {
+      setViewQuery(false);
+    });
   };
 
   return (

@@ -141,6 +141,7 @@
   background-color: white;
   overflow: auto;
   overflow-x: hidden;
+  z-index: 2;
 }
 
 .dropdown__menu::-webkit-scrollbar {

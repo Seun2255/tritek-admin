@@ -17,7 +17,10 @@
     "react": "18.2.0",
     "react-calendar": "^3.7.0",
     "react-chartjs-2": "^4.3.1",
+    "react-csv": "^2.2.2",
     "react-dom": "18.2.0",
+    "react-export-table-to-excel": "^1.0.3",
+    "react-to-print": "^2.14.7",
     "web3.storage": "^4.3.0"
   },
   "devDependencies": {

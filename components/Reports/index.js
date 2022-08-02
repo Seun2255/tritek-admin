@@ -8,7 +8,7 @@ import "react-calendar/dist/Calendar.css";
 import { formatDate } from "../../utils/dateFunctions";
 import ChartDashboard from "./chartDashboard";
 import InsightDashboard from "./insightDashboard";
-import getRows from "../../utils/reportCreators";
+import { getRows } from "../../utils/reportCreators";
 
 export default function Reports(props) {
   const { queries } = props;
@@ -79,16 +79,25 @@ export default function Reports(props) {
   };
 
   const generateReport = () => {
-    var temp = getRows(
-      selectedDepartment,
-      selectedTitle,
-      fromValue,
-      toValue,
-      queries
-    );
-    console.log(temp);
-    setData(temp);
-    setViewReport(true);
+    if (
+      selectedDepartment !== "Department" &&
+      selectedTitle !== "Report Title*"
+    ) {
+      var temp = getRows(
+        selectedDepartment,
+        selectedTitle,
+        fromValue,
+        toValue,
+        queries
+      );
+      setData(temp);
+      setViewReport(true);
+    } else {
+      setUnFilled(true);
+      setTimeout(() => {
+        setUnFilled(false);
+      }, 3000);
+    }
   };
 
   return (

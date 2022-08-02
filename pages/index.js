@@ -71,7 +71,7 @@ export default function Home() {
   const options = [
     "My Settings",
     "Options",
-    "Add Image",
+    state.user.photoURL ? "Change Image" : "Add Image",
     "Change Password",
     "logout",
   ];
@@ -98,6 +98,7 @@ export default function Home() {
       setSideDropdown(false);
       setSettingsDropdown(false);
       setUserOptions(false);
+      setForm("");
     } else if (view === "Contact Management") {
       setUserOptions(false);
       setCurrentView(view);
@@ -133,9 +134,11 @@ export default function Home() {
       if (option === "In Progress") {
         setQueryStatus("in Progress");
         setCurrentQueries(queries["in Progress"]);
+        setForm("");
       } else {
         setQueryStatus(option);
         setCurrentQueries(queries[option]);
+        setForm("");
       }
       setSideDropdown(false);
     }
@@ -153,6 +156,7 @@ export default function Home() {
     setOption("");
     setSettingsDropdown(false);
     setSideDropdown(false);
+    setForm("");
     if (option === "add a user") {
       setForm("profile");
     } else if (option === "edit user account") {
@@ -191,6 +195,7 @@ export default function Home() {
     setOption(option);
     setUserOptions(true);
     setMenuOpen(false);
+    setForm("");
   };
 
   useEffect(() => {

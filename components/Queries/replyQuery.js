@@ -13,7 +13,6 @@ export default function ReplyQuery(props) {
   const handleSubmit = () => {
     data["Response"] = reply;
     data["Status"] = "in Progress";
-    console.log(data);
     editQuery(
       { ...data, Response: reply, Status: "in Progress" },
       data["Query Number"]
