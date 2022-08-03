@@ -13,7 +13,7 @@ export default function CandidateProfileForm(props) {
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "UK", "America", "Japan", "Nigeria", "China"];
   const [menuOpen2, setMenuOpen2] = useState(false);
-  const [selected2, setSelected2] = useState("country");
+  const [selected2, setSelected2] = useState("General");
   const departments = ["General", "Admin", "IT", "Sales/Marketing"];
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,7 +26,7 @@ export default function CandidateProfileForm(props) {
   const [zip, setZip] = useState("");
   const [county, setCounty] = useState("");
   const [country, setCountry] = useState("");
-  const [department, setDepartment] = useState("general");
+  const [department, setDepartment] = useState("General");
   const [comments, setComments] = useState("");
   const [attachment, setAttachment] = useState("");
   const [fileName, setFileName] = useState("Attach signed NDA *");
