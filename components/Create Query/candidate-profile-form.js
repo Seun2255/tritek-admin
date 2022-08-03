@@ -13,7 +13,7 @@ export default function CandidateProfileForm(props) {
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "UK", "America", "Japan", "Nigeria", "China"];
   const [menuOpen2, setMenuOpen2] = useState(false);
-  const [selected2, setSelected2] = useState("General");
+  const [selected2, setSelected2] = useState("department");
   const departments = ["General", "Admin", "IT", "Sales/Marketing"];
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,7 +25,7 @@ export default function CandidateProfileForm(props) {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [county, setCounty] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("Nigeria");
   const [department, setDepartment] = useState("General");
   const [comments, setComments] = useState("");
   const [attachment, setAttachment] = useState("");
