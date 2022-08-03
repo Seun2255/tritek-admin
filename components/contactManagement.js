@@ -33,67 +33,73 @@ export default function Queries(props) {
   }, [data]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        Contact Management - Queries (New, In Progress, Resolved)
-      </div>
-      <section className={styles.table__container}>
-        <table className={styles.table}>
-          <thead style={{ backgroundColor: "#CCCCCC" }}>
-            <tr className={styles.table__head}>
-              <td style={{ fontWeight: 700, color: "#293986" }}>Name</td>
-              <td className={styles.table__cell}>Role</td>
-              <td className={styles.table__cell}>Email</td>
-              <td className={styles.table__cell}>Phone Number</td>
-              <td className={styles.table__cell}>Country</td>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => {
-              return (
-                <tr
-                  className="table__row"
-                  key={index}
-                  style={{ backgroundColor: index % 2 ? "white" : "#DDDDDD" }}
-                >
-                  <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
-                  <td className={styles.table__cell}>{row["Roles"]}</td>
-                  <td className={styles.table__cell}>{row["Emails"]}</td>
-                  <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>{row["Country"]}</td>
-                </tr>
-              );
-            })}
-            {fillUPArray.map((row, index) => {
-              return (
-                <tr
-                  className="table__row"
-                  key={index}
-                  style={{ backgroundColor: index % 2 ? "#DDDDDD" : "white" }}
-                >
-                  <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
-                  <td className={styles.table__cell}>{row["Roles"]}</td>
-                  <td className={styles.table__cell}>{row["Emails"]}</td>
-                  <td className={styles.table__cell}>{row["Phone number"]}</td>
-                  <td className={styles.table__cell}>{row["Country"]}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </section>
-      <div className={styles.pagination}>
-        <button
-          className={styles.back}
-          style={{
-            backgroundColor: "#6FA8DC",
-            width: "4em",
-            borderLeft: "2px solid black",
-          }}
-        >
-          {"<<"}
-        </button>
-        <button className={styles.back}>{"<"}</button>
+    <div className={styles.outer}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          Contact Management - Queries (New, In Progress, Resolved)
+        </div>
+        <section className={styles.table__container}>
+          <table className={styles.table}>
+            <thead style={{ backgroundColor: "#CCCCCC" }}>
+              <tr className={styles.table__head}>
+                <td style={{ fontWeight: 700, color: "#293986" }}>Name</td>
+                <td className={styles.table__cell}>Role</td>
+                <td className={styles.table__cell}>Email</td>
+                <td className={styles.table__cell}>Phone Number</td>
+                <td className={styles.table__cell}>Country</td>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, index) => {
+                return (
+                  <tr
+                    className="table__row"
+                    key={index}
+                    style={{ backgroundColor: index % 2 ? "white" : "#DDDDDD" }}
+                  >
+                    <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
+                    <td className={styles.table__cell}>{row["Roles"]}</td>
+                    <td className={styles.table__cell}>{row["Emails"]}</td>
+                    <td className={styles.table__cell}>
+                      {row["Phone number"]}
+                    </td>
+                    <td className={styles.table__cell}>{row["Country"]}</td>
+                  </tr>
+                );
+              })}
+              {fillUPArray.map((row, index) => {
+                return (
+                  <tr
+                    className="table__row"
+                    key={index}
+                    style={{ backgroundColor: index % 2 ? "#DDDDDD" : "white" }}
+                  >
+                    <td>{`${row["First Name"]} ${row["Last Name"]}`}</td>
+                    <td className={styles.table__cell}>{row["Roles"]}</td>
+                    <td className={styles.table__cell}>{row["Emails"]}</td>
+                    <td className={styles.table__cell}>
+                      {row["Phone number"]}
+                    </td>
+                    <td className={styles.table__cell}>{row["Country"]}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+        <div className={styles.pagination}>
+          <button
+            className={styles.back}
+            style={{
+              backgroundColor: "#6FA8DC",
+              width: "4em",
+              borderLeft: "2px solid black",
+            }}
+          >
+            {"<<"}
+          </button>
+          <button className={styles.back}>{"<"}</button>
+        </div>
       </div>
     </div>
   );
