@@ -1,39 +1,30 @@
 import Image from "next/image";
 import styles from "../../styles/components/User Management/changeEmail.module.css";
 import { useState, useEffect, useContext } from "react";
-import arrow from "../../assets/icons/arrow-black.svg";
-import search from "../../assets/icons/search.svg";
 import { auth } from "../../pages/api/API";
 import { Context } from "../../context";
-import { signInWithEmailAndPassword, updateEmail } from "firebase/auth";
+import { signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 
-export default function ChangeEmail(props) {
+export default function ChangePassword(props) {
   const { state } = useContext(Context);
   const [mode, setMode] = useState("change");
-  const [currentEmail, setCurrentEmail] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newEmail2, setNewEmail2] = useState("");
-  const [password, setPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPassword2, setNewPassword2] = useState("");
+  const [errorText, setErrorText] = useState("");
 
   const handleSave = () => {
-    if (newEmail === newEmail2) {
-      signInWithEmailAndPassword(auth, currentEmail, password)
+    if (newPassword === newPassword2) {
+      signInWithEmailAndPassword(auth, state.user.email, currentPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          updateEmail(user, newEmail)
-            .then(() => {
-              console.log("Email Changed");
-              setMode("succes");
-              setTimeout(() => {
-                setMode("change");
-              }, 2000);
-            })
-            .catch(() => {
-              setMode("used email");
-              setTimeout(() => {
-                setMode("change");
-              }, 2000);
-            });
+          updatePassword(user, newPassword).then(() => {
+            console.log("Password Changed");
+            setMode("succes");
+            setTimeout(() => {
+              setMode("change");
+            }, 2000);
+          });
         })
         .catch((error) => {
           console.log("Failed");
@@ -43,7 +34,7 @@ export default function ChangeEmail(props) {
           }, 2000);
         });
     } else {
-      alert("New email doesn't match");
+      alert("New Password doesn't match");
     }
   };
 
@@ -54,14 +45,7 @@ export default function ChangeEmail(props) {
       {mode === "succes" && (
         <div className={styles.centered}>
           <h1 className={styles.centered__text} style={{ color: "green" }}>
-            Email Changed
-          </h1>
-        </div>
-      )}
-      {mode === "used email" && (
-        <div className={styles.centered}>
-          <h1 className={styles.centered__text} style={{ color: "red" }}>
-            Email Already in Use
+            Password Changed
           </h1>
         </div>
       )}
@@ -74,40 +58,35 @@ export default function ChangeEmail(props) {
       )}
       {mode === "change" && (
         <div className={styles.container}>
-          <div className={styles.top__bar}>User Management - Change email</div>
+          <div className={styles.top__bar}>
+            User Management - Change password
+          </div>
           <main className={styles.main}>
             <div className={styles.form}>
               <div className={styles.input__box}>
-                <label className={styles.input__label}>Current Email</label>
+                <label className={styles.input__label}>Current Password</label>
                 <input
                   className={styles.input__field}
-                  type="email"
-                  onChange={(e) => setCurrentEmail(e.target.value)}
+                  type="Password"
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                 />
               </div>
               <div className={styles.input__box}>
-                <label className={styles.input__label}>New Email</label>
-                <input
-                  className={styles.input__field}
-                  type="text"
-                  onChange={(e) => setNewEmail(e.target.value)}
-                />
-              </div>
-              <div className={styles.input__box}>
-                <label className={styles.input__label}>Retype New Email</label>
-                <input
-                  className={styles.input__field}
-                  type="text"
-                  onChange={(e) => setNewEmail2(e.target.value)}
-                />
-              </div>
-              <div className={styles.input__box}>
-                <label className={styles.input__label}>Password</label>
+                <label className={styles.input__label}>New Password</label>
                 <input
                   className={styles.input__field}
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{ borderBottom: "2px solid black" }}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className={styles.input__box}>
+                <label className={styles.input__label}>
+                  Confirm New Password
+                </label>
+                <input
+                  className={styles.input__field}
+                  type="password"
+                  onChange={(e) => setNewPassword2(e.target.value)}
                 />
               </div>
               <div className={styles.action__buttons}>

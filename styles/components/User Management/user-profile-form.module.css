@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: #fee8ad;
+  background-color: white;
 }
 
 .deleted__text {
@@ -19,7 +19,7 @@
   height: 100%;
   color: black;
   box-sizing: border-box;
-  background-color: #fee8ad;
+  background-color: white;
   overflow: auto;
   overflow-x: hidden;
   position: relative;
@@ -253,14 +253,59 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
-.zipcode__input {
+
+.zip__nda__container {
   width: 45%;
   height: 100%;
+}
+
+.zipcode__input {
+  width: 100%;
   padding-left: 5px;
   border: 2px solid black;
   font-size: inherit;
+  height: 2em;
+}
+
+.nda__department__container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nda {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.clip {
+  height: 1.8em;
+  width: 1.5em;
+  cursor: pointer;
+  position: relative;
+}
+
+.department__dropdown {
+  font-size: 16px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.nda__dropdown__arrow {
+  width: 15%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid black;
 }
 
 .country__dropdown {
@@ -306,7 +351,7 @@
   font-size: 16px;
   box-sizing: border-box;
   background-color: white;
-  height: 60px;
+  height: 100px;
   overflow: auto;
   overflow-x: hidden;
 }
@@ -334,7 +379,7 @@
 }
 
 .additional__info {
-  margin-top: 30px;
+  margin-top: 100px;
   width: 100%;
   margin-bottom: 20px;
 }

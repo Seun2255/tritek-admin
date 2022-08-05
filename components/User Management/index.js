@@ -8,6 +8,7 @@ import Users from "./users";
 import UserGroups from "./userGroups";
 import ChangeEmail from "./changeEmail";
 import Permissions from "./permissions";
+import ChangePassword from "./changePassword";
 
 export default function UserManagement(props) {
   const { form, data, employees } = props;
@@ -17,6 +18,7 @@ export default function UserManagement(props) {
       {form === "edit" && <Users data={data} />}
       {form === "user groups" && <UserGroups data={employees} />}
       {form === "change email" && <ChangeEmail />}
+      {form === "change password" && <ChangePassword />}
       {form === "permissions" && <Permissions />}
     </div>
   );

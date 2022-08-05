@@ -18,6 +18,7 @@ import {
   sendEmailVerification,
   applyActionCode,
   updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import { async } from "@firebase/util";
 import { timeStamp } from "../../utils/dateFunctions";
@@ -334,6 +335,23 @@ const changeEmail = async (email, password, newEmail) => {
     });
 };
 
+const changePassword = async (email, password, newPassword) => {
+  var state = "null";
+  await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      updatePassword(user, newPassword).then(() => {
+        console.log("Password Changed");
+        state = "password changed";
+      });
+    })
+    .catch((error) => {
+      console.log("Failed");
+      state = "fail";
+    });
+  return state;
+};
+
 export {
   signIn,
   signUserOut,
@@ -355,6 +373,7 @@ export {
   setPermissions,
   getPermissions,
   changeEmail,
+  changePassword,
   confirmStatus,
   getUserData,
 };

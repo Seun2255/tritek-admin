@@ -7,7 +7,7 @@
   overflow: auto;
   overflow-x: hidden;
   position: relative;
-  background-color: #fee8ad;
+  background-color: white;
 }
 
 .container::-webkit-scrollbar {

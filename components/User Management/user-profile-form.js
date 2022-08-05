@@ -10,6 +10,9 @@ import {
   signUp,
 } from "../../pages/api/API";
 import axios from "axios";
+import clip from "../../assets/icons/clip.svg";
+import { Web3Storage } from "web3.storage";
+import linkCreator from "../../utils/linkCreator";
 
 var generator = require("generate-password");
 
@@ -18,6 +21,9 @@ export default function UserProfileForm(props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selected, setSelected] = useState("country");
   const options = ["Germany", "UK", "America", "Japan", "Nigeria", "China"];
+  const [menuOpen2, setMenuOpen2] = useState(false);
+  const [selected2, setSelected2] = useState("department");
+  const departments = ["General", "Admin", "IT", "Sales/Marketing"];
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobilePhone, setMobilePhone] = useState("");
@@ -33,6 +39,22 @@ export default function UserProfileForm(props) {
   const [deleteUser, setDeleteUser] = useState(false);
   const [formState, setFormState] = useState("active");
   const [ticket, setTicket] = useState("");
+  const [department, setDepartment] = useState("General");
+  const [attachment, setAttachment] = useState("");
+  const [fileName, setFileName] = useState("Attach signed NDA *");
+
+  const token = process.env.NEXT_PUBLIC_STORAGE_TOKEN;
+  const client = new Web3Storage({ token });
+
+  const handleFileUpload = async (event) => {
+    let file = event.target.files[0];
+    if (file) {
+      const cid = await client.put(event.target.files);
+      const url = linkCreator(cid, file.name);
+      setAttachment(url);
+      setFileName(file.name);
+    }
+  };
 
   const handleSave = () => {
     var employee = {
@@ -48,6 +70,8 @@ export default function UserProfileForm(props) {
       County: county,
       Country: country,
       Comments: comments,
+      Attachment: attachment,
+      Department: department,
     };
     if (mode === "edit") {
       employee["Roles"] = data.Roles || "Admin Staff";
@@ -266,14 +290,80 @@ export default function UserProfileForm(props) {
                     />
                   </div>
                   <div className={styles.zip__country}>
-                    <input
-                      className={styles.zipcode__input}
-                      placeholder="Postcode/Zipcode"
-                      value={zip}
-                      onChange={(e) => {
-                        setZip(e.target.value);
-                      }}
-                    />
+                    <div className={styles.zip__nda__container}>
+                      <input
+                        className={styles.zipcode__input}
+                        placeholder="Postcode/Zipcode"
+                        value={zip}
+                        onChange={(e) => {
+                          setZip(e.target.value);
+                        }}
+                      />
+                      <div className={styles.nda__department__container}>
+                        <div className={styles.nda}>
+                          <label htmlFor="upload" className={styles.clip}>
+                            <Image alt="clip" src={clip} layout="fill" />
+                          </label>
+                          <input
+                            type="file"
+                            id="upload"
+                            style={{ display: "none" }}
+                            onChange={handleFileUpload}
+                          />
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              width: "90%",
+                              overflow: "hidden",
+                              overflowX: "clip",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {fileName}
+                          </span>
+                        </div>
+                        <div className={styles.department__dropdown}>
+                          <button
+                            className={styles.country__dropdown__button}
+                            onClick={() => setMenuOpen2(!menuOpen2)}
+                          >
+                            <span>{selected2}</span>
+                            <div className={styles.nda__dropdown__arrow}>
+                              <Image
+                                alt="arrow"
+                                layout="fill"
+                                src={arrow}
+                                style={{
+                                  transform: menuOpen2
+                                    ? "rotate(180deg)"
+                                    : "rotate(0deg)",
+                                }}
+                              />
+                            </div>
+                          </button>
+                          {menuOpen2 && (
+                            <div className={styles.countries__menu}>
+                              {departments.map((option, id) => {
+                                return (
+                                  <div
+                                    key={id}
+                                    className={styles.country}
+                                    onClick={() => {
+                                      setSelected2(option);
+                                      setMenuOpen2(false);
+                                      setDepartment(option);
+                                    }}
+                                  >
+                                    {option}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                     <div className={styles.country__dropdown}>
                       <button
                         className={styles.country__dropdown__button}

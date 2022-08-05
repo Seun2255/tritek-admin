@@ -65,6 +65,7 @@ export default function Home() {
     "Change email",
     "User Groups",
     "Permission Level",
+    "Change password",
   ];
 
   const router = useRouter();
@@ -167,6 +168,8 @@ export default function Home() {
       setForm("change email");
     } else if (option === "Permission Level") {
       setForm("permissions");
+    } else if (option === "Change password") {
+      setForm("change password");
     }
   };
 
