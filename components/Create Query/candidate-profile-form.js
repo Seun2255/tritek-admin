@@ -197,80 +197,15 @@ export default function CandidateProfileForm(props) {
                 />
               </div>
               <div className={styles.zip__country}>
-                <div className={styles.zip__nda__container}>
-                  <input
-                    className={styles.zipcode__input}
-                    placeholder="Postcode/Zipcode"
-                    value={zip}
-                    onChange={(e) => {
-                      setZip(e.target.value);
-                    }}
-                  />
-                  <div className={styles.nda__department__container}>
-                    <div className={styles.nda}>
-                      <label htmlFor="upload" className={styles.clip}>
-                        <Image alt="clip" src={clip} layout="fill" />
-                      </label>
-                      <input
-                        type="file"
-                        id="upload"
-                        style={{ display: "none" }}
-                        onChange={handleFileUpload}
-                      />
-                      <span
-                        style={{
-                          fontWeight: 600,
-                          width: "90%",
-                          overflow: "hidden",
-                          overflowX: "clip",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {fileName}
-                      </span>
-                    </div>
-                    <div className={styles.department__dropdown}>
-                      <button
-                        className={styles.country__dropdown__button}
-                        onClick={() => setMenuOpen2(!menuOpen2)}
-                      >
-                        <span>{selected2}</span>
-                        <div className={styles.nda__dropdown__arrow}>
-                          <Image
-                            alt="arrow"
-                            layout="fill"
-                            src={arrow}
-                            style={{
-                              transform: menuOpen2
-                                ? "rotate(180deg)"
-                                : "rotate(0deg)",
-                            }}
-                          />
-                        </div>
-                      </button>
-                      {menuOpen2 && (
-                        <div className={styles.countries__menu}>
-                          {departments.map((option, id) => {
-                            return (
-                              <div
-                                key={id}
-                                className={styles.country}
-                                onClick={() => {
-                                  setSelected2(option);
-                                  setMenuOpen2(false);
-                                  setDepartment(option);
-                                }}
-                              >
-                                {option}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <input
+                  className={styles.zipcode__input}
+                  placeholder="Postcode/Zipcode"
+                  value={zip}
+                  onChange={(e) => {
+                    setZip(e.target.value);
+                  }}
+                />
+
                 <div className={styles.country__dropdown}>
                   <button
                     className={styles.country__dropdown__button}

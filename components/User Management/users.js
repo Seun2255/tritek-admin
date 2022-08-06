@@ -1,10 +1,12 @@
 import Image from "next/image";
 import styles from "../../styles/components/User Management/users.module.css";
-import logo from "../../assets/logo.png";
-import email from "../../assets/icons/email.svg";
+import clip from "../../assets/icons/clip.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 import UserProfileForm from "./user-profile-form";
+import axios from "axios";
+import download from "downloadjs";
+import getFileName from "../../utils/getFileName";
 
 export default function Users(props) {
   const { data } = props;
@@ -26,11 +28,23 @@ export default function Users(props) {
           "User name": "",
           "Date of Joining": "",
           Roles: "",
+          Attachment: "",
         });
       }
     }
     setFillUpArray(array);
   };
+
+  function downloadFile(file) {
+    axios({
+      url: file,
+      method: "GET",
+      responseType: "blob",
+    }).then((response) => {
+      const content = response.headers["content-type"];
+      download(response.data, getFileName(file), content);
+    });
+  }
 
   useEffect(() => {
     fillUp();
@@ -56,6 +70,7 @@ export default function Users(props) {
                   <td className={styles.table__cell}>Email</td>
                   <td className={styles.table__cell}>Phone Number</td>
                   <td className={styles.table__cell}>Country</td>
+                  <td className={styles.table__cell}>Attachment</td>
                 </tr>
               </thead>
               <tbody>
@@ -79,6 +94,34 @@ export default function Users(props) {
                         {row["Phone number"]}
                       </td>
                       <td className={styles.table__cell}>{row["Country"]}</td>
+                      <td
+                        className={styles.table__cell}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          downloadFile(row["Attachment"]);
+                        }}
+                        style={{
+                          verticalAlign: "middle",
+                          textAlign: "center",
+                        }}
+                      >
+                        {row["Attachment"] ? (
+                          <div
+                            style={{
+                              width: "30px",
+                              height: "20px",
+                              position: "relative",
+                              zIndex: 10,
+                              display: "block",
+                              margin: "0 auto",
+                            }}
+                          >
+                            <Image src={clip} alt="clip" layout="fill" />
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
@@ -97,6 +140,7 @@ export default function Users(props) {
                         {row["Phone number"]}
                       </td>
                       <td className={styles.table__cell}>{row["Country"]}</td>
+                      <td className={styles.table__cell}></td>
                     </tr>
                   );
                 })}

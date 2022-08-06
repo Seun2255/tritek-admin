@@ -229,7 +229,7 @@
 }
 
 .zipcode__input {
-  width: 100%;
+  width: 45%;
   padding-left: 5px;
   border: 2px solid black;
   font-size: inherit;
